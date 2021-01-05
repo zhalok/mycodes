@@ -159,68 +159,56 @@ int kossoraju(int n)
 
 void solve()
 {
-	int n,m;
-	cin>>n>>m;
-    bool grid[n][m];
-	for(int i=0;i<n;i++)
-	for(int j=0;j<m;j++)
-	cin>>grid[i][j];
+	 int n,m;
+	 cin>>n>>m;
+	 int grid[n][m];
+	 for(int i=0;i<n;i++)
+	 for(int j=0;j<m;j++)
+	 cin>>grid[i][j];
 
-	for(int i=0;i<n;i++)
-	for(int j=0;j<m;j++)
-	{
-		if(grid[i][j]==1)
-		{
-			bool flag1=true;
-			bool flag2=true;
-			for(int k=0;k<n;k++)
-			if(grid[k][j]==0)
-			{
-				flag1=false;
-			    break;
-			}
+	 int ans[n][m];
+     //memset(ans,1,sizeof ans);
+     for(int i=0;i<n;i++)
+	 for(int j=0;j<m;j++)
+	 ans[i][j]=1;
 
-			for(int k=0;k<m;k++)
-			if(grid[i][k]==0)
-			{
-				flag2=false;
-				break;
-			}
-              
-			  if(flag1==false&&flag2==false)
-			  {
-				  cout<<"NO"<<endl;
-				  return ;
-			  }
+	 for(int i=0;i<n;i++)
+	 for(int j=0;j<m;j++)
+	 if(grid[i][j]==0)
+	 {
+		 for(int k=0;k<n;k++) ans[k][j]=0;
+		 for(int k=0;k<m;k++) ans[i][k]=0;
+	 }
 
-		}
-	}
-    
-//	cout<<"HI there"<<endl;
-	bool ans[n][m];
-	memset(ans,1,sizeof ans);
+	 int grid1[n][m];
+	 for(int i=0;i<n;i++)
+	 for(int j=0;j<m;j++)
+	 {
+		 int temp=0;
+		 for(int k=0;k<n;k++) temp|=ans[k][j];
+		 for(int k=0;k<m;k++) temp|=ans[i][k];
+		 grid1[i][j]=temp;
+	 }
 
-/*	for(int i=0;i<n;i++)
-	{
-		for(int j=0;j<m;j++) cout<<ans[i][j]<<" ";
-		cout<<endl;
-	}
+/*	 for(int i=0;i<n;i++) {
+		 for(int j=0;j<m;j++) cout<<grid1[i][j]<<" ";
+		 cout<<endl;
+	 }
 */
-	for(int i=0;i<n;i++)
-	for(int j=0;j<m;j++)
-	if(grid[i][j]==0)
-	{
-		for(int k=0;k<n;k++) ans[k][j]=0;
-		for(int k=0;k<m;k++) ans[i][k]=0;
 
-	}
-    
-	cout<<"YES"<<endl;
-	for(int i=0;i<n;i++)
-	{
-		for(int j=0;j<m;j++) cout<<ans[i][j]<<" ";
-		cout<<endl;
-	}
+	 for(int i=0;i<n;i++)
+	 for(int j=0;j<m;j++)
+	 if(grid1[i][j]!=grid[i][j]) { cout<<"NO"<<endl; return ; }
+
+
+	 cout<<"YES"<<endl;
+	 for(int i=0;i<n;i++)
+	 {
+		 for(int j=0;j<m;j++) cout<<ans[i][j]<<" ";
+		 cout<<endl;
+	 }
+
+	 
 
 
 }
@@ -233,8 +221,8 @@ int main(int args,char * _argc[])
 {
 
 
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
+  //freopen("input.txt","r",stdin);
+  //freopen("output.txt","w",stdout);
 
     ios::sync_with_stdio(false);
 //	int n;
