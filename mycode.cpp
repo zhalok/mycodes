@@ -1,4 +1,8 @@
-#include<bits/stdc++.h>
+//#include<bits/stdc++.h>
+#include<iostream>
+
+#include<vector>
+#include <utility>
 using namespace std;
 #define zhalok Zhalok
 #define inf 1e9
@@ -23,9 +27,10 @@ using namespace std;
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
+#define eps 1e-6
 
 
- 
+ /*
 ll minn(ll a,ll b)
 {
 	return a<b?a:b;
@@ -45,6 +50,37 @@ ll cill(ll a,ll b)
 	return a/b+1;
 }
 
+void solve_eqn(ll a1,ll b1,ll a2,ll b2,ll c1,ll c2)
+{
+	 
+     ll del=a1*b2-b1*a2;
+	 ll delx=c1*b2-c2*b1;
+	 ll dely=a1*c2-a2*c1;
+     
+	 long double x,y;
+	 if(delx==0) x=0.0;
+	 else 
+	  x=(1.0*delx)/del;
+
+	  if(dely==0)
+	  y=0.0;
+	  else 
+	  y=(1.0*dely)/del;
+	//  cout<<fixed<<setprecision(10)<<x<<" "<<y<<endl;
+	  
+	  
+      
+//	 return {x,y};
+
+}
+
+double find_dis(double x1,double y1,double x2,double y2)
+{
+	double ans=(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+	return ans;
+	return sqrt(ans);
+}
+
 
  
 ll mod_exp(ll a,ll n,ll mod)
@@ -61,6 +97,104 @@ ll mod_exp(ll a,ll n,ll mod)
 	}
 	
 }
+*/
+
+ll abss(ll a)
+{
+	if(a>=0) return a;
+	else return -1*(a);
+}
+
+vpii points;
+
+void find_area()
+{
+
+//  for(auto x:points) cout<<x.first<<" "<<x.second<<endl;
+//  cout<<endl;
+  ll ans=0;
+  
+  for(int i=0;i<points.size()-1;i++)
+  
+  ans+=( points[i].first*points[i+1].second );
+  
+  
+  
+
+  for(int i=0;i<points.size()-1;i++)
+  ans-=( points[i].second*points[i+1].first );
+    
+   cout<<abss(ans)/(float)2<<endl;
+
+ //return ans;
+  	
+ 
+}
+
+
+pair<int,int> directions[10];
+string s;
+
+
+void solve()
+{ 
+	pii point=make_pair(0,0);
+	
+	cin>>s;
+	points.clear();
+	points.push_back(point);
+	for(int i=0;i<s.size()-1;i++)
+	{
+	   point.first+=directions[s[i]-'0'].first;
+	   point.second+=directions[s[i]-'0'].second;
+	  // if(mp[{point.first,point.second}]==false)
+	   points.push_back(point);
+	  // mp[points[point.first,point.second]]=true;
+	}
+	 
+	 find_area();
+	 
+	 
+
+
+}
+
+
+
+
+
+int main()
+{
+
+
+  //freopen("input.txt","r",stdin);
+  //freopen("output.txt","w",stdout);
+    directions[8]=make_pair(0,1);
+	directions[2]=make_pair(0,-1);
+	directions[6]=make_pair(1,0);
+	directions[4]=make_pair(-1,0);
+	directions[9]=make_pair(1,1);
+	directions[7]=make_pair(-1,1);
+	directions[1]=make_pair(-1,-1);
+	directions[3]=make_pair(1,-1);
+
+ //   ios::sync_with_stdio(false);
+
+	int t;
+	cin>>t;
+	while(t--)
+	 solve();
+
+//pii ans=solve_eqn(1,1,1,-1,1,1);
+//cout<<ans.first<<" "<<ans.second<<endl;
+
+    return 0;
+}
+
+
+
+
+
 
 /*
 
@@ -153,85 +287,3 @@ int kossoraju(int n)
 
 */
 
-
-
-
-
-void solve()
-{
-	 int n,m;
-	 cin>>n>>m;
-	 int grid[n][m];
-	 for(int i=0;i<n;i++)
-	 for(int j=0;j<m;j++)
-	 cin>>grid[i][j];
-
-	 int ans[n][m];
-     //memset(ans,1,sizeof ans);
-     for(int i=0;i<n;i++)
-	 for(int j=0;j<m;j++)
-	 ans[i][j]=1;
-
-	 for(int i=0;i<n;i++)
-	 for(int j=0;j<m;j++)
-	 if(grid[i][j]==0)
-	 {
-		 for(int k=0;k<n;k++) ans[k][j]=0;
-		 for(int k=0;k<m;k++) ans[i][k]=0;
-	 }
-
-	 int grid1[n][m];
-	 for(int i=0;i<n;i++)
-	 for(int j=0;j<m;j++)
-	 {
-		 int temp=0;
-		 for(int k=0;k<n;k++) temp|=ans[k][j];
-		 for(int k=0;k<m;k++) temp|=ans[i][k];
-		 grid1[i][j]=temp;
-	 }
-
-/*	 for(int i=0;i<n;i++) {
-		 for(int j=0;j<m;j++) cout<<grid1[i][j]<<" ";
-		 cout<<endl;
-	 }
-*/
-
-	 for(int i=0;i<n;i++)
-	 for(int j=0;j<m;j++)
-	 if(grid1[i][j]!=grid[i][j]) { cout<<"NO"<<endl; return ; }
-
-
-	 cout<<"YES"<<endl;
-	 for(int i=0;i<n;i++)
-	 {
-		 for(int j=0;j<m;j++) cout<<ans[i][j]<<" ";
-		 cout<<endl;
-	 }
-
-	 
-
-
-}
-
-
-
-
-
-int main(int args,char * _argc[])
-{
-
-
-  //freopen("input.txt","r",stdin);
-  //freopen("output.txt","w",stdout);
-
-    ios::sync_with_stdio(false);
-//	int n;
-//	cin>>n;
-//	cout<<n<<endl;
-//	printf("%.419lf\n",sqrt(n));
-//	int t;
-//	cin>>t;
-//	while(t--)
-	 solve();
-    return 0;
-}
