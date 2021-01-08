@@ -1,6 +1,6 @@
 //#include<bits/stdc++.h>
 #include<iostream>
-
+#include<math.h>
 #include<vector>
 #include <utility>
 using namespace std;
@@ -105,56 +105,22 @@ ll abss(ll a)
 	else return -1*(a);
 }
 
-vpii points;
-
-void find_area()
-{
-
-//  for(auto x:points) cout<<x.first<<" "<<x.second<<endl;
-//  cout<<endl;
-  ll ans=0;
-  
-  for(int i=0;i<points.size()-1;i++)
-  
-  ans+=( points[i].first*points[i+1].second );
-  
-  
-  
-
-  for(int i=0;i<points.size()-1;i++)
-  ans-=( points[i].second*points[i+1].first );
-    
-   cout<<abss(ans)/(float)2<<endl;
-
- //return ans;
-  	
- 
-}
 
 
-pair<int,int> directions[10];
-string s;
 
 
 void solve()
 { 
-	pii point=make_pair(0,0);
-	
-	cin>>s;
-	points.clear();
-	points.push_back(point);
-	for(int i=0;i<s.size()-1;i++)
-	{
-	   point.first+=directions[s[i]-'0'].first;
-	   point.second+=directions[s[i]-'0'].second;
-	  // if(mp[{point.first,point.second}]==false)
-	   points.push_back(point);
-	  // mp[points[point.first,point.second]]=true;
-	}
+	 double dh,dl,dr,k;
+while(1)
+{
+	cin>>dh>>dl>>dr>>k;
+	if(dh==0&&dl==0&&dr==0&&k==0) break;
+	 double ans1=dh;
+	 double temp1=dr+dl;
+	cout<<ans1+temp1<<endl;
 	 
-	 find_area();
-	 
-	 
+}
 
 
 }
@@ -166,29 +132,14 @@ void solve()
 int main()
 {
 
+freopen("input.txt","r",stdin);
+freopen("output.txt","w",stdout);
+//int t;
+//cin>>t;
+//while(t--)
+solve();
 
-  //freopen("input.txt","r",stdin);
-  //freopen("output.txt","w",stdout);
-    directions[8]=make_pair(0,1);
-	directions[2]=make_pair(0,-1);
-	directions[6]=make_pair(1,0);
-	directions[4]=make_pair(-1,0);
-	directions[9]=make_pair(1,1);
-	directions[7]=make_pair(-1,1);
-	directions[1]=make_pair(-1,-1);
-	directions[3]=make_pair(1,-1);
-
- //   ios::sync_with_stdio(false);
-
-	int t;
-	cin>>t;
-	while(t--)
-	 solve();
-
-//pii ans=solve_eqn(1,1,1,-1,1,1);
-//cout<<ans.first<<" "<<ans.second<<endl;
-
-    return 0;
+ 
 }
 
 

@@ -28,53 +28,83 @@ using namespace std;
 #define all(v) v.begin(),v.end()
 #define eps 1e-6
 
+pair<long double,long double> quadratic_eqn_solve(ll a,ll b,ll c)
+{
+    long double del=sqrt(b*b-4*a*c);
+    long double ans1=(1.0)*(del-b)/(2*a);
+    long double ans2=(1.0)*(-del-b)/(2*a);
+    return {ans1,ans2};
+
+    
+}
+
+ll cill(ll a,ll b)
+{
+	if(a%b==0)
+	return a/b;
+	return a/b+1;
+}
+
+
+double eval(double x)
+{
+     double ans= 2*x*x-12*x+7;
+     return ans;
+}
+
+double ternarysearch(double lo,double hi)
+{
+  
+  while((hi-lo)>eps)
+  {
+      double p1=(2*lo+hi)/3;
+      double p2=(2*hi+lo)/3;
+      double evalp1=eval(p1);
+      double evalp2=eval(p2);
+      if(evalp1<evalp2) hi=p2;
+      else lo=p1;
+
+  }
+  return lo;
+
+    
+
+}
+
 void solve(){
 
-int s,n;
-cin>>s>>n;
+double l,r;
+cin>>l>>r;
+double ans=ternarysearch(l,r);
+cout<<ans<<endl;
 
 
-vpll p;
-for(int i=0;i<n;i++)
+
+/*
+int h,l,r,k;
+while(1)
 {
-    ll x,y;
-    cin>>x>>y;
-    p.push_back({x,-y});
+    cin>>h>>l>>r>>k;
+    if(h==0&&l==0&&r==0&&k==0) break;
+    ll a=(k*k-1);
+    ll b=2*r;
+    ll c=(k*k*l*l)-(h*h+r*r);
+    ll del=b*b-4*a*c;
+    cout<<del<<endl;
+    cout<<a<<" "<<b<<" "<<c<<endl;
 }
-sort(all(p));
-
-
-//for(auto x:p) cout<<x.first<<" "<<x.second<<endl;
-
-//cout<<endl;
-
-for(int i=0;i<p.size();i++)
-{
-    ll loose=p[i].first;
-    ll gain=-p[i].second;
-    if(s>loose){
-        
-        s+=gain;
-      //  cout<<loose<<" "<<gain<<endl;
-    }
-    else {
-        cout<<"NO"<<endl;
-        return;
-    }
-}
-
-
-cout<<"YES"<<endl;
-
-
+*/
 
 }
 
 
 int main()
 {
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
+ //   freopen("input.txt","r",stdin);
+ //   freopen("output.txt","w",stdout);
     ios::sync_with_stdio(false);
+    int t;
+    cin>>t;
+    while(t--)
      solve();
 }
