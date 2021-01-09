@@ -38,6 +38,11 @@ pair<long double,long double> quadratic_eqn_solve(ll a,ll b,ll c)
     
 }
 
+ll abss(ll a,ll b)
+{
+    if(a>b) return a-b;
+    else return b-a;
+}
 
 ll minn(ll a,ll b)
 
@@ -83,41 +88,36 @@ ll ternarysearch(ll lo,ll hi)
 
 void solve(){
 
-int n ,k;
-cin>>n>>k;
+int n;
+cin>>n;
 vi v;
-map<ll,int>pref;
-map<ll,int>suf;
-ull ans=0;
+map<int,bool>pos;
 for(int i=0;i<n;i++)
 {
-    int x;
-    cin>>x;
-    suf[x]++;
-    v.push_back(x);
-
-
+   char c;
+   int x;
+   cin>>c>>x; 
+   if(c=='-')
+   v.push_back(-x);
+   else v.push_back(x);
 }
 
+int idx=-1;
 
-
-
-for(int i=0;i<v.size();i++)
+for(int i=v.size()-1;i>=0;i--)
+if(v[i]<0)
 {
-    suf[v[i]]--;
-    if(v[i]%k==0)
-    {ll temp_ans=(pref[v[i]/k]*suf[v[i]*k]);
-     ans+=temp_ans;
-    }  
-    pref[v[i]]++;
-    
+    idx=i;
+    break;
 }
 
-
-cout<<ans<<endl;
-
-
-
+if(idx==-1) cout<<"0"<<endl;
+else {
+    set<int>s;
+    for(int i=0;i<=idx;i++)
+    s.insert(abs(v[i]));
+    cout<<s.size()<<endl;
+}
 
 }
 
@@ -131,4 +131,5 @@ int main()
    // cin>>t;
    // while(t--)
      solve();
+  
 }
