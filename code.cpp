@@ -22,7 +22,7 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 10000001
+#define sz 100001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
@@ -78,50 +78,46 @@ ll ternarysearch(ll lo,ll hi)
 
 }
 
+ 
+
+
 void solve(){
 
-int n;
-cin>>n;
+int n ,k;
+cin>>n>>k;
 vi v;
+map<ll,int>pref;
+map<ll,int>suf;
+ull ans=0;
 for(int i=0;i<n;i++)
 {
     int x;
     cin>>x;
+    suf[x]++;
     v.push_back(x);
+
+
 }
 
-vi ans(v.size(),0);
-int cnt=0;
-int mx=0;
-int total=0;
-for(int i=1;i<v.size()-1;i++)
-if((v[i]>v[i-1]&&v[i]>v[i+1])||(v[i]<v[i-1]&&v[i]<v[i+1]))
-ans[i]=1;
-
-for(auto x:ans) cout<<x<<" ";
-cout<<endl;
-
-
-//cout<<total<<" "<<mx<<" "<<endl;
 
 
 
-
-
-/*
-int h,l,r,k;
-while(1)
+for(int i=0;i<v.size();i++)
 {
-    cin>>h>>l>>r>>k;
-    if(h==0&&l==0&&r==0&&k==0) break;
-    ll a=(k*k-1);
-    ll b=2*r;
-    ll c=(k*k*l*l)-(h*h+r*r);
-    ll del=b*b-4*a*c;
-    cout<<del<<endl;
-    cout<<a<<" "<<b<<" "<<c<<endl;
+    suf[v[i]]--;
+    if(v[i]%k==0)
+    {ll temp_ans=(pref[v[i]/k]*suf[v[i]*k]);
+     ans+=temp_ans;
+    }  
+    pref[v[i]]++;
+    
 }
-*/
+
+
+cout<<ans<<endl;
+
+
+
 
 }
 
@@ -131,8 +127,8 @@ int main()
     freopen("input.txt","r",stdin);
     freopen("output.txt","w",stdout);
     ios::sync_with_stdio(false);
-    int t;
-    cin>>t;
-    while(t--)
+   // int t;
+   // cin>>t;
+   // while(t--)
      solve();
 }
