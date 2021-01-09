@@ -1,4 +1,4 @@
-//#include<bits/stdc++.h>
+#include<bits/stdc++.h>
 #include<iostream>
 #include<math.h>
 #include<vector>
@@ -30,14 +30,14 @@ using namespace std;
 #define eps 1e-6
 
 
- /*
+ 
 ll minn(ll a,ll b)
 {
 	return a<b?a:b;
 }
  
  
- 
+ /*
 ll maxx(ll a,ll b)
 {
 	return a>b?a:b;
@@ -111,7 +111,7 @@ ll abss(ll a)
 
 void solve()
 { 
-	 double dh,dl,dr,k;
+	/* double dh,dl,dr,k;
 while(1)
 {
 	cin>>dh>>dl>>dr>>k;
@@ -121,6 +121,22 @@ while(1)
 	cout<<ans1+temp1<<endl;
 	 
 }
+*/
+
+ll n,m,k;
+cin>>n>>m>>k;
+map<int,int>mp;
+for(int i=1;i<=m;i++) mp[i]=inf;
+for(int i=0;i<n;i++)
+{
+	int x,y;
+	cin>>x>>y;
+	mp[x]=min(mp[x],y);
+}
+
+ll sum=0;
+for(int i=1;i<=m;i++) sum+=mp[i];
+cout<<minn(sum,k)<<endl;
 
 
 }
@@ -132,8 +148,8 @@ while(1)
 int main()
 {
 
-freopen("input.txt","r",stdin);
-freopen("output.txt","w",stdout);
+//freopen("input.txt","r",stdin);
+//freopen("output.txt","w",stdout);
 //int t;
 //cin>>t;
 //while(t--)

@@ -38,6 +38,13 @@ pair<long double,long double> quadratic_eqn_solve(ll a,ll b,ll c)
     
 }
 
+
+ll minn(ll a,ll b)
+
+{
+    return a<b?a:b;
+}
+
 ll cill(ll a,ll b)
 {
 	if(a%b==0)
@@ -45,27 +52,27 @@ ll cill(ll a,ll b)
 	return a/b+1;
 }
 
-
-double eval(double x)
+ll eval(ll x)
 {
-     double ans= 2*x*x-12*x+7;
+    ll ans= 2*x*x-12*x+7;
      return ans;
 }
 
-double ternarysearch(double lo,double hi)
+ll ternarysearch(ll lo,ll hi)
 {
   
-  while((hi-lo)>eps)
+  while((hi-lo)>1)
   {
-      double p1=(2*lo+hi)/3;
-      double p2=(2*hi+lo)/3;
-      double evalp1=eval(p1);
-      double evalp2=eval(p2);
-      if(evalp1<evalp2) hi=p2;
-      else lo=p1;
+      ll mid=((lo+hi)/2);
+      ll left_val=eval(mid);
+      ll right_val=eval(mid+1);
+      if(left_val<=right_val)
+      hi=mid;
+      else lo=mid;
 
   }
-  return lo;
+  
+  return minn(eval(lo),eval(lo+1));
 
     
 
@@ -73,10 +80,31 @@ double ternarysearch(double lo,double hi)
 
 void solve(){
 
-double l,r;
-cin>>l>>r;
-double ans=ternarysearch(l,r);
-cout<<ans<<endl;
+int n;
+cin>>n;
+vi v;
+for(int i=0;i<n;i++)
+{
+    int x;
+    cin>>x;
+    v.push_back(x);
+}
+
+vi ans(v.size(),0);
+int cnt=0;
+int mx=0;
+int total=0;
+for(int i=1;i<v.size()-1;i++)
+if((v[i]>v[i-1]&&v[i]>v[i+1])||(v[i]<v[i-1]&&v[i]<v[i+1]))
+ans[i]=1;
+
+for(auto x:ans) cout<<x<<" ";
+cout<<endl;
+
+
+//cout<<total<<" "<<mx<<" "<<endl;
+
+
 
 
 
@@ -100,8 +128,8 @@ while(1)
 
 int main()
 {
- //   freopen("input.txt","r",stdin);
- //   freopen("output.txt","w",stdout);
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
     ios::sync_with_stdio(false);
     int t;
     cin>>t;
