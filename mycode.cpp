@@ -154,7 +154,52 @@ s.insert(v[i].first);
 vector<ll>unv;
 for(auto x:s) unv.push_back(x);
 
-for(auto x:unv) cout<<mn[x]<<" "<<mx[x]<<endl;
+bool flag1=false;
+bool flag2=false;
+for(auto x:unv)
+{   // cout<<x<<" "<<mn[x]<<" "<<mx[x]<<endl;
+
+	if(x==x0&&(mn[x]<=y0&&mx[x]>=y0)) flag1=true;
+	if(x==x1&&(mn[x]<=y1&&mx[x]>=y1)) flag2=true;
+}
+
+
+
+
+if(flag1&&flag2)
+{
+	int idx1=-1;
+	int idx2=-1;
+	for(int i=0;i<unv.size();i++)
+	if(unv[i]==x0||unv[i]==x1) {
+		idx1=i;
+		break;
+	}
+	for(int i=unv.size()-1;i>=0;i--)
+	if(unv[i]==x0||unv[i]==x1)
+	{
+		idx2=i;
+		break;
+	}
+
+for(int i=idx1+1;i<=idx2;i++)
+if(unv[i]-unv[i-1]!=1) {
+	cout<<"hi"<<endl;
+	cout<<"-1"<<endl;
+	return ;
+}
+else {
+	if(mx[unv[i]]<mn[unv[i-1]]||mn[unv[i]]>mx[unv[i-1]]) {
+		cout<<"hello"<<endl;
+		cout<<"-1"<<endl;
+		return ;
+	}
+}
+
+cout<<(abss(x0-x1)+abss(y0-y1))-1<<endl;
+
+
+}else cout<<"-1"<<endl;
 
 
 
