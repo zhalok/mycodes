@@ -37,11 +37,13 @@ ll minn(ll a,ll b)
 }
  
  
- /*
+ 
 ll maxx(ll a,ll b)
 {
 	return a>b?a:b;
 }
+
+/*
 
 ll cill(ll a,ll b)
 {
@@ -111,32 +113,52 @@ ll abss(ll a)
 
 void solve()
 { 
-	/* double dh,dl,dr,k;
-while(1)
-{
-	cin>>dh>>dl>>dr>>k;
-	if(dh==0&&dl==0&&dr==0&&k==0) break;
-	 double ans1=dh;
-	 double temp1=dr+dl;
-	cout<<ans1+temp1<<endl;
-	 
-}
-*/
 
-ll n,m,k;
-cin>>n>>m>>k;
-map<int,int>mp;
-for(int i=1;i<=m;i++) mp[i]=inf;
+ll x0,y0,x1,y1;
+cin>>x0>>y0>>x1>>y1;
+
+
+map<ll,ll>mn;
+map<ll,ll>mx;
+vector< pair< ll , pll > > v;
+int n;
+cin>>n;
 for(int i=0;i<n;i++)
 {
-	int x,y;
-	cin>>x>>y;
-	mp[x]=min(mp[x],y);
+	ll r,x,y;
+	cin>>r>>x>>y;
+	v.push_back({r,{x,y}});
 }
 
-ll sum=0;
-for(int i=1;i<=m;i++) sum+=mp[i];
-cout<<minn(sum,k)<<endl;
+for(int i=0;i<n;i++)
+{
+	int val=v[i].ff;
+	int mxval=v[i].ss.ss;
+	int mnval=v[i].ss.ff;
+	mx[val]=maxx(mx[val],mxval);
+	mn[val]=maxx(mn[val],mxval);
+
+}
+
+for(int i=0;i<n;i++)
+{
+	ll val=v[i].ff;
+	ll mnval=v[i].ss.ff;
+	mn[val]=minn(mn[val],mnval);
+}
+
+set<ll>s;
+for(int i=0;i<n;i++)
+s.insert(v[i].first);
+
+vector<ll>unv;
+for(auto x:s) unv.push_back(x);
+
+for(auto x:unv) cout<<mn[x]<<" "<<mx[x]<<endl;
+
+
+
+
 
 
 }
@@ -148,8 +170,8 @@ cout<<minn(sum,k)<<endl;
 int main()
 {
 
-//freopen("input.txt","r",stdin);
-//freopen("output.txt","w",stdout);
+freopen("input.txt","r",stdin);
+freopen("output.txt","w",stdout);
 //int t;
 //cin>>t;
 //while(t--)

@@ -4,8 +4,8 @@
     #define ld long double
     int main()
     {
-        freopen("input.txt","r",stdin);
-        freopen("ouput.txt","w",stdout);
+    //    freopen("input.txt","r",stdin);
+    //    freopen("ouput.txt","w",stdout);
     	  ld x,y;
           ll x1,y1,x2,y2,x3,y3,a1,b1,c1,a2,b2,c2;
         while(~scanf("%lld%lld%lld%lld%lld%lld",&x1,&y1,&x2,&y2,&x3,&y3))
