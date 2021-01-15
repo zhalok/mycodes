@@ -1,37 +1,43 @@
-    #include<bits/stdc++.h>
-    using namespace std;
-    #define ll long long
-    #define ld long double
-    int main()
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+#define ll long long
+#define ld long double
+int main()
+{
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+    
+    ll x,y,x1,y1;
+    double r;
+    while(cin>>x>>y>>r && r>0.0)
     {
-    //    freopen("input.txt","r",stdin);
-    //    freopen("ouput.txt","w",stdout);
-    	  ld x,y;
-          ll x1,y1,x2,y2,x3,y3,a1,b1,c1,a2,b2,c2;
-        while(~scanf("%lld%lld%lld%lld%lld%lld",&x1,&y1,&x2,&y2,&x3,&y3))
+        ll n,c1,c2,ans=0;
+        cin>>n;
+        vector<pair<ll,ll>>v;
+        while(n--)
         {
-     
-     
-            a1=-2*(x1-x2);
-            b1=-2*(y1-y2);
-            c1=(x1*x1+y1*y1)-(x2*x2+y2*y2);
-            a2=-2*(x2-x3);
-            b2=-2*(y2-y3);
-            c2=(x2*x2+y2*y2)-(x3*x3+y3*y3);
-            if(a1*b2-a2*b1==0)
-                cout<<"Impossible"<<endl;
-            else
+            cin>>x1>>y1;
+            if((x-x1)*(x-x1)+(y-y1)*(y-y1)<=r*r)
             {
-                if((b1*c2-b2*c1)==0) x=0;
-                else 
-                x=1.0*(b1*c2-b2*c1)/(a1*b2-a2*b1);
-                if((c1*a2-c2*a1)==0) y=0;
-                else 
-                y=1.0*(c1*a2-c2*a1)/(a1*b2-a2*b1);
-                 cout<<fixed<<setprecision(10)<<x<<" "<<y<<endl;
-                
+                v.push_back({x1-x,y1-y});
             }
         }
-        return 0;
+        for(ll i=0;i<v.size();i++)
+        {
+            c1=c2=0;
+            for(ll j=0;j<v.size();j++)
+            {
+                if(v[i].first*v[j].second-v[j].first*v[i].second>=0)
+                    c1++;
+                if(v[i].first*v[j].second-v[j].first*v[i].second<=0)
+                    c2++;
+            }
+            ans=max({ans,c1,c2});
+        }
+        cout<<ans<<endl;
     }
-     
+
+    return 0;
+}

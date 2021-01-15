@@ -5,7 +5,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1e9
+#define inf 1000000000.0
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -27,8 +27,8 @@ using namespace std;
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
-#define eps 1e-6
-
+#define eps 1e-2
+#define pi acos(-1.0)
 
  
 ll minn(ll a,ll b)
@@ -36,14 +36,12 @@ ll minn(ll a,ll b)
 	return a<b?a:b;
 }
  
- 
- 
 ll maxx(ll a,ll b)
 {
 	return a>b?a:b;
 }
 
-/*
+
 
 ll cill(ll a,ll b)
 {
@@ -51,6 +49,7 @@ ll cill(ll a,ll b)
 	return a/b;
 	return a/b+1;
 }
+/*
 
 void solve_eqn(ll a1,ll b1,ll a2,ll b2,ll c1,ll c2)
 {
@@ -109,106 +108,123 @@ ll abss(ll a)
 
 
 
+long double get_angle(pii a,pii b,pii c)
+{
+     int x1=a.first;
+	 int y1=a.second;
+	 int x2=b.first;
+	 int y2=b.second;
+	 int x3=c.first;
+	 int y3=c.second;
+     long double len1=sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+	 long double len2=sqrt((x3-x2)*(x3-x2)+(y3-y2)*(y3-y2));
+	 long double val=((x1-x2)*(x3-x2)+(y1-y2)*(y3-y2))/(len1*len2);
+	 return acos(val);
 
+}
+
+
+long double find_point_dis(pii point1,pii point2)
+{
+	long double temp_ans;
+	temp_ans=((point1.first-point2.first)*(point1.first-point2.first));
+	temp_ans+=((point1.second-point2.second)*(point1.second-point2.second));
+	return sqrt(temp_ans);
+}
+
+int check_sidde(pii p1,pii p2,pii p3)
+{
+	int x1=p1.first;
+	int y1=p1.second;
+	int x2=p2.first;
+	int y2=p2.second;
+	int x3=p3.first;
+	int y3=p3.second;
+
+    ll ans=(x3-x1)*(y1-y2)-(y3-y1)*(x1-x2);
+	if(ans>=0) return 1;
+	else return -1;
+
+}
+
+ll cnt_div(ll n,ll k)
+{
+	ll cnt=0;
+	while(n%k==0)
+	{
+		cnt++;
+		n/=k;
+	}
+	return cnt;
+}
+
+ll gcd(ll a,ll b)
+{
+	if(a%b==0) return b;
+	return gcd(b,a%b);
+}
+
+ll lcm(ll a,ll b)
+{
+	ll g=gcd(a,b);
+	return (a*b)/g;
+}
+
+bool check(string s,string t)
+{
+	if(t.size()>s.size()) return false;
+	if(s.size()%t.size()) return false;
+	int i=0;
+	int j=t.size()-1;
+	string temp;
+	while(j<s.size())
+	{
+		temp.clear();
+		for(int k=i;k<=j;k++)
+		temp.push_back(s[k]);
+		if(temp==t){
+			i=j+1;
+			j=i+t.size()-1;
+		}else return false;
+	}
+	return true;
+}
 
 void solve()
 { 
 
-ll x0,y0,x1,y1;
-cin>>x0>>y0>>x1>>y1;
+string s;
+string t;
+cin>>s>>t;
 
 
-map<ll,ll>mn;
-map<ll,ll>mx;
-vector< pair< ll , pll > > v;
-int n;
-cin>>n;
-for(int i=0;i<n;i++)
+
+
+string temp;
+
+for(int i=0;i<s.size();i++)
 {
-	ll r,x,y;
-	cin>>r>>x>>y;
-	v.push_back({r,{x,y}});
-}
-
-for(int i=0;i<n;i++)
-{
-	int val=v[i].ff;
-	int mxval=v[i].ss.ss;
-	int mnval=v[i].ss.ff;
-	mx[val]=maxx(mx[val],mxval);
-	mn[val]=maxx(mn[val],mxval);
-
-}
-
-for(int i=0;i<n;i++)
-{
-	ll val=v[i].ff;
-	ll mnval=v[i].ss.ff;
-	mn[val]=minn(mn[val],mnval);
-}
-
-set<ll>s;
-for(int i=0;i<n;i++)
-s.insert(v[i].first);
-
-vector<ll>unv;
-for(auto x:s) unv.push_back(x);
-
-bool flag1=false;
-bool flag2=false;
-for(auto x:unv)
-{   // cout<<x<<" "<<mn[x]<<" "<<mx[x]<<endl;
-
-	if(x==x0&&(mn[x]<=y0&&mx[x]>=y0)) flag1=true;
-	if(x==x1&&(mn[x]<=y1&&mx[x]>=y1)) flag2=true;
-}
-
-
-
-
-if(flag1&&flag2)
-{
-	int idx1=-1;
-	int idx2=-1;
-	for(int i=0;i<unv.size();i++)
-	if(unv[i]==x0||unv[i]==x1) {
-		idx1=i;
-		break;
-	}
-	for(int i=unv.size()-1;i>=0;i--)
-	if(unv[i]==x0||unv[i]==x1)
+	temp.clear();
+	for(int k=0;k<=i;k++)
+	temp.push_back(s[k]);
+	if(check(s,temp)&&check(t,temp))
 	{
-		idx2=i;
-		break;
-	}
-
-for(int i=idx1+1;i<=idx2;i++)
-if(unv[i]-unv[i-1]!=1) {
-	cout<<"hi"<<endl;
-	cout<<"-1"<<endl;
-	return ;
-}
-else {
-	if(mx[unv[i]]<mn[unv[i-1]]||mn[unv[i]]>mx[unv[i-1]]) {
-		cout<<"hello"<<endl;
-		cout<<"-1"<<endl;
+		ll a=s.size()/temp.size();
+		ll b=t.size()/temp.size();
+		ll c=lcm(a,b);
+		for(int k=0;k<c;k++) cout<<temp;
+		cout<<endl;
 		return ;
 	}
 }
 
-cout<<(abss(x0-x1)+abss(y0-y1))-1<<endl;
-
-
-}else cout<<"-1"<<endl;
-
+cout<<"-1"<<endl;
 
 
 
 
 
 }
-
-
 
 
 
@@ -217,9 +233,9 @@ int main()
 
 freopen("input.txt","r",stdin);
 freopen("output.txt","w",stdout);
-//int t;
-//cin>>t;
-//while(t--)
+int t;
+cin>>t;
+for(int i=1;i<=t;i++)
 solve();
 
  
@@ -320,4 +336,3 @@ int kossoraju(int n)
 }
 
 */
-
