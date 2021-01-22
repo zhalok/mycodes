@@ -5,7 +5,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1000000000.0
+#define inf 1e9+10
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -23,7 +23,7 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 10000001
+#define sz 5001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
@@ -49,6 +49,8 @@ ll cill(ll a,ll b)
 	return a/b;
 	return a/b+1;
 }
+
+
 /*
 
 void solve_eqn(ll a1,ll b1,ll a2,ll b2,ll c1,ll c2)
@@ -190,37 +192,91 @@ bool check(string s,string t)
 	return true;
 }
 
+int dp[sz][sz];
+int par[sz][sz];
+vi adj[sz],cost[sz];
+
+ll dfs(int node,int counter)
+{
+    if(node==1) {
+		if(counter==1) return 0;
+		else return inf+10;
+	}
+
+	if(counter<1) return inf+10;
+	if(dp[node][counter]!=-1)return dp[node][counter];
+	ll ans=inf;
+    
+	for(int i=0;i<adj[node].size();i++)
+	{
+		int new_node=adj[node][i];
+		ll temp_ans=dfs(new_node,counter-1)+cost[node][i];
+		if(temp_ans<ans)
+		{
+			ans=temp_ans;
+			par[node][counter]=new_node;
+		}
+	}
+
+	return dp[node][counter]=ans;
+
+   
+
+}
+
+
+void print_path(int n,int t)
+{
+	memset(dp,-1,sizeof dp);
+	memset(par,-1,sizeof par);
+	int idx=-1;
+	for(int i=n;i>=1;i--)
+	{
+		ll time=dfs(n,i);
+		if(time<=t)
+		{
+			idx=i;
+			break;
+		}
+		
+	}
+
+    vector<int>path;
+	int x=n;
+	while(x!=-1)
+	{
+		path.push_back(x);
+		x=par[x][idx--];
+	}
+
+	cout<<path.size()<<endl;
+	reverse(all(path));
+	for(auto x:path) cout<<x<<" ";
+	cout<<endl;
+
+}
+
+vector<int> s;
+void pre_order_traversal(ll n)
+{
+	if(n<2){ s.push_back(n); return ; }
+	pre_order_traversal((n/2));
+	pre_order_traversal(n%2);
+	pre_order_traversal((n/2));
+}
+
+
 void solve()
 { 
 
-string s;
-string t;
-cin>>s>>t;
+ll n,l,r;
+cin>>n>>l>>r;
 
-
-
-
-string temp;
-
-for(int i=0;i<s.size();i++)
-{
-	temp.clear();
-	for(int k=0;k<=i;k++)
-	temp.push_back(s[k]);
-	if(check(s,temp)&&check(t,temp))
-	{
-		ll a=s.size()/temp.size();
-		ll b=t.size()/temp.size();
-		ll c=lcm(a,b);
-		for(int k=0;k<c;k++) cout<<temp;
-		cout<<endl;
-		return ;
-	}
-}
-
-cout<<"-1"<<endl;
-
-
+ll ans=0;
+pre_order_traversal(n);
+for(int i=l-1;i<r;i++)
+if(s[i]==1) ans++;
+cout<<ans<<endl; 
 
 
 
@@ -231,11 +287,11 @@ cout<<"-1"<<endl;
 int main()
 {
 
-freopen("input.txt","r",stdin);
-freopen("output.txt","w",stdout);
-int t;
-cin>>t;
-for(int i=1;i<=t;i++)
+//freopen("input.txt","r",stdin);
+//freopen("output.txt","w",stdout);
+//int t;
+//cin>>t;
+//for(int i=1;i<=t;i++)
 solve();
 
  
