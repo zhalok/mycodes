@@ -172,111 +172,28 @@ ll lcm(ll a,ll b)
 	return (a*b)/g;
 }
 
-bool check(string s,string t)
-{
-	if(t.size()>s.size()) return false;
-	if(s.size()%t.size()) return false;
-	int i=0;
-	int j=t.size()-1;
-	string temp;
-	while(j<s.size())
-	{
-		temp.clear();
-		for(int k=i;k<=j;k++)
-		temp.push_back(s[k]);
-		if(temp==t){
-			i=j+1;
-			j=i+t.size()-1;
-		}else return false;
-	}
-	return true;
-}
-
-int dp[sz][sz];
-int par[sz][sz];
-vi adj[sz],cost[sz];
-
-ll dfs(int node,int counter)
-{
-    if(node==1) {
-		if(counter==1) return 0;
-		else return inf+10;
-	}
-
-	if(counter<1) return inf+10;
-	if(dp[node][counter]!=-1)return dp[node][counter];
-	ll ans=inf;
-    
-	for(int i=0;i<adj[node].size();i++)
-	{
-		int new_node=adj[node][i];
-		ll temp_ans=dfs(new_node,counter-1)+cost[node][i];
-		if(temp_ans<ans)
-		{
-			ans=temp_ans;
-			par[node][counter]=new_node;
-		}
-	}
-
-	return dp[node][counter]=ans;
-
-   
-
-}
 
 
-void print_path(int n,int t)
-{
-	memset(dp,-1,sizeof dp);
-	memset(par,-1,sizeof par);
-	int idx=-1;
-	for(int i=n;i>=1;i--)
-	{
-		ll time=dfs(n,i);
-		if(time<=t)
-		{
-			idx=i;
-			break;
-		}
-		
-	}
-
-    vector<int>path;
-	int x=n;
-	while(x!=-1)
-	{
-		path.push_back(x);
-		x=par[x][idx--];
-	}
-
-	cout<<path.size()<<endl;
-	reverse(all(path));
-	for(auto x:path) cout<<x<<" ";
-	cout<<endl;
-
-}
-
-vector<int> s;
-void pre_order_traversal(ll n)
-{
-	if(n<2){ s.push_back(n); return ; }
-	pre_order_traversal((n/2));
-	pre_order_traversal(n%2);
-	pre_order_traversal((n/2));
-}
-
-
-void solve()
+void solve(int t)
 { 
 
-ll n,l,r;
-cin>>n>>l>>r;
+int n;
+cin>>n;
+double temp=1.0;
+int ans;
+for(int i=1;i<=n;i++)
+{
+     double temp1=(n-(i-1))/(double)n;
+	 temp*=temp1;
+	 if((1-temp)>=0.5)
+	 {
+		 ans=i;
+		 break;
+	 }
+}
 
-ll ans=0;
-pre_order_traversal(n);
-for(int i=l-1;i<r;i++)
-if(s[i]==1) ans++;
-cout<<ans<<endl; 
+cout<<"Case "<<t<<": ";
+cout<<ans-1<<endl;
 
 
 
@@ -287,12 +204,12 @@ cout<<ans<<endl;
 int main()
 {
 
-//freopen("input.txt","r",stdin);
-//freopen("output.txt","w",stdout);
-//int t;
-//cin>>t;
-//for(int i=1;i<=t;i++)
-solve();
+freopen("input.txt","r",stdin);
+freopen("output.txt","w",stdout);
+int t;
+cin>>t;
+for(int i=1;i<=t;i++)
+solve(i);
 
  
 }
