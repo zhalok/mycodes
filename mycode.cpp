@@ -1,11 +1,12 @@
 #include<bits/stdc++.h>
+#include<map>
 #include<iostream>
 #include<math.h>
 #include<vector>
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1e9+10
+#define inf 1e9
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -23,11 +24,11 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 5001
+#define sz 10000
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
-#define eps 1e-2
+#define eps 1e-8
 #define pi acos(-1.0)
 
  
@@ -172,44 +173,250 @@ ll lcm(ll a,ll b)
 	return (a*b)/g;
 }
 
+bool primechk[sz];
 
+vector<int>primes;
+
+void seive()
+{
+
+	for(ll i=2;i*i<sz;i++)
+	if(primechk[i]==false)
+	for(ll j=i*i;j<sz;j+=i)
+	primechk[j]=true;
+
+	for(int i=2;i<sz;i++)
+	if(primechk[i]==false)
+	primes.push_back(i);
+        
+	
+
+}
+/*
+vll v;
+vpll ans;
+map<int,int>counter;
+
+bool check(int x)
+{
+	counter.clear();
+	ans.clear();
+	for(int i=0;i<v.size();i++)
+	counter[v[i]]++;
+    
+	for(int i=v.size();i>=0;i--)
+	if(counter[v[i]]>0)
+	{
+		counter[v[i]]--;
+		if(counter[x-v[i]]>0){
+		ans.push_back({v[i],x-v[i]});
+		counter[x-v[i]]--;
+		counter[v[i]]--;
+		x=v[i];
+		}
+		
+	}
+	
+
+	if(ans.size()*2==v.size()) return true;
+	else return false;
+
+	
+
+}
+*/
+/*
+vi v;
+map<int,bool>visited;
+
+int check()
+{
+	visited.clear();
+	
+	int ans=0;
+	for(int i=0;i<v.size();i++){
+		int lasten=0;
+		bool flag=false;
+		for(int j=0;j<v.size();j++)
+		{
+             if((visited[j]==false)&&v[j]>lasten)
+			{
+				flag=true;
+				lasten=v[j];
+				visited[j]=true;
+
+			}
+		}
+		if(flag) ans++;
+	}
+	//for(int i=0;i<v.size();i++) cout<<visited[i]<<" ";
+	//cout<<endl;
+
+	return ans;
+}
+
+*/
+
+
+
+struct node{
+
+bool flag;
+int counter;
+node *cur[26];
+node()
+{
+	counter=0;
+	flag=false;
+	for(int i=0;i<26;i++)
+	cur[i]=NULL;
+
+}
+
+};
+
+class TRIE{
+
+void insert(node* cur_node,string name)
+{
+	for(int i=0;i<name.size();i++){
+    if(cur_node->cur[name[i]-'a']==NULL)
+	cur_node->cur[name[i]-'a']=new node();
+	cur_node=cur_node->cur[name[i]-'a'];
+	
+	}
+	cur_node->flag=1;
+	
+}
+
+bool search(node* cur_node,string s)
+{
+	
+	for(int i=0;i<s.size();i++)
+	if(cur_node->cur[s[i]-'a']==NULL) return false;
+	else cur_node=cur_node->cur[s[i]-'a'];
+	return cur_node->flag;
+}
+
+
+};
+
+
+vi adj[sz+1];
+vi cost[sz+1];
+ll level[sz+1];
+int sparse_table[sz+1][20];
+int parent[sz+1];
+int n,m;
+
+void dfs(int node,int par)
+{
+	
+	parent[node]=par;
+	for(int i=0;i<adj[node].size();i++)
+	if(adj[node][i]!=parent[node])
+	{
+		level[adj[node][i]]=level[node]+cost[node][i];
+		dfs(adj[node][i],node);
+	}
+
+}
+
+void create_sparse_table()
+{
+   for(int j=1;j<=log2(n);j++)
+   {
+	   for(int i=1;i<=n;i++)
+	   {
+		   int par=sparse_table[i][j-1];
+		   if(par!=-1)
+		   sparse_table[i][j]=sparse_table[par][j-1];
+	   }
+   }
+}
+
+int lca(int a,int b)
+{
+	if(level[b]<level[a]) swap(a,b);
+	int d=level[b]-level[a];
+	while(d>0)
+	{
+		int jump=log2(d);
+		b=sparse_table[b][jump];
+		d-=(1<<jump);
+	}
+
+	if(a==b) return a;
+
+    for(int i=log2(n);i>=0;i--)
+	if(sparse_table[a][i]!=-1&&sparse_table[a][i]!=sparse_table[b][i])
+	{
+		a=sparse_table[a][i];
+		b=sparse_table[b][i];
+	}
+	return parent[a];
+
+
+
+}
+void preprocess()
+{
+	for(int i=0;i<=n;i++)
+	{
+		parent[i]=-1;
+		adj[i].clear();
+		cost[i].clear();
+	    level[i]=0;
+		for(int j=0;j<=log2(n);j++)
+		sparse_table[i][j]=-1;
+	}
+}
 
 void solve(int t)
-{ 
-
-int n;
-cin>>n;
-double temp=1.0;
-int ans;
-for(int i=1;i<=n;i++)
 {
-     double temp1=(n-(i-1))/(double)n;
-	 temp*=temp1;
-	 if((1-temp)>=0.5)
-	 {
-		 ans=i;
-		 break;
-	 }
+
+scanf("%d%d",&n,&m);
+preprocess();
+for(int i=0;i<n-1;i++)
+{
+	int a,b,c;
+    scanf("%d%d%d",&a,&b,&c);
+	adj[a].push_back(b);
+	adj[b].push_back(a);
+	cost[a].push_back(c);
+	cost[b].push_back(c);
+}
+dfs(1,-1);
+create_sparse_table();
+while(m--)
+{
+int a,b;
+scanf("%d%d",&a,&b);
+int x=lca(a,b);
+cout<<(level[a]-level[x]) + (level[b]-level[x])<<endl;
 }
 
-cout<<"Case "<<t<<": ";
-cout<<ans-1<<endl;
 
 
 
 }
+
 
 
 
 int main()
 {
 
-freopen("input.txt","r",stdin);
-freopen("output.txt","w",stdout);
+
+//freopen("input.txt","r",stdin);
+//freopen("output.txt","w",stdout);
 int t;
-cin>>t;
+scanf("%d",&t);
+//int t;
+//cin>>t;
 for(int i=1;i<=t;i++)
 solve(i);
+
 
  
 }

@@ -1,2 +1,2 @@
 
-freopen("output.txt","w",stdout);
+		v1.push_back(x);

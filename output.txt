@@ -1,2 +1,2 @@
-Case 1: 22
-Case 2: 30
+Case 1: 14 2
+Case 2: 15 1
