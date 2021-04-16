@@ -6,7 +6,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1e9
+#define inf 1e9+1
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -24,217 +24,192 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 10000
+#define sz 200001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
 #define eps 1e-8
 #define pi acos(-1.0)
+
+ 
+ll minn(ll a,ll b)
+{
+	return a<b?a:b;
+}
  
 ll maxx(ll a,ll b)
 {
 	return a>b?a:b;
 }
 
-ll minn(ll a,ll b)
+
+
+ll cill(ll a,ll b)
 {
-	return a<b?a:b;
+	if(a%b==0)
+	return a/b;
+	return a/b+1;
 }
 
-struct node
+int n,q;
+int tree1[4*sz];
+int tree2[4*sz];
+
+void update1(int idx,int lo,int hi,int upidx,int val)
 {
+	if(upidx<lo||upidx>hi) return ;
+	if(lo==hi)
+	{
+		tree1[idx]=val;
+		return ;
+	}
+
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
 	
-	node* next[2];
-	node()
+	update1(left,lo,mid,upidx,val);
+	update1(right,mid+1,hi,upidx,val);
+	tree1[idx]=tree1[left]+tree1[right];
+}
+
+void update2(int idx,int lo,int hi,int upidx,int val)
+{
+	if(upidx<lo||upidx>hi) return ;
+	if(lo==hi)
 	{
+		tree2[idx]=val;
+		return ;
+	}
+
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
 	
-		next[0]=next[1]=NULL;
-	}
-};
+	update2(left,lo,mid,upidx,val);
+	update2(right,mid+1,hi,upidx,val);
 
-vector<int>bits; 
+	tree2[idx]=tree2[left]+tree2[right];
+}
 
-
-void insert(node* cur_node,int n)
+int query1(int idx,int lo,int hi,int qlo,int qhi)
 {
- 
-bits.clear();
-for(int i=0;i<31;i++)
+	if(qlo>hi||qhi<lo) return 0;
+	if(qlo<=lo&&qhi>=hi) return tree1[idx];
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	return query1(left,lo,mid,qlo,qhi)+query1(right,mid+1,hi,qlo,qhi);
+
+}
+
+int query2(int idx,int lo,int hi,int qlo,int qhi)
 {
-	bits.push_back(n%2);
-	n/=2;
-}
- 
-reverse(all(bits));
- 
-for(int i=0;i<bits.size();i++){
-if(cur_node->next[bits[i]]==NULL)
-cur_node->next[bits[i]]= new node();
-cur_node=cur_node->next[bits[i]];
+	if(qlo>hi||qhi<lo) return 0;
+	if(qlo<=lo&&qhi>=hi) return tree2[idx];
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	return query2(left,lo,mid,qlo,qhi)+query2(right,mid+1,hi,qlo,qhi);
 
- 
 }
- 
- 
-}
- 
-int search_max(node* cur_node,int n)
+
+
+
+
+ll dp[10][200001];
+
+ll get_ans(int d,int m)
 {
-
-int m=n; 
-bits.clear();
-for(int i=0;i<31;i++)
-{
-    bits.push_back(n%2);
-	n/=2;
+	if((10-d)>m) return 0;
+	if(dp[d][m]!=-1) return dp[d][m];
+    return dp[d][m]=(1+get_ans(1,(m-(10-d)))%MOD+get_ans(0,m-(10-d))%MOD)%MOD;
 }
 
-reverse(all(bits));
-int res=0;
-for(int i=0;i<bits.size();i++)
-{
-	if(bits[i]==0)
-	{
-		if(cur_node->next[1]!=NULL){
-			res*=2;
-			res++;
-			cur_node=cur_node->next[1];
-		}
-		else if(cur_node->next[0]!=NULL)
-		{
-			res*=2;
-			cur_node=cur_node->next[0];
-		}
-	}
-	else {
-		if(cur_node->next[0]!=NULL)
-		{
-			res*=2;
-			res++;
-			cur_node=cur_node->next[0];
-		}
-		else if(cur_node->next[1]!=NULL)
-		{
-			res*=2;
-			cur_node=cur_node->next[1];
-		}
-	}
 
-}
-
-return (res);
- 
-}
-
-int search_min(node* cur_node,int n)
-{
-
-int m=n; 
-bits.clear();
-for(int i=0;i<31;i++)
-{
-    bits.push_back(n%2);
-	n/=2;
-}
-
-reverse(all(bits));
-int res=0;
-for(int i=0;i<bits.size();i++)
-{
-	if(bits[i]==0)
-	{
-		if(cur_node->next[0]!=NULL){
-			res*=2;
-			
-			cur_node=cur_node->next[0];
-		}
-		else if(cur_node->next[1]!=NULL)
-		{
-			res*=2;
-			res++;
-			cur_node=cur_node->next[1];
-		}
-	}
-	else {
-		if(cur_node->next[1]!=NULL)
-		{
-			res*=2;
-			
-			cur_node=cur_node->next[1];
-		}
-		else if(cur_node->next[0]!=NULL)
-		{
-			res*=2;
-			res++;
-			cur_node=cur_node->next[0];
-		}
-	}
-
-}
-
-return (res);
- 
-}
-
- 
- vector<ll>v;
- 
- 
 void solve(int t)
 {
-	node* root= new node();
-	insert(root,0);
-	int n;
-	cin>>n;
-	v.clear();
-	
-	ll exor=0;
-	for(int i=0;i<n;i++)
-	{
-		ll x;
-		cin>>x;
-		exor^=x;
-		
-		v.push_back(exor);
- 
-	}
-   int ans1=0;
-   int ans2=inf;
-   for(int i=0;i<v.size();i++)
-   {
-	   
-	   ans1=maxx(ans1,search_max(root,v[i]));
-	   ans2=minn(ans2,search_min(root,v[i]));
-	   insert(root,v[i]);
- 
-   }
 
+int n;
+cin>>n;
 
+vector<string>v;
+vector<pii>points;
 
- 
-   
- 
-  
-   cout<<"Case "<<t<<": ";
-   cout<<ans1<<" "<<ans2<<endl;
- 
- 
- 
+for(int i=0;i<n;i++)
+{
+	string s;
+	cin>>s;
+    v.push_back(s);
 }
- 
+
+for(int i=0;i<v.size();i++)
+for(int j=0;j<v[i].size();j++)
+if(v[i][j]=='*')
+points.push_back({i,j});
+
+// sort(all(points));
+
+pii point1;
+pii point2;
+
+if(points[0].first==points[1].first)
+{
+	if(points[0].first==n-1)
+	{
+	point1={points[0].first-1,points[0].second};
+	point2={points[1].first-1,points[1].second};
+	}
+	else {
+		point1={points[0].first+1,points[0].second};
+		point2={points[1].first+1,points[1].second};
+		}
+}
+else if(points[0].second==points[1].second)
+{
+	if(points[0].second==n-1)
+	{
+	point1={points[0].first,points[0].second-1};
+	point2={points[1].first,points[1].second-1};
+	}
+	else {
+	point1={points[0].first,points[0].second+1};
+	point2={points[1].first,points[1].second+1};
+	}
+}
+else{
+
+ point1={points[0].first,points[1].second};
+ point2={points[1].first,points[0].second};
+
+}
+
+v[point1.first][point1.second]='*';
+v[point2.first][point2.second]='*';
+
+for(auto x:v) cout<<x<<endl;
+cout<<endl;
+
+	
+
+
+
+
+
+}
+
 int main()
 {
- 
- 
+
 freopen("input.txt","r",stdin);
 freopen("output.txt","w",stdout);
-int t;
-scanf("%d",&t);
+	
 //int t;
-//cin>>t;
+//scanf("%d",&t);
+int t;
+// memset(dp,-1,sizeof dp);
+scanf("%d",&t);
 for(int i=1;i<=t;i++)
 solve(i);
- 
- 
- 
+
 }

@@ -1,2 +1,1 @@
-
-		v1.push_back(x);
+sort(all(points));

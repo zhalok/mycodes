@@ -6,7 +6,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1e9
+#define inf 1e9+1
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -24,7 +24,7 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 10000
+#define sz 300001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
@@ -84,7 +84,7 @@ double find_dis(double x1,double y1,double x2,double y2)
 	return ans;
 	return sqrt(ans);
 }
-
+*/
 
  
 ll mod_exp(ll a,ll n,ll mod)
@@ -101,7 +101,7 @@ ll mod_exp(ll a,ll n,ll mod)
 	}
 	
 }
-*/
+
 
 ll abss(ll a)
 {
@@ -173,25 +173,25 @@ ll lcm(ll a,ll b)
 	return (a*b)/g;
 }
 
-bool primechk[sz];
+// bool primechk[sz];
 
-vector<int>primes;
+// vector<int>primes;
 
-void seive()
-{
+// void seive()
+// {
 
-	for(ll i=2;i*i<sz;i++)
-	if(primechk[i]==false)
-	for(ll j=i*i;j<sz;j+=i)
-	primechk[j]=true;
+// 	for(ll i=2;i*i<sz;i++)
+// 	if(primechk[i]==false)
+// 	for(ll j=i*i;j<sz;j+=i)
+// 	primechk[j]=true;
 
-	for(int i=2;i<sz;i++)
-	if(primechk[i]==false)
-	primes.push_back(i);
+// 	for(int i=2;i<sz;i++)
+// 	if(primechk[i]==false)
+// 	primes.push_back(i);
         
 	
 
-}
+// }
 /*
 vll v;
 vpll ans;
@@ -259,163 +259,509 @@ int check()
 
 
 
-struct node{
+// struct node{
 
-bool flag;
-int counter;
-node *cur[26];
-node()
-{
-	counter=0;
-	flag=false;
-	for(int i=0;i<26;i++)
-	cur[i]=NULL;
+// bool flag;
+// int counter;
+// node *cur[26];
+// node()
+// {
+// 	counter=0;
+// 	flag=false;
+// 	for(int i=0;i<26;i++)
+// 	cur[i]=NULL;
 
-}
+// }
 
-};
+// };
 
-class TRIE{
+// class TRIE{
 
-void insert(node* cur_node,string name)
-{
-	for(int i=0;i<name.size();i++){
-    if(cur_node->cur[name[i]-'a']==NULL)
-	cur_node->cur[name[i]-'a']=new node();
-	cur_node=cur_node->cur[name[i]-'a'];
+// void insert(node* cur_node,string name)
+// {
+// 	for(int i=0;i<name.size();i++){
+//     if(cur_node->cur[name[i]-'a']==NULL)
+// 	cur_node->cur[name[i]-'a']=new node();
+// 	cur_node=cur_node->cur[name[i]-'a'];
 	
-	}
-	cur_node->flag=1;
+// 	}
+// 	cur_node->flag=1;
 	
-}
+// }
 
-bool search(node* cur_node,string s)
-{
+// bool search(node* cur_node,string s)
+// {
 	
-	for(int i=0;i<s.size();i++)
-	if(cur_node->cur[s[i]-'a']==NULL) return false;
-	else cur_node=cur_node->cur[s[i]-'a'];
-	return cur_node->flag;
-}
+// 	for(int i=0;i<s.size();i++)
+// 	if(cur_node->cur[s[i]-'a']==NULL) return false;
+// 	else cur_node=cur_node->cur[s[i]-'a'];
+// 	return cur_node->flag;
+// }
 
 
-};
+// };
 
 
-vi adj[sz+1];
-vi cost[sz+1];
-ll level[sz+1];
-int sparse_table[sz+1][20];
-int parent[sz+1];
-int n,m;
+// vi adj[sz+1];
+// vi cost[sz+1];
+// ll level[sz+1];
+// int sparse_table[sz+1][20];
+// int parent[sz+1];
+// int n,m;
 
-void dfs(int node,int par)
-{
+// void dfs(int node,int par)
+// {
 	
-	parent[node]=par;
-	for(int i=0;i<adj[node].size();i++)
-	if(adj[node][i]!=parent[node])
-	{
-		level[adj[node][i]]=level[node]+cost[node][i];
-		dfs(adj[node][i],node);
-	}
+// 	parent[node]=par;
+// 	for(int i=0;i<adj[node].size();i++)
+// 	if(adj[node][i]!=parent[node])
+// 	{
+// 		level[adj[node][i]]=level[node]+cost[node][i];
+// 		dfs(adj[node][i],node);
+// 	}
 
-}
+// }
 
-void create_sparse_table()
+// void create_sparse_table()
+// {
+//    for(int j=1;j<=log2(n);j++)
+//    {
+// 	   for(int i=1;i<=n;i++)
+// 	   {
+// 		   int par=sparse_table[i][j-1];
+// 		   if(par!=-1)
+// 		   sparse_table[i][j]=sparse_table[par][j-1];
+// 	   }
+//    }
+// }
+
+// int lca(int a,int b)
+// {
+// 	if(level[b]<level[a]) swap(a,b);
+// 	int d=level[b]-level[a];
+// 	while(d>0)
+// 	{
+// 		int jump=log2(d);
+// 		b=sparse_table[b][jump];
+// 		d-=(1<<jump);
+// 	}
+
+// 	if(a==b) return a;
+
+//     for(int i=log2(n);i>=0;i--)
+// 	if(sparse_table[a][i]!=-1&&sparse_table[a][i]!=sparse_table[b][i])
+// 	{
+// 		a=sparse_table[a][i];
+// 		b=sparse_table[b][i];
+// 	}
+// 	return parent[a];
+
+
+
+// }
+
+// int n;
+// pair<pll,pll> tree[8*sz];
+// vll v;
+ 
+ 
+// void build(int idx,int lo,int hi)
+// {
+// 	// max sum total sum prefix suffix
+	
+//     if(lo==hi) {
+    	
+//     	tree[idx]={{v[lo],v[lo]},{v[lo],v[lo]}};
+//     	return ;
+    	
+// 	}
+	
+// 	int mid=(lo+hi)/2;
+// 	int left=2*idx+1;
+// 	int right=left+1;
+// 	build(left,lo,mid);
+// 	build(right,mid+1,hi);
+	
+//     ll left_max=tree[left].ff.ff;
+//     ll left_sum=tree[left].ff.ss;
+//     ll left_pref=tree[left].ss.ff;
+//     ll left_suf=tree[left].ss.ss;
+    
+//     ll right_max=tree[right].ff.ff;
+//     ll right_sum=tree[right].ff.ss;
+//     ll right_pref=tree[right].ss.ff;
+//     ll right_suf=tree[right].ss.ss;
+	
+//     ll cross_max=left_suf+right_pref;
+	
+// 	ll par_max,par_sum,par_pref,par_suf;
+   
+//      par_max=maxx(left_max,maxx(right_max,cross_max));
+//      par_sum=left_sum+right_sum;
+//      par_pref=maxx(left_pref,left_sum+right_pref);
+//      par_suf=maxx(right_suf,right_sum+left_suf);
+    
+//     tree[idx]={{par_max,par_sum},{par_pref,par_suf}};
+    
+		
+	
+//  } 
+ 
+ 
+ 
+// void update(int idx,int lo,int hi,int pos,int val)
+// {
+// 	// max sum total sum prefix suffix
+// 	if(lo>pos or hi<pos) return ;
+	
+//     if(lo==hi) {
+    	
+//     	tree[idx]={{val,val},{val,val}};
+//     	return ;
+    	
+// 	}
+	
+// 	int mid=(lo+hi)/2;
+// 	int left=2*idx+1;
+// 	int right=left+1;
+// 	update(left,lo,mid,pos,val);
+// 	update(right,mid+1,hi,pos,val);
+	
+//     ll left_max=tree[left].ff.ff;
+//     ll left_sum=tree[left].ff.ss;
+//     ll left_pref=tree[left].ss.ff;
+//     ll left_suf=tree[left].ss.ss;
+    
+//     ll right_max=tree[right].ff.ff;
+//     ll right_sum=tree[right].ff.ss;
+//     ll right_pref=tree[right].ss.ff;
+//     ll right_suf=tree[right].ss.ss;
+ 
+// 	ll cross_max=left_suf+right_pref;
+// 	ll par_max,par_sum,par_pref,par_suf;
+	
+// 	par_max=maxx(left_max,maxx(right_max,cross_max));
+//     par_sum=left_sum+right_sum;
+//     par_pref=maxx(left_pref,left_sum+right_pref);
+//     par_suf=maxx(right_suf,right_sum+left_suf);
+//     tree[idx]={{par_max,par_sum},{par_pref,par_suf}};
+// } 
+ 
+//  pair<pll,pll> query(int idx,int lo,int hi,int qlo,int qhi)
+//  {
+    
+
+//     if(qhi<lo or qlo>hi) return {{-inf,-inf},{-inf,-inf}};
+    
+//     if(qhi>=hi and qlo<=lo) return tree[idx];
+ 
+	
+// 	int mid=(lo+hi)/2;
+// 	int left=2*idx+1;
+// 	int right=left+1;
+	
+// //	if(mid<=qlo) return query(right,mid+1,hi,qlo,qhi);
+// //	if(mid>=qhi) return query(left,lo,mid,qlo,qhi);
+	
+	
+//     pair<pll,pll> left_ans=query(left,lo,mid,qlo,qhi);
+// 	pair<pll,pll> right_ans=query(right,mid+1,hi,qlo,qhi);
+	
+//     ll left_max=left_ans.ff.ff;
+//     ll left_sum=left_ans.ff.ss;
+//     ll left_pref=left_ans.ss.ff;
+//     ll left_suf=left_ans.ss.ss;
+    
+//     ll right_max=right_ans.ff.ff;
+//     ll right_sum=right_ans.ff.ss;
+//     ll right_pref=right_ans.ss.ff;
+//     ll right_suf=right_ans.ss.ss;
+	
+//     ll cross_max=left_suf+right_pref;
+	
+// 	ll par_max,par_sum,par_pref,par_suf;
+	
+//     par_max=maxx(left_max,maxx(right_max,cross_max));
+//     par_sum=left_sum+right_sum;
+//     par_pref=maxx(left_pref,left_sum+right_pref);
+//     par_suf=maxx(right_suf,right_sum+left_suf);
+    
+//     return {{par_max,par_sum},{par_pref,par_suf}};
+ 
+	
+ 	
+ 	
+//  }
+
+int n,q;
+vll v;
+ll tree[4*sz];
+
+void build_for_sum(int idx,int lo,int hi)
 {
-   for(int j=1;j<=log2(n);j++)
-   {
-	   for(int i=1;i<=n;i++)
-	   {
-		   int par=sparse_table[i][j-1];
-		   if(par!=-1)
-		   sparse_table[i][j]=sparse_table[par][j-1];
-	   }
-   }
+	if(lo == hi) {
+		tree[idx]=v[lo];
+		return ;
+	}
+
+	int mid = (lo + hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	
+	build_for_sum(left,lo,mid);
+	build_for_sum(right,mid+1,hi);
+	tree[idx]=tree[left]+tree[right];
 }
 
-int lca(int a,int b)
+
+void build_for_min(int idx,int lo,int hi)
 {
-	if(level[b]<level[a]) swap(a,b);
-	int d=level[b]-level[a];
-	while(d>0)
+	if(lo==hi)
 	{
-		int jump=log2(d);
-		b=sparse_table[b][jump];
-		d-=(1<<jump);
+		tree[idx]=v[lo];
+		return ;
 	}
 
-	if(a==b) return a;
-
-    for(int i=log2(n);i>=0;i--)
-	if(sparse_table[a][i]!=-1&&sparse_table[a][i]!=sparse_table[b][i])
-	{
-		a=sparse_table[a][i];
-		b=sparse_table[b][i];
-	}
-	return parent[a];
-
-
-
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	build_for_min(left,lo,mid);
+	build_for_min(right,mid+1,hi);
+	tree[idx]=minn(tree[left],tree[right]);
 }
-void preprocess()
+
+
+void update_for_sum(int idx,int lo,int hi,int upidx,int val)
 {
-	for(int i=0;i<=n;i++)
+	if(lo>upidx||hi<upidx) return ;
+	if(lo == hi)
 	{
-		parent[i]=-1;
-		adj[i].clear();
-		cost[i].clear();
-	    level[i]=0;
-		for(int j=0;j<=log2(n);j++)
-		sparse_table[i][j]=-1;
+		// cout<<"Updaate is called"<<endl;
+		tree[idx]=val;
+		return ;
 	}
+
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	update_for_sum(left,lo,mid,upidx,val);
+	update_for_sum(right,mid+1,hi,upidx,val);
+
+	tree[idx] = tree[left]+tree[right];
+
 }
+
+// void update_for_min(int idx,int lo,int hi,int upidx,int val)
+// {
+
+// 	if(lo>upidx||hi<upidx) return ;
+// 	if(lo == hi)
+// 	{
+// 		// cout<<"Updaate is called"<<endl;
+// 		tree[idx]=val;
+// 		return ;
+// 	}
+
+// 	int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
+// 	update_for_min(left,lo,mid,upidx,val);
+// 	update_for_min(right,mid+1,hi,upidx,val);
+
+// 	tree[idx] = minn(tree[left],tree[right]);
+	
+// }
+
+ll query_of_sum(int idx,int lo,int hi,int qlo,int qhi)
+{
+	if(qlo>hi||qhi<lo) return 0;
+	if(qlo<=lo&&qhi>=hi) return tree[idx];
+
+	int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	return query_of_sum(left,lo,mid,qlo,qhi) + query_of_sum(right,mid+1,hi,qlo,qhi);
+
+
+}
+
+
+// ll query_for_min(int idx,int lo,int hi,int qlo,int qhi)
+// {
+//     if(qlo>hi||qhi<lo) return 100001;
+// 	if(qlo<=lo&&qhi>=hi) return tree[idx];
+    
+// 	int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
+
+// 	return minn(query_for_min(left,lo,mid,qlo,qhi),query_for_min(right,mid+1,hi,qlo,qhi));
+	
+
+// }
+
+
+
+ll query_for_kth_one(int idx,int lo,int hi,int k)
+{
+	if(lo==hi)
+	return hi;
+	
+    int mid = (lo+hi)/2;
+	int left = 2*idx+1;
+	int right = 2*idx+2;
+	
+    if(tree[right]>=k) return query_for_kth_one(right,mid+1,hi,k);
+	else return query_for_kth_one(left,lo,mid,k-tree[right]);
+    
+	return 0;
+
+}
+
+
+
+
+
+
+
+ll get_digit_sum(ll n)
+{
+	ll sum =0 ;
+	while(n)
+	{
+		sum+=(n%10);
+		n/=10;
+	}
+	return sum;
+}
+
+ll count_digits(ll n)
+{
+	ll ans=0;
+	while(n)
+	{
+      ans++;
+	  n/=10;
+	}
+	return ans;
+}
+
+ll dp[100001];
+
+
+ll lis(int idx)
+{
+   
+    if(idx==n) return 1;
+	if(dp[idx]!=-1) return dp[idx];
+	ll ans = 0;
+	for(int i=idx+1;i<v.size();i++)
+	if(v[i]>v[idx])
+	{
+		ll temp_ans= 1+ lis(i);
+		ans+=temp_ans;
+	}
+	return dp[idx]=ans;
+	
+
+}
+
+// bool primes[17];
+// bool flag=false;
+// bool check[17];
+// int n;
+// vi ans;
+// vi anss;
+
+// void get_solution()
+// {
+// 	if(flag) return ;
+// 	bool flag1=true;
+// 	for(int i=2;i<=n;i++)
+// 	if(check[i]==false)
+// 	{
+// 		if(primes[ans.back()+i])
+// 		{
+// 			flag1=false;
+// 			check[i]=true;
+// 			ans.push_back(i);
+// 			get_solution();
+// 			check[i]=false;
+// 			ans.pop_back();
+
+// 		}
+
+
+// 	}
+
+// 	if(flag1)
+// 	{
+// 		if(primes[ans.back()+ans[0]])
+// 		{
+// 			anss=ans;
+// 			flag=true;
+// 			return ;
+// 		}
+// 	}
+// }
 
 void solve(int t)
 {
 
-scanf("%d%d",&n,&m);
-preprocess();
-for(int i=0;i<n-1;i++)
+map<int,int>mp1,mp2;
+cin>>n;
+vpii points;
+int mn = 100000000;
+int mx = 0;
+for(int i=0;i<n;i++)
 {
-	int a,b,c;
-    scanf("%d%d%d",&a,&b,&c);
-	adj[a].push_back(b);
-	adj[b].push_back(a);
-	cost[a].push_back(c);
-	cost[b].push_back(c);
+	int x,y;
+	cin>>x>>y;
+	points.push_back({x,y});
+	mn=minn(mn,x);
+	mx=maxx(mx,y);
+
 }
-dfs(1,-1);
-create_sparse_table();
-while(m--)
+
+for(int i=1;i<=mx;i++)
 {
-int a,b;
-scanf("%d%d",&a,&b);
-int x=lca(a,b);
-cout<<(level[a]-level[x]) + (level[b]-level[x])<<endl;
+	mp1[i]=-1;
+	mp2[i]=-1;
+}
+
+for(int i=0;i<points.size();i++)
+{
+	mp1[points[i].second]=points[i].first;
+	mp2[points[i].first]=points[i].second;
+}
+
+for(int i=1;i<=mx;i++)
+{
+	
 }
 
 
 
 
+
+
 }
 
-
-
-
+ 
+ 
 int main()
 {
 
-
-//freopen("input.txt","r",stdin);
-//freopen("output.txt","w",stdout);
-int t;
-scanf("%d",&t);
+// freopen("input.txt","r",stdin);
+// freopen("output.txt","w",stdout);
+	
 //int t;
-//cin>>t;
-for(int i=1;i<=t;i++)
-solve(i);
+//scanf("%d",&t);
+// int t;
+
+// scanf("%d",&t);
+// for(int i=1;i<=t;i++)
+solve(1);
 
 
  
