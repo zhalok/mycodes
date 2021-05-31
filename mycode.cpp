@@ -6,7 +6,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 1e9+1
+#define inf 1000000001
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -24,7 +24,7 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 300001
+#define sz 10001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(),v.end()
@@ -173,25 +173,8 @@ ll lcm(ll a,ll b)
 	return (a*b)/g;
 }
 
-// bool primechk[sz];
 
-// vector<int>primes;
 
-// void seive()
-// {
-
-// 	for(ll i=2;i*i<sz;i++)
-// 	if(primechk[i]==false)
-// 	for(ll j=i*i;j<sz;j+=i)
-// 	primechk[j]=true;
-
-// 	for(int i=2;i<sz;i++)
-// 	if(primechk[i]==false)
-// 	primes.push_back(i);
-        
-	
-
-// }
 /*
 vll v;
 vpll ans;
@@ -493,63 +476,63 @@ int check()
  	
 //  }
 
-int n,q;
-vll v;
-ll tree[4*sz];
+// int n,q;
+// vll v;
+// ll tree[4*sz];
 
-void build_for_sum(int idx,int lo,int hi)
-{
-	if(lo == hi) {
-		tree[idx]=v[lo];
-		return ;
-	}
+// void build_for_sum(int idx,int lo,int hi)
+// {
+// 	if(lo == hi) {
+// 		tree[idx]=v[lo];
+// 		return ;
+// 	}
 
-	int mid = (lo + hi)/2;
-	int left = 2*idx+1;
-	int right = 2*idx+2;
+// 	int mid = (lo + hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
 	
-	build_for_sum(left,lo,mid);
-	build_for_sum(right,mid+1,hi);
-	tree[idx]=tree[left]+tree[right];
-}
+// 	build_for_sum(left,lo,mid);
+// 	build_for_sum(right,mid+1,hi);
+// 	tree[idx]=tree[left]+tree[right];
+// }
 
 
-void build_for_min(int idx,int lo,int hi)
-{
-	if(lo==hi)
-	{
-		tree[idx]=v[lo];
-		return ;
-	}
+// void build_for_min(int idx,int lo,int hi)
+// {
+// 	if(lo==hi)
+// 	{
+// 		tree[idx]=v[lo];
+// 		return ;
+// 	}
 
-	int mid = (lo+hi)/2;
-	int left = 2*idx+1;
-	int right = 2*idx+2;
-	build_for_min(left,lo,mid);
-	build_for_min(right,mid+1,hi);
-	tree[idx]=minn(tree[left],tree[right]);
-}
+// 	int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
+// 	build_for_min(left,lo,mid);
+// 	build_for_min(right,mid+1,hi);
+// 	tree[idx]=minn(tree[left],tree[right]);
+// }
 
 
-void update_for_sum(int idx,int lo,int hi,int upidx,int val)
-{
-	if(lo>upidx||hi<upidx) return ;
-	if(lo == hi)
-	{
-		// cout<<"Updaate is called"<<endl;
-		tree[idx]=val;
-		return ;
-	}
+// void update_for_sum(int idx,int lo,int hi,int upidx,int val)
+// {
+// 	if(lo>upidx||hi<upidx) return ;
+// 	if(lo == hi)
+// 	{
+// 		// cout<<"Updaate is called"<<endl;
+// 		tree[idx]+=val;
+// 		return ;
+// 	}
 
-	int mid = (lo+hi)/2;
-	int left = 2*idx+1;
-	int right = 2*idx+2;
-	update_for_sum(left,lo,mid,upidx,val);
-	update_for_sum(right,mid+1,hi,upidx,val);
+// 	int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
+// 	update_for_sum(left,lo,mid,upidx,val);
+// 	update_for_sum(right,mid+1,hi,upidx,val);
 
-	tree[idx] = tree[left]+tree[right];
+// 	tree[idx] = tree[left]+tree[right];
 
-}
+// }
 
 // void update_for_min(int idx,int lo,int hi,int upidx,int val)
 // {
@@ -572,18 +555,18 @@ void update_for_sum(int idx,int lo,int hi,int upidx,int val)
 	
 // }
 
-ll query_of_sum(int idx,int lo,int hi,int qlo,int qhi)
-{
-	if(qlo>hi||qhi<lo) return 0;
-	if(qlo<=lo&&qhi>=hi) return tree[idx];
+// ll query_of_sum(int idx,int lo,int hi,int qlo,int qhi)
+// {
+// 	if(qlo>hi||qhi<lo) return 0;
+// 	if(qlo<=lo&&qhi>=hi) return tree[idx];
 
-	int mid = (lo+hi)/2;
-	int left = 2*idx+1;
-	int right = 2*idx+2;
-	return query_of_sum(left,lo,mid,qlo,qhi) + query_of_sum(right,mid+1,hi,qlo,qhi);
+// 	int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
+// 	return query_of_sum(left,lo,mid,qlo,qhi) + query_of_sum(right,mid+1,hi,qlo,qhi);
 
 
-}
+// }
 
 
 // ll query_for_min(int idx,int lo,int hi,int qlo,int qhi)
@@ -602,21 +585,21 @@ ll query_of_sum(int idx,int lo,int hi,int qlo,int qhi)
 
 
 
-ll query_for_kth_one(int idx,int lo,int hi,int k)
-{
-	if(lo==hi)
-	return hi;
+// ll query_for_kth_one(int idx,int lo,int hi,int k)
+// {
+// 	if(lo==hi)
+// 	return hi;
 	
-    int mid = (lo+hi)/2;
-	int left = 2*idx+1;
-	int right = 2*idx+2;
+//     int mid = (lo+hi)/2;
+// 	int left = 2*idx+1;
+// 	int right = 2*idx+2;
 	
-    if(tree[right]>=k) return query_for_kth_one(right,mid+1,hi,k);
-	else return query_for_kth_one(left,lo,mid,k-tree[right]);
+//     if(tree[right]>=k) return query_for_kth_one(right,mid+1,hi,k);
+// 	else return query_for_kth_one(left,lo,mid,k-tree[right]);
     
-	return 0;
+// 	return 0;
 
-}
+// }
 
 
 
@@ -646,25 +629,25 @@ ll count_digits(ll n)
 	return ans;
 }
 
-ll dp[100001];
+// ll dp[100001];
 
 
-ll lis(int idx)
-{
+// ll lis(int idx)
+// {
    
-    if(idx==n) return 1;
-	if(dp[idx]!=-1) return dp[idx];
-	ll ans = 0;
-	for(int i=idx+1;i<v.size();i++)
-	if(v[i]>v[idx])
-	{
-		ll temp_ans= 1+ lis(i);
-		ans+=temp_ans;
-	}
-	return dp[idx]=ans;
+//     if(idx==n) return 1;
+// 	if(dp[idx]!=-1) return dp[idx];
+// 	ll ans = 0;
+// 	for(int i=idx+1;i<v.size();i++)
+// 	if(v[i]>v[idx])
+// 	{
+// 		ll temp_ans= 1+ lis(i);
+// 		ans+=temp_ans;
+// 	}
+// 	return dp[idx]=ans;
 	
 
-}
+// }
 
 // bool primes[17];
 // bool flag=false;
@@ -705,41 +688,150 @@ ll lis(int idx)
 // 	}
 // }
 
-void solve(int t)
+
+
+
+
+
+vll fact ;
+
+void precalculation()
+{
+	fact.push_back(1);
+	ll factor=1;
+	for(int i=1;i<=200000;i++)
+	{
+		factor*=i;
+		factor%=MOD;
+		fact.push_back(factor);
+	}
+}
+
+bool primechk[sz];
+
+vector<int>primes;
+
+void seive(ll n)
 {
 
-map<int,int>mp1,mp2;
-cin>>n;
-vpii points;
-int mn = 100000000;
-int mx = 0;
-for(int i=0;i<n;i++)
-{
-	int x,y;
-	cin>>x>>y;
-	points.push_back({x,y});
-	mn=minn(mn,x);
-	mx=maxx(mx,y);
+	for(ll i=2;i*i<=n;i++)
+	if(primechk[i]==false)
+	for(ll j=i*i;j<=n;j+=i)
+	primechk[j]=true;
+
+	for(int i=2;i<=n;i++)
+	if(primechk[i]==false)
+	primes.push_back(i);
+        
+	
 
 }
 
-for(int i=1;i<=mx;i++)
-{
-	mp1[i]=-1;
-	mp2[i]=-1;
-}
 
-for(int i=0;i<points.size();i++)
-{
-	mp1[points[i].second]=points[i].first;
-	mp2[points[i].first]=points[i].second;
-}
 
-for(int i=1;i<=mx;i++)
+ll process(ll p,ll gap,ll pr)
 {
+
+for(int i=0;i<gap;i++)
+p/=pr;
+
+return p;
 	
 }
 
+ll count_primes(ll x,ll p)
+{
+	ll cnt=0;
+	while(x%p==0)
+	{
+		cnt++;
+		x/=p;
+	}
+
+	return cnt;
+	
+}
+
+vll used_primes;
+
+void factorization(ll n)
+{
+	used_primes.clear();
+    ll temp_n=n;
+	for(int i=2;i*i<=temp_n;i++)
+	if(n%i==0)
+	{
+		used_primes.push_back(i);
+		
+		n/=i;
+	}
+
+	if(n>1) used_primes.push_back(n);
+	
+
+}
+
+ll dp[100001][2];
+
+vll vertices[100001];
+
+vll adj[100001];
+
+
+ll dfs(int cur_node,int set_val,int par){
+
+if(dp[cur_node][set_val]!=-1) return dp[cur_node][set_val];
+
+
+
+ll ans =0;
+
+for(int i=0;i<adj[cur_node].size();i++)
+{
+	
+	int next_node=adj[cur_node][i];
+	if(next_node!=par){
+	ll temp_ans = 0;
+	temp_ans=maxx(temp_ans,abs( vertices[cur_node][set_val] - vertices[next_node][0] ) + dfs(next_node,0,cur_node));
+	temp_ans=maxx(temp_ans,abs( vertices[cur_node][set_val] - vertices[next_node][1] ) + dfs(next_node,1,cur_node));
+	ans+=temp_ans;
+	}
+
+	
+}
+
+return dp[cur_node][set_val]= ans;
+
+
+}
+
+int calculate_digits(ll n)
+{
+	ll cnt=0;
+	while(n)
+    {
+		n/=10;
+		cnt++;
+	}
+
+	return cnt;
+
+
+}
+
+ll digit_to_num(vll v)
+{
+	ll sum =0;
+	for(auto x:v)
+	{
+		sum*=10;
+		sum+=x;
+	}
+	return sum;
+}
+
+void solve()
+{
 
 
 
@@ -752,16 +844,23 @@ for(int i=1;i<=mx;i++)
 int main()
 {
 
+
+
 // freopen("input.txt","r",stdin);
 // freopen("output.txt","w",stdout);
-	
-//int t;
-//scanf("%d",&t);
-// int t;
 
-// scanf("%d",&t);
+ios_base::sync_with_stdio(false);
+cin.tie(NULL);
+
+	
+int t;
+
+// precalculation();
+
+
+// cin>>t;
 // for(int i=1;i<=t;i++)
-solve(1);
+solve();
 
 
  
