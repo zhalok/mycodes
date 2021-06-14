@@ -27,111 +27,138 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
+
+
 class Solution {
-    
-public:
+    public:
+    int gridd[50][50];
+    set<int>s;
 
-bool isPalindrome(string s)
-{
-  int i=0;
-  int j=s.size()-1;
-  while(i<=j)
-  {
-    if(s[i]!=s[j]) return false;
-    i++;
-    j--;
-  }
-
-  return true;
-}
-
-bool check(string s,int len)
-{
-    int i=0;
-    int j=len-1;
-    while(j<s.size())
+    bool isperfect(int sr,int er,int sc,int ec)
     {
-      string temp;
-      for(int k=i;k<=j;k++)
-      temp.push_back(s[k]);
-      if(isPalindrome(temp)) return true;
-      i++;
-      j++;
-    }
+      s.clear();
+  
 
-    return false;
-}
+      for(int i=sr;i<=er;i++)
+      {
+        int sum =0;
+          for(int j=sc;j<=ec;j++)
+          sum+=gridd[i][j];
+          s.insert(sum);
 
-string find_palindrome_substring(string s,int len)
-{
-   int i=0;
-   int j=len-1;
-   string ans;
-   while(j<s.size())
-   {
-     string temp;
-     for(int k=i;k<=j;k++)
-     temp.push_back(s[k]);
-     if(isPalindrome(temp))
-     ans = temp;
-     i++;
-     j++;
-   }
+      }
 
-   return ans;
-}
+      for(int i=sc;i<=ec;i++)
+      {
+        int sum = 0;
+        for(int j=sr;j<=er;j++)
+        sum+=gridd[j][i];
+        s.insert(sum);
+      }
 
-int process(string s,int parity)
-{
-  int mx=0;
-  int lo=1;
-  int hi=s.size();
-  if(lo%2!=parity) lo++;
-  if(hi%2!=parity) hi--;
-  while(lo<=hi)
-  {
-    int mid = (lo+hi)/2;
-    if(mid%2!=parity) mid--;
-    if(mid<lo) break;
-    if(check(s,mid)){
-      mx=max(mx,mid);
-      lo=mid+2;
-    }
-    else hi=mid-2;
-  }
+      int diagonal_sum1=0;
+      int digaonal_sum2=0;
 
-  return mx;
-}
+      int i=sr;
+      int j=sc;
+      while(i<=er&&j<=ec)
+      {
+        diagonal_sum1+=gridd[i][j];
+        i++;
+        j++;
+      }
 
+      s.insert(diagonal_sum1);
 
-string longestPalindrome(string s) {
+      i=er;
+      j=sc;
+
+      while(i>=sr&&j<=ec)
+      {
+        digaonal_sum2+=gridd[i][j];
+        i--;
+        j++;
+      }
+
+      s.insert(digaonal_sum2);
       
-    int mx=max(process(s,0),process(s,1));
-
-    return find_palindrome_substring(s,mx);
-
-
-    
-        
+      if(s.size()==1) return true;
+      else return false;
+     
+      
     }
 
-    
+    int largestMagicSquare(vector<vector<int>>& grid){
+            
+        for(int i=0;i<grid.size();i++)
+        {
+          for(int j=0;j<grid[i].size();j++)
+          gridd [i][j]=grid[i][j];
+        }
+
+        int ans =0;
+        
+        for(int k=1;k<=min(grid.size(),grid[0].size());k++)
+        {
+            for(int i=0;i<grid.size();i++)
+            for(int j=0;j<grid[i].size();j++)
+            {
+              int sr=i;
+              int er=i+k-1;
+              int sc=j;
+              int ec=j+k-1;
+              if(er<grid.size()&&ec<grid[0].size()){
+               
+
+              if(isperfect(sr,er,sc,ec))
+              {
+                 ans = max(ans,k);
+              }
+
+              }
+
+
+            }
+        }
+
+        return ans;
+
+    }
+
+    };
+
+
+
+  
      
-     
-     
+      
+
+
+// int main()
+// {
+//     freopen("input.txt","r",stdin);
+//     freopen("output.txt","w",stdout);
+//     Solution solution;
+//     int n,m;
+//     cin>>n>>m;
+//     vector<vi>v;
+
+//     for(int i=0;i<n;i++)
+//     {
+//       vi temp;
+//       for(int j=0;j<m;j++)
+//       {
+//         int x;
+//         cin>>x;
+//         temp.push_back(x);
+//       }
+//       v.push_back(temp);
+//     }
+
+//     cout<<solution.largestMagicSquare(v)<<endl;
     
 
-};
-
-int main()
-{
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-    Solution solution;
-    string s;
-    cin>>s;
-    // cout<<solution.check(s,3)<<endl;
-    cout<<solution.longestPalindrome(s)<<endl;
+// }
+    
     
 
-}

@@ -1,12 +1,8 @@
 #include<bits/stdc++.h>
-#include<map>
-#include<iostream>
-#include<math.h>
-#include<vector>
-#include <utility>
+using namespace std;
 using namespace std;
 #define zhalok Zhalok
-#define inf 1000000001
+#define inf 1000000
 #define ll long long int  
 #define ull unsigned long long 
 #define loop(i,a,b) for(ll i=a;i<b;i++)
@@ -30,66 +26,101 @@ using namespace std;
 #define all(v) v.begin(),v.end()
 #define eps 1e-8
 #define pi acos(-1.0)
-int main()
-{
-	freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-	vi v1,v2;
-	int n;
-	cin>>n;
-	for(int i=0;i<n;i++)
-	{
-		int x;
-		cin>>x;
-		v1.push_back(x);
-	}
-
-	int m;
-	cin>>m;
-	for(int i=0;i<m;i++)
-	{
-		int x;
-		cin>>x;
-		v2.push_back(x);
-	}
-
-	
 
 
-	  
-		 if(v1.size()<v2.size()){
-        int gap=v2.size()-v1.size();    
-        for(int i=0;i<gap;i++)
-        v1.push_back(0);
+//  * Definition for singly-linked list.
+  struct ListNode {
+      int val;
+      ListNode *next;
+      ListNode() : val(0), next(nullptr) {}
+      ListNode(int x) : val(x), next(nullptr) {}
+      ListNode(int x, ListNode *next) : val(x), next(next) {}
+  };
+ 
+
+
+class Solution {
+
+    int get_size(ListNode* node)
+    {
+        int size=0;
+        while(node!=NULL)
+        {
+            size++;
+            node=node->next;
         }
-        else{
-           int gap=v1.size()-v2.size();
-            for(int i=0;i<gap;i++)
-        v2.push_back(0);
-             
-            }
+        return size;
+    }
 
-        v1.push_back(0);
-        v2.push_back(0);
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+     ListNode* temp_head = head;
+     ListNode* prev_node = head;
 
-        for(auto x:v1) cout<<x<<" ";
-		cout<<endl;
-		for(auto x:v2) cout<<x<<" ";
-		cout<<endl;
-	
-
-        vi v(v1.size(),0);
-        // for(int i=0;i<v.size()-1;i++) cout<<v[i]<<" ";
-        for(int i=0;i<v.size()-1;i++){
-        v[i]=(v1[i]+v2[i]+v[i])%10;
-        v[i+1]=(v1[i]+v2[i]+v[i])/10;
+     int size=get_size(head);
+     int n=size-n;
+     n++;
+     int cnt=1;
+     if(n==1) {
+         head=head->next;
+         return head;
+     }
+     while(temp_head!=NULL)
+     {
+        if(cnt==n)
+        {
+           prev_node->next=temp_head->next;
+           break;
         }
 
-        if(v[v.size()-1]==0)
-        v.pop_back();
+        cnt++;
+        prev_node=temp_head;
+        temp_head=temp_head->next;
+     } 
 
-        // reverse(all(v));
+     return head;
+        
+    }
+        
 
-        for(int i=0;i<v.size();i++) cout<<v[i]<<" ";
-        cout<<endl;
-}
+    };
+
+
+
+  
+     
+      
+
+
+// int main()
+// {
+//     freopen("input.txt","r",stdin);
+//     freopen("output.txt","w",stdout);
+//     Solution solution;
+//     int n;
+//     cin>>n;
+//     vi vv;
+//     for(int i=0;i<n;i++)
+//     {
+//       int x;
+//       cin>>x;
+//       vv.push_back(x);
+//     }
+//     int target;
+//     cin>>target;
+  
+
+//    vector<vi> ans = solution.fourSum(vv,target);
+
+//    for(int i=0;i<ans.size();i++)
+//    {
+//      for(int j=0;j<ans[i].size();j++) cout<<ans[i][j]<<" ";
+//      cout<<endl;
+//    }
+    
+    
+
+// }
+    
+    
+
