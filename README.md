@@ -1,1 +1,1 @@
-I usually upload all the codes i do for problem solving and competitive programming 
+I usually keep my codes i do for problem solving and competitive programming 
