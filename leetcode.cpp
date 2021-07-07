@@ -28,137 +28,141 @@ using namespace std;
 #define pi acos(-1.0)
 
 
-
 class Solution {
-    public:
-    int gridd[50][50];
-    set<int>s;
+public:
+    map<string,bool>mp;
+    map<int,bool>flag;
+    string t;
+    string ss;
 
-    bool isperfect(int sr,int er,int sc,int ec)
+    bool check(int i,int j,int seg)
     {
-      s.clear();
-  
-
-      for(int i=sr;i<=er;i++)
-      {
-        int sum =0;
-          for(int j=sc;j<=ec;j++)
-          sum+=gridd[i][j];
-          s.insert(sum);
-
-      }
-
-      for(int i=sc;i<=ec;i++)
-      {
-        int sum = 0;
-        for(int j=sr;j<=er;j++)
-        sum+=gridd[j][i];
-        s.insert(sum);
-      }
-
-      int diagonal_sum1=0;
-      int digaonal_sum2=0;
-
-      int i=sr;
-      int j=sc;
-      while(i<=er&&j<=ec)
-      {
-        diagonal_sum1+=gridd[i][j];
-        i++;
-        j++;
-      }
-
-      s.insert(diagonal_sum1);
-
-      i=er;
-      j=sc;
-
-      while(i>=sr&&j<=ec)
-      {
-        digaonal_sum2+=gridd[i][j];
-        i--;
-        j++;
-      }
-
-      s.insert(digaonal_sum2);
-      
-      if(s.size()==1) return true;
-      else return false;
-     
-      
-    }
-
-    int largestMagicSquare(vector<vector<int>>& grid){
-            
-        for(int i=0;i<grid.size();i++)
+        vector<string>temp;
+        for(int k=i;k<=j;k+=seg)
         {
-          for(int j=0;j<grid[i].size();j++)
-          gridd [i][j]=grid[i][j];
+            if(flag[k])
+            {
+                string temps;
+                for(int x=k;x<k+seg;x++)
+                temps+=ss[x];
+                temp.push_back(temps);
+                // cout<<i<<" "<<j<<endl;
+                // cout<<temps<<endl;
+            
+            }
+            else return false;
+
         }
 
-        int ans =0;
+        sort(all(temp));
+        string tempss;
+        for(auto x:temp) tempss+=x;
+        // cout<<tempss<<endl;
+        if(tempss==t)
+        return true;
+        else return false;
         
-        for(int k=1;k<=min(grid.size(),grid[0].size());k++)
+    }
+
+    vector<int> findSubstring(string s, vector<string>& words) {
+        
+        sort(all(words));
+        // for(auto x:words) cout<<x<<endl;
+        
+        for(auto x:words){ 
+            mp[x]=true;
+            t+=x;
+        }
+        ss=s;
+
+        
+        
+
+        int i=0;
+        int j=words[0].size()-1;
+       
+        while(j<s.size())
         {
-            for(int i=0;i<grid.size();i++)
-            for(int j=0;j<grid[i].size();j++)
-            {
-              int sr=i;
-              int er=i+k-1;
-              int sc=j;
-              int ec=j+k-1;
-              if(er<grid.size()&&ec<grid[0].size()){
-               
+            string temp;
+            for(int k=i;k<=j;k++)
+            temp+=s[k];
+            if(mp[temp])
+            flag[i]=true;
+            i++;
+            j++;
+        }
 
-              if(isperfect(sr,er,sc,ec))
-              {
-                 ans = max(ans,k);
-              }
+        
 
-              }
+        int total_size=0;
+        for(auto x:words) total_size+=x.size();
+        // cout<<total_size<<endl;
+       
+        i=0;
+        j=total_size-1;
 
+        vi ans ;
 
-            }
+        while(j<s.size())
+        {
+            if(check(i,j,words[0].size()))ans.push_back(i);
+            i++;
+            j++;
+
         }
 
         return ans;
+         
+
 
     }
-
-    };
-
-
-
-  
+};
      
       
 
 
-// int main()
-// {
-//     freopen("input.txt","r",stdin);
-//     freopen("output.txt","w",stdout);
-//     Solution solution;
-//     int n,m;
-//     cin>>n>>m;
-//     vector<vi>v;
+int main()
+{
+    // cout<<"HEllo world"<<endl;
+    //gu
+    int m;
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+    int n;
+    cin>>n;
+    vi v;
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        cin>>x;
+        v.push_back(x);
 
-//     for(int i=0;i<n;i++)
-//     {
-//       vi temp;
-//       for(int j=0;j<m;j++)
-//       {
-//         int x;
-//         cin>>x;
-//         temp.push_back(x);
-//       }
-//       v.push_back(temp);
-//     }
+        
+    }
 
-//     cout<<solution.largestMagicSquare(v)<<endl;
+    for(auto x: v)cout<<x<<endl;
+    
+    // Solution solution;
+
+    // string s;
+    // vector<string>v;
+
+    // cin>>s;
+    // int n;
+    // cin>>n;
+    // for(int i=0;i<n;i++)
+    // {
+    //     string s;
+    //     cin>>s;
+    //     v.push_back(s);
+    // }
+
+    // vi ans = solution.findSubstring(s,v);
+    // for(auto x:ans) cout<<x<<" ";
+    // cout<<endl;
     
 
-// }
+}
     
     
 

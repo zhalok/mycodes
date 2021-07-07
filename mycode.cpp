@@ -807,6 +807,7 @@ return dp[cur_node][set_val]= ans;
 
 int calculate_digits(ll n)
 {
+	
 	ll cnt=0;
 	while(n)
     {
@@ -830,9 +831,50 @@ ll digit_to_num(vll v)
 	return sum;
 }
 
+int sum_of_digits(int n)
+{
+	int sum = 0;
+	while(n)
+	{
+		sum+=(n%10);
+		n/=10;
+	}
+
+	return sum;
+}
+
 void solve()
 {
 
+int n;
+cin>>n;
+vi v;
+map<int,int>mp;
+for(int i=0;i<n;i++)
+{
+	int x;
+	cin>>x;
+	mp[x]=i+1;
+}
+int ans =0;
+for(int x=1;x<2*n;x++)
+{
+	for(int i=1;i*i<=x;i++)
+	{
+		if(x%i==0&&i*i!=x)
+		{
+			int a = i;
+			int b = x/i;
+			if(mp[a]&&mp[b])
+			{
+				if(mp[a]+mp[b]==x)
+                ans++;
+			} 
+		}
+	}
+}
+
+cout<<ans<<endl;
 
 
 
@@ -858,8 +900,8 @@ int t;
 // precalculation();
 
 
-// cin>>t;
-// for(int i=1;i<=t;i++)
+cin>>t;
+for(int i=1;i<=t;i++)
 solve();
 
 

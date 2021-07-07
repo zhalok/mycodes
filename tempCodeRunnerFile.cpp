@@ -1,1 +1,1 @@
-
+cout<<"Hello"<<endl;
