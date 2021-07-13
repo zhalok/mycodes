@@ -1,0 +1,31 @@
+dhor toke ekta array dise and etar upore kichu range query korte hobe 
+int a[10]={1,2,3,4,5,6,7,8,9,10}
+
+range queries can be --> 1. sum of values in a range 
+                         2. max or min value in a range
+                         
+possible solutions can be --> bruteforce (O(n*q)) 
+                          --> segment tree/fenwick tree (nlogn + qlogn) 
+                          --> sparse table (nlogn + q)
+                          
+sparse table solution:
+
+what is sparse table ?
+sparse table is a pre computation table for answering queries 
+
+its a two dimensional array 
+
+sparse_table[i][j] gives the value of a segment starting from index i and len of 2^j which means it gives the query for segment i to i+2^j-1;
+
+
+now a thing is that if we want to find the query of segment from x to y suppose 
+
+then here len is (y-x+1) so it means it will be from sparse table at index 
+[x][len]
+
+now the thing is if we want to calculate the value of segment starting from x and of length len that means its equal to 
+
+segment1 = starting at index x of length len/2 +
+segment2 = starting at index x+(len/2) of length len/2 right ?
+
+thats how we answer queries with the sparse table 

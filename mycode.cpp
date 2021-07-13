@@ -1,24 +1,24 @@
-#include<bits/stdc++.h>
-#include<map>
-#include<iostream>
-#include<math.h>
-#include<vector>
+#include <bits/stdc++.h>
+#include <map>
+#include <iostream>
+#include <math.h>
+#include <vector>
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
 #define inf 1000000001
-#define ll long long int  
-#define ull unsigned long long 
-#define loop(i,a,b) for(ll i=a;i<b;i++)
-#define negloop(i,a,b) for(ll i=a;i>=b;i--)
+#define ll long long int
+#define ull unsigned long long
+#define loop(i, a, b) for (ll i = a; i < b; i++)
+#define negloop(i, a, b) for (ll i = a; i >= b; i--)
 #define vi vector<int>
 #define vll vector<ll>
 #define vull vector<ull>
 #define pb push_back
 #define be begin()
 #define en end()
-#define pii pair<int,int>
-#define pll pair<ll,ll>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
 #define vpii vector<pii>
 #define vpll vector<pll>
 #define ff first
@@ -27,30 +27,36 @@ using namespace std;
 #define sz 10001
 #define ub upper_bound
 #define lb lower_bound
-#define all(v) v.begin(),v.end()
-#define eps 1e-8
+#define all(v) v.begin(), v.end()
+#define eps 1e-9
 #define pi acos(-1.0)
 
- 
-ll minn(ll a,ll b)
+ll minn(ll a, ll b)
 {
-	return a<b?a:b;
-}
- 
-ll maxx(ll a,ll b)
-{
-	return a>b?a:b;
+	return a < b ? a : b;
 }
 
-
-
-ll cill(ll a,ll b)
+ll maxx(ll a, ll b)
 {
-	if(a%b==0)
-	return a/b;
-	return a/b+1;
+	return a > b ? a : b;
 }
 
+double maxx(double a, double b)
+{
+	return (a >= b ? a : b);
+}
+
+double minn(double a, double b)
+{
+	return (a <= b ? a : b);
+}
+
+ll cill(ll a, ll b)
+{
+	if (a % b == 0)
+		return a / b;
+	return a / b + 1;
+}
 
 /*
 
@@ -86,94 +92,92 @@ double find_dis(double x1,double y1,double x2,double y2)
 }
 */
 
- 
-ll mod_exp(ll a,ll n,ll mod)
+ll mod_exp(ll a, ll n, ll mod)
 {
-	if(n==0) return 1;
-	if(n%2==0){
-		ll temp=mod_exp(a,n/2,mod);
-		return (temp%mod*temp%mod)%mod;
+	if (n == 0)
+		return 1;
+	if (n % 2 == 0)
+	{
+		ll temp = mod_exp(a, n / 2, mod);
+		return (temp % mod * temp % mod) % mod;
 	}
-	else {
-		ll temp1=a;
-		ll temp2=mod_exp(a,n-1,mod);
-		return (temp1%mod*temp2%mod)%mod;
+	else
+	{
+		ll temp1 = a;
+		ll temp2 = mod_exp(a, n - 1, mod);
+		return (temp1 % mod * temp2 % mod) % mod;
 	}
-	
 }
-
 
 ll abss(ll a)
 {
-	if(a>=0) return a;
-	else return -1*(a);
+	if (a >= 0)
+		return a;
+	else
+		return -1 * (a);
 }
 
-
-
-long double get_angle(pii a,pii b,pii c)
+long double get_angle(pii a, pii b, pii c)
 {
-     int x1=a.first;
-	 int y1=a.second;
-	 int x2=b.first;
-	 int y2=b.second;
-	 int x3=c.first;
-	 int y3=c.second;
-     long double len1=sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
-	 long double len2=sqrt((x3-x2)*(x3-x2)+(y3-y2)*(y3-y2));
-	 long double val=((x1-x2)*(x3-x2)+(y1-y2)*(y3-y2))/(len1*len2);
-	 return acos(val);
-
+	int x1 = a.first;
+	int y1 = a.second;
+	int x2 = b.first;
+	int y2 = b.second;
+	int x3 = c.first;
+	int y3 = c.second;
+	long double len1 = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+	long double len2 = sqrt((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2));
+	long double val = ((x1 - x2) * (x3 - x2) + (y1 - y2) * (y3 - y2)) / (len1 * len2);
+	return acos(val);
 }
 
-
-long double find_point_dis(pii point1,pii point2)
+long double find_point_dis(pii point1, pii point2)
 {
 	long double temp_ans;
-	temp_ans=((point1.first-point2.first)*(point1.first-point2.first));
-	temp_ans+=((point1.second-point2.second)*(point1.second-point2.second));
+	temp_ans = ((point1.first - point2.first) * (point1.first - point2.first));
+	temp_ans += ((point1.second - point2.second) * (point1.second - point2.second));
 	return sqrt(temp_ans);
 }
 
-int check_sidde(pii p1,pii p2,pii p3)
+int check_sidde(pii p1, pii p2, pii p3)
 {
-	int x1=p1.first;
-	int y1=p1.second;
-	int x2=p2.first;
-	int y2=p2.second;
-	int x3=p3.first;
-	int y3=p3.second;
+	int x1 = p1.first;
+	int y1 = p1.second;
+	int x2 = p2.first;
+	int y2 = p2.second;
+	int x3 = p3.first;
+	int y3 = p3.second;
 
-    ll ans=(x3-x1)*(y1-y2)-(y3-y1)*(x1-x2);
-	if(ans>=0) return 1;
-	else return -1;
-
+	ll ans = (x3 - x1) * (y1 - y2) - (y3 - y1) * (x1 - x2);
+	if (ans >= 0)
+		return 1;
+	else
+		return -1;
 }
 
-ll cnt_div(ll n,ll k)
+ll cnt_div(ll n, ll k)
 {
-	ll cnt=0;
-	while(n%k==0)
+	ll cnt = 0;
+	while (n % k == 0)
 	{
 		cnt++;
-		n/=k;
+		n /= k;
 	}
 	return cnt;
 }
 
-ll gcd(ll a,ll b)
+ll gcd(ll a, ll b)
 {
-	if(a%b==0) return b;
-	return gcd(b,a%b);
+	if (a % b == 0)
+		return b;
+	return gcd(b, a % b);
 }
 
-ll lcm(ll a,ll b)
+ll lcm(ll a, ll b)
 {
-	ll g=gcd(a,b);
-	return (a*b)/g;
+	ll g = gcd(a, b);
+	return (a * b) / g;
 }
-
-
 
 /*
 vll v;
@@ -240,8 +244,6 @@ int check()
 
 */
 
-
-
 // struct node{
 
 // bool flag;
@@ -266,24 +268,22 @@ int check()
 //     if(cur_node->cur[name[i]-'a']==NULL)
 // 	cur_node->cur[name[i]-'a']=new node();
 // 	cur_node=cur_node->cur[name[i]-'a'];
-	
+
 // 	}
 // 	cur_node->flag=1;
-	
+
 // }
 
 // bool search(node* cur_node,string s)
 // {
-	
+
 // 	for(int i=0;i<s.size();i++)
 // 	if(cur_node->cur[s[i]-'a']==NULL) return false;
 // 	else cur_node=cur_node->cur[s[i]-'a'];
 // 	return cur_node->flag;
 // }
 
-
 // };
-
 
 // vi adj[sz+1];
 // vi cost[sz+1];
@@ -294,7 +294,7 @@ int check()
 
 // void dfs(int node,int par)
 // {
-	
+
 // 	parent[node]=par;
 // 	for(int i=0;i<adj[node].size();i++)
 // 	if(adj[node][i]!=parent[node])
@@ -339,141 +339,128 @@ int check()
 // 	}
 // 	return parent[a];
 
-
-
 // }
 
 // int n;
 // pair<pll,pll> tree[8*sz];
 // vll v;
- 
- 
+
 // void build(int idx,int lo,int hi)
 // {
 // 	// max sum total sum prefix suffix
-	
+
 //     if(lo==hi) {
-    	
+
 //     	tree[idx]={{v[lo],v[lo]},{v[lo],v[lo]}};
 //     	return ;
-    	
+
 // 	}
-	
+
 // 	int mid=(lo+hi)/2;
 // 	int left=2*idx+1;
 // 	int right=left+1;
 // 	build(left,lo,mid);
 // 	build(right,mid+1,hi);
-	
+
 //     ll left_max=tree[left].ff.ff;
 //     ll left_sum=tree[left].ff.ss;
 //     ll left_pref=tree[left].ss.ff;
 //     ll left_suf=tree[left].ss.ss;
-    
+
 //     ll right_max=tree[right].ff.ff;
 //     ll right_sum=tree[right].ff.ss;
 //     ll right_pref=tree[right].ss.ff;
 //     ll right_suf=tree[right].ss.ss;
-	
+
 //     ll cross_max=left_suf+right_pref;
-	
+
 // 	ll par_max,par_sum,par_pref,par_suf;
-   
+
 //      par_max=maxx(left_max,maxx(right_max,cross_max));
 //      par_sum=left_sum+right_sum;
 //      par_pref=maxx(left_pref,left_sum+right_pref);
 //      par_suf=maxx(right_suf,right_sum+left_suf);
-    
+
 //     tree[idx]={{par_max,par_sum},{par_pref,par_suf}};
-    
-		
-	
-//  } 
- 
- 
- 
+
+//  }
+
 // void update(int idx,int lo,int hi,int pos,int val)
 // {
 // 	// max sum total sum prefix suffix
 // 	if(lo>pos or hi<pos) return ;
-	
+
 //     if(lo==hi) {
-    	
+
 //     	tree[idx]={{val,val},{val,val}};
 //     	return ;
-    	
+
 // 	}
-	
+
 // 	int mid=(lo+hi)/2;
 // 	int left=2*idx+1;
 // 	int right=left+1;
 // 	update(left,lo,mid,pos,val);
 // 	update(right,mid+1,hi,pos,val);
-	
+
 //     ll left_max=tree[left].ff.ff;
 //     ll left_sum=tree[left].ff.ss;
 //     ll left_pref=tree[left].ss.ff;
 //     ll left_suf=tree[left].ss.ss;
-    
+
 //     ll right_max=tree[right].ff.ff;
 //     ll right_sum=tree[right].ff.ss;
 //     ll right_pref=tree[right].ss.ff;
 //     ll right_suf=tree[right].ss.ss;
- 
+
 // 	ll cross_max=left_suf+right_pref;
 // 	ll par_max,par_sum,par_pref,par_suf;
-	
+
 // 	par_max=maxx(left_max,maxx(right_max,cross_max));
 //     par_sum=left_sum+right_sum;
 //     par_pref=maxx(left_pref,left_sum+right_pref);
 //     par_suf=maxx(right_suf,right_sum+left_suf);
 //     tree[idx]={{par_max,par_sum},{par_pref,par_suf}};
-// } 
- 
+// }
+
 //  pair<pll,pll> query(int idx,int lo,int hi,int qlo,int qhi)
 //  {
-    
 
 //     if(qhi<lo or qlo>hi) return {{-inf,-inf},{-inf,-inf}};
-    
+
 //     if(qhi>=hi and qlo<=lo) return tree[idx];
- 
-	
+
 // 	int mid=(lo+hi)/2;
 // 	int left=2*idx+1;
 // 	int right=left+1;
-	
+
 // //	if(mid<=qlo) return query(right,mid+1,hi,qlo,qhi);
 // //	if(mid>=qhi) return query(left,lo,mid,qlo,qhi);
-	
-	
+
 //     pair<pll,pll> left_ans=query(left,lo,mid,qlo,qhi);
 // 	pair<pll,pll> right_ans=query(right,mid+1,hi,qlo,qhi);
-	
+
 //     ll left_max=left_ans.ff.ff;
 //     ll left_sum=left_ans.ff.ss;
 //     ll left_pref=left_ans.ss.ff;
 //     ll left_suf=left_ans.ss.ss;
-    
+
 //     ll right_max=right_ans.ff.ff;
 //     ll right_sum=right_ans.ff.ss;
 //     ll right_pref=right_ans.ss.ff;
 //     ll right_suf=right_ans.ss.ss;
-	
+
 //     ll cross_max=left_suf+right_pref;
-	
+
 // 	ll par_max,par_sum,par_pref,par_suf;
-	
+
 //     par_max=maxx(left_max,maxx(right_max,cross_max));
 //     par_sum=left_sum+right_sum;
 //     par_pref=maxx(left_pref,left_sum+right_pref);
 //     par_suf=maxx(right_suf,right_sum+left_suf);
-    
+
 //     return {{par_max,par_sum},{par_pref,par_suf}};
- 
-	
- 	
- 	
+
 //  }
 
 // int n,q;
@@ -490,12 +477,11 @@ int check()
 // 	int mid = (lo + hi)/2;
 // 	int left = 2*idx+1;
 // 	int right = 2*idx+2;
-	
+
 // 	build_for_sum(left,lo,mid);
 // 	build_for_sum(right,mid+1,hi);
 // 	tree[idx]=tree[left]+tree[right];
 // }
-
 
 // void build_for_min(int idx,int lo,int hi)
 // {
@@ -512,7 +498,6 @@ int check()
 // 	build_for_min(right,mid+1,hi);
 // 	tree[idx]=minn(tree[left],tree[right]);
 // }
-
 
 // void update_for_sum(int idx,int lo,int hi,int upidx,int val)
 // {
@@ -552,7 +537,7 @@ int check()
 // 	update_for_min(right,mid+1,hi,upidx,val);
 
 // 	tree[idx] = minn(tree[left],tree[right]);
-	
+
 // }
 
 // ll query_of_sum(int idx,int lo,int hi,int qlo,int qhi)
@@ -565,76 +550,64 @@ int check()
 // 	int right = 2*idx+2;
 // 	return query_of_sum(left,lo,mid,qlo,qhi) + query_of_sum(right,mid+1,hi,qlo,qhi);
 
-
 // }
-
 
 // ll query_for_min(int idx,int lo,int hi,int qlo,int qhi)
 // {
 //     if(qlo>hi||qhi<lo) return 100001;
 // 	if(qlo<=lo&&qhi>=hi) return tree[idx];
-    
+
 // 	int mid = (lo+hi)/2;
 // 	int left = 2*idx+1;
 // 	int right = 2*idx+2;
 
 // 	return minn(query_for_min(left,lo,mid,qlo,qhi),query_for_min(right,mid+1,hi,qlo,qhi));
-	
 
 // }
-
-
 
 // ll query_for_kth_one(int idx,int lo,int hi,int k)
 // {
 // 	if(lo==hi)
 // 	return hi;
-	
+
 //     int mid = (lo+hi)/2;
 // 	int left = 2*idx+1;
 // 	int right = 2*idx+2;
-	
+
 //     if(tree[right]>=k) return query_for_kth_one(right,mid+1,hi,k);
 // 	else return query_for_kth_one(left,lo,mid,k-tree[right]);
-    
+
 // 	return 0;
 
 // }
 
-
-
-
-
-
-
 ll get_digit_sum(ll n)
 {
-	ll sum =0 ;
-	while(n)
+	ll sum = 0;
+	while (n)
 	{
-		sum+=(n%10);
-		n/=10;
+		sum += (n % 10);
+		n /= 10;
 	}
 	return sum;
 }
 
 ll count_digits(ll n)
 {
-	ll ans=0;
-	while(n)
+	ll ans = 0;
+	while (n)
 	{
-      ans++;
-	  n/=10;
+		ans++;
+		n /= 10;
 	}
 	return ans;
 }
 
 // ll dp[100001];
 
-
 // ll lis(int idx)
 // {
-   
+
 //     if(idx==n) return 1;
 // 	if(dp[idx]!=-1) return dp[idx];
 // 	ll ans = 0;
@@ -645,7 +618,6 @@ ll count_digits(ll n)
 // 		ans+=temp_ans;
 // 	}
 // 	return dp[idx]=ans;
-	
 
 // }
 
@@ -674,7 +646,6 @@ ll count_digits(ll n)
 
 // 		}
 
-
 // 	}
 
 // 	if(flag1)
@@ -688,68 +659,47 @@ ll count_digits(ll n)
 // 	}
 // }
 
-
-
-
-
-
-vll fact ;
+vll fact;
 
 void precalculation()
 {
 	fact.push_back(1);
-	ll factor=1;
-	for(int i=1;i<=200000;i++)
+	ll factor = 1;
+	for (int i = 1; i <= 200000; i++)
 	{
-		factor*=i;
-		factor%=MOD;
+		factor *= i;
+		factor %= MOD;
 		fact.push_back(factor);
 	}
 }
 
 bool primechk[sz];
 
-vector<int>primes;
+vector<int> primes;
 
 void seive(ll n)
 {
 
-	for(ll i=2;i*i<=n;i++)
-	if(primechk[i]==false)
-	for(ll j=i*i;j<=n;j+=i)
-	primechk[j]=true;
+	for (ll i = 2; i * i <= n; i++)
+		if (primechk[i] == false)
+			for (ll j = i * i; j <= n; j += i)
+				primechk[j] = true;
 
-	for(int i=2;i<=n;i++)
-	if(primechk[i]==false)
-	primes.push_back(i);
-        
-	
-
+	for (int i = 2; i <= n; i++)
+		if (primechk[i] == false)
+			primes.push_back(i);
 }
 
-
-
-ll process(ll p,ll gap,ll pr)
+ll count_primes(ll x, ll p)
 {
-
-for(int i=0;i<gap;i++)
-p/=pr;
-
-return p;
-	
-}
-
-ll count_primes(ll x,ll p)
-{
-	ll cnt=0;
-	while(x%p==0)
+	ll cnt = 0;
+	while (x % p == 0)
 	{
 		cnt++;
-		x/=p;
+		x /= p;
 	}
 
 	return cnt;
-	
 }
 
 vll used_primes;
@@ -757,76 +707,39 @@ vll used_primes;
 void factorization(ll n)
 {
 	used_primes.clear();
-    ll temp_n=n;
-	for(int i=2;i*i<=temp_n;i++)
-	if(n%i==0)
-	{
-		used_primes.push_back(i);
-		
-		n/=i;
-	}
+	ll temp_n = n;
+	for (int i = 2; i * i <= temp_n; i++)
+		if (n % i == 0)
+		{
+			used_primes.push_back(i);
 
-	if(n>1) used_primes.push_back(n);
-	
+			n /= i;
+		}
 
-}
-
-ll dp[100001][2];
-
-vll vertices[100001];
-
-vll adj[100001];
-
-
-ll dfs(int cur_node,int set_val,int par){
-
-if(dp[cur_node][set_val]!=-1) return dp[cur_node][set_val];
-
-
-
-ll ans =0;
-
-for(int i=0;i<adj[cur_node].size();i++)
-{
-	
-	int next_node=adj[cur_node][i];
-	if(next_node!=par){
-	ll temp_ans = 0;
-	temp_ans=maxx(temp_ans,abs( vertices[cur_node][set_val] - vertices[next_node][0] ) + dfs(next_node,0,cur_node));
-	temp_ans=maxx(temp_ans,abs( vertices[cur_node][set_val] - vertices[next_node][1] ) + dfs(next_node,1,cur_node));
-	ans+=temp_ans;
-	}
-
-	
-}
-
-return dp[cur_node][set_val]= ans;
-
-
+	if (n > 1)
+		used_primes.push_back(n);
 }
 
 int calculate_digits(ll n)
 {
-	
-	ll cnt=0;
-	while(n)
-    {
-		n/=10;
+
+	ll cnt = 0;
+	while (n)
+	{
+		n /= 10;
 		cnt++;
 	}
 
 	return cnt;
-
-
 }
 
 ll digit_to_num(vll v)
 {
-	ll sum =0;
-	for(auto x:v)
+	ll sum = 0;
+	for (auto x : v)
 	{
-		sum*=10;
-		sum+=x;
+		sum *= 10;
+		sum += x;
 	}
 	return sum;
 }
@@ -834,84 +747,85 @@ ll digit_to_num(vll v)
 int sum_of_digits(int n)
 {
 	int sum = 0;
-	while(n)
+	while (n)
 	{
-		sum+=(n%10);
-		n/=10;
+		sum += (n % 10);
+		n /= 10;
 	}
 
 	return sum;
 }
 
+vi st1, stmax;
+
+void push(int n)
+{
+	if (stmax.size() == 0)
+		stmax.push_back(n);
+	else
+	{
+		int mx = stmax.back();
+		mx = max(mx, n);
+		stmax.push_back(mx);
+	}
+
+	st1.push_back(n);
+}
+
+int pop()
+{
+	st1.pop_back();
+	int x = stmax.back();
+	stmax.pop_back();
+	return x;
+}
+
+int gcd(int a, int b, int &x, int &y)
+{
+	cout << a << " " << b << endl;
+
+	if (b == 0)
+	{
+		cout << "BAse case" << endl;
+		x = 1;
+		y = 0;
+		return a;
+	}
+
+	cout << "not base case" << endl;
+	int x1, y1;
+	int d = gcd(b, a % b, x1, y1);
+	x = y1;
+	y = x1 - y1 * (a / b);
+	return d;
+}
+
 void solve()
 {
 
-int n;
-cin>>n;
-vi v;
-map<int,int>mp;
-for(int i=0;i<n;i++)
-{
-	int x;
-	cin>>x;
-	mp[x]=i+1;
-}
-int ans =0;
-for(int x=1;x<2*n;x++)
-{
-	for(int i=1;i*i<=x;i++)
-	{
-		if(x%i==0&&i*i!=x)
-		{
-			int a = i;
-			int b = x/i;
-			if(mp[a]&&mp[b])
-			{
-				if(mp[a]+mp[b]==x)
-                ans++;
-			} 
-		}
-	}
+	int x, y;
+	gcd(6, 3, x, y);
+	cout << "ans" << endl;
+	cout << x << " " << y << endl;
 }
 
-cout<<ans<<endl;
-
-
-
-
-}
-
- 
- 
 int main()
 {
 
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
 
-// freopen("input.txt","r",stdin);
-// freopen("output.txt","w",stdout);
+	int t;
 
-ios_base::sync_with_stdio(false);
-cin.tie(NULL);
+	// precalculation();
 
-	
-int t;
-
-// precalculation();
-
-
-cin>>t;
-for(int i=1;i<=t;i++)
-solve();
-
-
- 
+	// cin >> t;
+	// for (int i = 1; i <= t; i++)
+	solve();
 }
-
-
-
-
-
 
 /*
 
