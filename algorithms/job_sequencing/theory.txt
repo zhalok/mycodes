@@ -1,0 +1,11 @@
+problem: given the deadline and profit
+solution: greedy
+
+** problem: given the deadline, duration and profit
+** solution: dp
+
+
+greedy solution:
+
+>> sort the jobs based on their profit in decreasing order 
+>> go through each job and then assign the job to the deadline and if the deadline is filled then keep decrementing  

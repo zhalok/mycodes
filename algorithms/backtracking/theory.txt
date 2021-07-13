@@ -1,0 +1,13 @@
+lets say we have a string "abc"
+now we know then number of permutations is 3! = 6 right ?
+
+
+--> swap the first element with first then second and then with third and then pass it to the recursive call;
+--> now the first element is fixed so start doing the previous step with the second element 
+--> the there will be only one element left then we will print the solution and return this is the base case 
+
+
+illustration :
+
+
+

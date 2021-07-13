@@ -36,24 +36,46 @@ void solve()
     int n;
     cin >> n;
     vector<pair<pii, int>> v;
+    int max_deadline = 0;
     for (int i = 0; i < n; i++)
     {
         int deadline;
         int profit;
         cin >> deadline >> profit;
+        max_deadline = max(max_deadline, deadline);
         v.push_back({{profit, deadline}, i});
     }
 
-    sort(all(v), greater<pair<pii, int>>());
+    sort(all(v), greater<pair<pii, int>>()); //sorting in descending order
 
-    vi ans[n + 1];
+    int ans[max_deadline + 1];
     memset(ans, 0, sizeof ans);
+
     for (int i = 0; i < v.size(); i++)
     {
         int deadline = v[i].first.second;
         int profit = v[i].first.first;
         int id = v[i].second;
+        for (int j = deadline; j >= 0; j--)
+            if (ans[j] == 0)
+            {
+                ans[j] = id;
+                break;
+            }
     }
+
+    // here we are checking for all possible slots starting from the deadline
+    // we will take consider the values staring from index 1 so the 0th index can be considered as a garbage
+    // for jobs that we cant do
+
+    ll sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += ans[i];
+        cout << ans[i] << " ";
+    }
+
+    cout << sum << endl;
 }
 
 int main()

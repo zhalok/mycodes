@@ -1,0 +1,5 @@
+problem1:
+RMQSQ - Range Minimum Query spoj
+link: https://www.spoj.com/problems/RMQSQ/
+
+
