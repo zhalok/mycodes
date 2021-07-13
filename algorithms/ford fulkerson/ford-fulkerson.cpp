@@ -41,6 +41,7 @@ ll minn(ll a,ll b)
     return a<b?a:b;
 }
 
+
 int n,m;
 
 ll adjmat[4002][4002];

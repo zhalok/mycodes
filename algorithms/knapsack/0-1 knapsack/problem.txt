@@ -1,0 +1,10 @@
+the problem is that u have n things with their weight and cost 
+you have a capacity u can carry no more than that capacity
+u have to pick up elements in such a way that the total cost is maximized
+
+
+solution:
+
+
+the solution is dynammic programming 
+checking all possible way to pick up then choose the most optimal one 

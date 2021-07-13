@@ -1,0 +1,3 @@
+--> first find the level of the nodes 
+--> if they are not same then we have to make them the same 
+--> then binary lifting we will do that will the sparse table 

@@ -14,3 +14,8 @@ void sparseTable(int n)
 
     // here it means that the value of segment (from i of len 2^j) is equal to the sum of segment ( from i of len (2^j)/2 which is 2^(j-1) + from i+2^(j-1) of len 2^(j-1) )
 }
+
+
+
+
+
