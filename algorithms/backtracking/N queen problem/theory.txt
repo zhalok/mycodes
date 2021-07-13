@@ -1,0 +1,8 @@
+Problem:
+
+The problem is you have a chess board of size n*n and now u have to place n queens in the chess board such that no queens attack each other
+
+backtracking solution:
+
+go through every column and then go through all the rows of the column if the current position is safe then keep the queen there and then pass the array to the recursive call thats it 
+
