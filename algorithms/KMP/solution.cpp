@@ -37,7 +37,7 @@ ll maxx(ll a, ll b)
     return a > b ? a : b;
 }
 
-int lps[3000];
+int lps[301];
 
 vector<string> v1;
 vector<string> v2;
@@ -63,7 +63,7 @@ map<int, int> mp;
 void kmp_match(string s, string t)
 {
     make_lps(t);
-    vi v;
+
     int i = 0;
     int j = 0;
     while (i < s.size())
@@ -125,6 +125,12 @@ void solve()
         for (int j = 0; j < m2; j++)
             if (mp[j] == n1)
                 ans.push_back({i + 1, j + 1});
+    }
+
+    if (ans.size() == 0)
+    {
+        cout << "NO MATCH FOUND..." << endl;
+        return;
     }
 
     for (int i = 0; i < ans.size(); i++)
