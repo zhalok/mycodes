@@ -69,7 +69,7 @@ void solve()
     // for jobs that we cant do
 
     ll sum = 0;
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= max_deadline; i++)
     {
         sum += ans[i];
         cout << ans[i] << " ";
