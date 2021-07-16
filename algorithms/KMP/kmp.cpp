@@ -83,8 +83,12 @@ bool match(string s, string t)
                 j = pref[j - 1];
         }
     }
+    
+    if(j==t.size()) return true;
+    
     return false;
 }
+
 
 void solve()
 {
