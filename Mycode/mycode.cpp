@@ -435,19 +435,7 @@ void solve()
 
 	mergesort(0, n - 1);
 
-	// if (v.size() == 1)
-	// {
-	// 	cout << "1" << endl;
-	// 	return;
-	// }
-
-	// if (comp(v[0], v[1]) == false)
-	// {
-	// 	cout << "-1" << endl;
-	// 	return;
-	// }
-
-	for (int i = 1; i < n; i++)
+		for (int i = 1; i < n; i++)
 		if (comp(v[0], v[i]) == false)
 		{
 			cout << "-1" << endl;
