@@ -10,6 +10,7 @@ void dfs(int node)
 	}
 
 }
+// finding their depths
 
 void create_sparse_table()
 {
@@ -24,6 +25,8 @@ void create_sparse_table()
    }
 }
 
+// building the sparse table 
+
 int lca(int a,int b)
 {
 	if(level[b]<level[a]) swap(a,b);
@@ -35,6 +38,8 @@ int lca(int a,int b)
 		d-=(1<<jump);
 	}
 
+        // making their depths equal 
+
 	if(a==b) return a;
 
     for(int i=log2(n);i>=0;i--)
@@ -44,6 +49,8 @@ int lca(int a,int b)
 		b=sparse_table[b][i];
 	}
 	return parent[a];
+	
+	// searching for LCA with binary lifting 
 
 
 
