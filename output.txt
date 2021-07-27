@@ -1,6 +1,0 @@
-6 3
-not base case
-3 0
-BAse case
-ans
-0 1
