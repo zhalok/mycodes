@@ -6,7 +6,7 @@
 #include <utility>
 using namespace std;
 #define zhalok Zhalok
-#define inf 100001
+#define inf 1000000000
 #define ll long long int
 #define ull unsigned long long
 #define loop(i, a, b) for (ll i = a; i < b; i++)
@@ -370,91 +370,82 @@ bool comp(vi v1, vi v2)
 	return false;
 }
 
-vector<vi> v;
-
-void merge(int lo, int hi)
+bool checkIntersection(pii p1, pii p2)
 {
-	int mid = (lo + hi) / 2;
-	vector<vi> v1, v2;
-	for (int i = lo; i <= mid; i++)
-		v1.push_back(v[i]);
-	for (int i = mid + 1; i <= hi; i++)
-		v2.push_back(v[i]);
+	int lo1 = p1.first;
+	int hi1 = p1.second;
+	int lo2 = p2.first;
+	int hi2 = p2.second;
+	if (lo1 > hi1)
+		swap(lo1, hi1);
+	if (lo2 > hi2)
+		swap(lo2, hi2);
 
-	vector<vi> vv;
-	int i = 0;
-	int j = 0;
-	while (i < v1.size() && j < v2.size())
-	{
-		if (comp(v1[i], v2[j]))
-			vv.push_back(v1[i++]);
-		else
-			vv.push_back(v2[j++]);
-	}
-
-	while (i < v1.size())
-		vv.push_back(v1[i++]);
-
-	while (j < v2.size())
-		vv.push_back(v2[j++]);
-
-	int idx = 0;
-	for (int x = lo; x <= hi; x++)
-		v[x] = vv[idx++];
-}
-
-void mergesort(int l, int r)
-{
-	if (l >= r)
-		return;
-	int mid = (l + r) / 2;
-	mergesort(l, mid);
-	mergesort(mid + 1, r);
-	merge(l, r);
+	if (lo1 <= lo2 && hi1 >= hi2)
+		return false;
+	if (lo2 <= lo1 && hi2 >= hi1)
+		return false;
+	if (hi1 < lo2 || lo1 > hi2)
+		return false;
+	return true;
 }
 
 void solve()
 {
-
-	v.clear();
-	int n;
-	cin >> n;
-	vector<vi> vv;
+	ll n, k;
+	ll mxmx = 0;
+	cin >> n >> k;
+	vll v;
+	set<ll> s;
 	for (int i = 0; i < n; i++)
 	{
-		vi temp;
-		for (int j = 0; j < 5; j++)
-		{
-			int x;
-			cin >> x;
-			temp.push_back(x);
-		}
-		vv.push_back(temp);
-		v.push_back(temp);
+		ll x;
+		cin >> x;
+		v.push_back(x);
+		s.insert(x);
+		mxmx = maxx(mxmx, x);
 	}
 
-	mergesort(0, n - 1);
+	vi idxs[100001];
 
-		for (int i = 1; i < n; i++)
-		if (comp(v[0], v[i]) == false)
-		{
-			cout << "-1" << endl;
-			return;
-		}
+	for (int i = 0; i < n; i++)
+		idxs[v[i]].push_back(i + 1);
 
-	for (int i = 0; i < vv.size(); i++)
-		if (vv[i] == v[0])
+	for (int i = 0; i <= mxmx; i++)
+		if (idxs[i].size())
+			sort(all(idxs[i]), greater<int>());
+
+	ll mx = -inf;
+
+	for (int i = 0; i < n - 1; i++)
+	{
+		int x = v[i];
+		int y = v[i + 1];
+		ll temp_ans = (i + 1) * (i + 2) - k * (x | y);
+		mx = maxx(mx, temp_ans);
+	}
+
+	sort(all(v));
+
+	for (int i = 0; i < v.size() - 1; i++)
+	{
+		if (v[i] == v[i + 1])
 		{
-			cout << i + 1 << endl;
-			return;
+			int x = idxs[v[i]][0];
+			int y = idxs[v[i]][1];
+			ll temp_ans = (x * y) - k * v[i];
+			mx = maxx(mx, temp_ans);
 		}
+	}
+
+	cout << mx << endl;
 }
 
 int main()
 {
 
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	// freopen("input.txt", "r", stdin);
+	// freopen("output.txt", "w", stdout);
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);

@@ -53,37 +53,28 @@ ll cnt;
 void merge(int lo, int hi)
 {
     int mid = (lo + hi) / 2;
-    vi v1, v2;
-    for (int i = lo; i <= mid; i++)
-        v1.push_back(v[i]);
-    for (int i = mid + 1; i <= hi; i++)
-        v2.push_back(v[i]);
-
+    int i = lo;
+    int j = mid + 1;
     vll vv;
-    int i = 0;
-    int j = 0;
-
-    while (i < v1.size() && j < v2.size())
+    while (i <= mid && j <= hi)
     {
-        if (v1[i] <= v2[j])
-            vv.push_back(v1[i++]);
+        if (v[i] <= v[j])
+            vv.push_back(v[i++]);
         else
         {
-            ll temp_cnt = vv.size() - mid - j;
-            cnt += abs(temp_cnt);
-            vv.push_back(v2[j++]);
+            ll temp_cnt = (mid - i + 1);
+            cnt += temp_cnt;
+            vv.push_back(v[j++]);
         }
     }
 
-    while (i < v1.size())
-        vv.push_back(v1[i++]);
+    while (i <= mid)
+        vv.push_back(v[i++]);
+    while (j <= hi)
+        vv.push_back(v[j++]);
 
-    while (j < v2.size())
-        vv.push_back(v2[j++]);
-
-    int idx = 0;
-    for (int x = lo; x <= hi; x++)
-        v[x] = vv[idx++];
+    for (int i = 0, x = lo; i < vv.size() && x <= hi; i++, x++)
+        v[x] = vv[i];
 }
 
 void mergesort(int l, int r)
@@ -109,11 +100,11 @@ void solve()
         v.push_back(x);
     }
 
-    mergesort(0, v.size() - 1);
+        mergesort(0, v.size() - 1);
     cout << cnt << endl;
-    for (int i = 0; i < n; i++)
-        cout << v[i] << " ";
-    cout << endl;
+    // for (int i = 0; i < n; i++)
+    //     cout << v[i] << " ";
+    // cout << endl;
 }
 
 int main()
