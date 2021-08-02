@@ -390,55 +390,116 @@ bool checkIntersection(pii p1, pii p2)
 	return true;
 }
 
+vi get_in_bits(ll n)
+{
+	vi v;
+	int bits = 32;
+	while (bits--)
+	{
+		v.push_back(n % 2);
+		n /= 2;
+	}
+	reverse(all(v));
+	return v;
+}
+
+ll bits_to_num(vi v)
+{
+	ll sum = 0;
+	for (int i = 0; i < v.size(); i++)
+	{
+		sum *= 2;
+		sum += v[i];
+	}
+	return sum;
+}
+
+struct Point
+{
+	int x, y;
+};
+int n;
+int a1[200005];
+int a2[200005];
+ll dp[200002][2][2][2];
+
+ll get_ans(int idx, int left, int up, int right)
+{
+	if (idx > n)
+		return 0;
+	if (dp[idx][left][up][right] != -1)
+		return dp[idx][left][up][right];
+
+	ll ans = 0;
+
+	if (a2[idx] == 0)
+	{
+		left = up;
+		up = right;
+		right = a1[idx + 2];
+		return get_ans(idx + 1, left, up, right);
+	}
+
+	if (up == 0)
+	{
+		up = 1;
+		left = up;
+		up = right;
+		right = a1[idx + 2];
+		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
+	}
+
+	if (left == -1)
+	{
+		left = 1;
+		left = up;
+		up = right;
+		right = a1[idx + 2];
+		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
+	}
+
+	if (right == -1)
+	{
+		right = 1;
+		left = up;
+		up = right;
+		right = a1[idx + 2];
+		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
+	}
+
+	return dp[idx][left][up][right] = ans;
+}
+
 void solve()
 {
-	ll n, k;
-	ll mxmx = 0;
-	cin >> n >> k;
-	vll v;
-	set<ll> s;
-	for (int i = 0; i < n; i++)
-	{
-		ll x;
-		cin >> x;
-		v.push_back(x);
-		s.insert(x);
-		mxmx = maxx(mxmx, x);
-	}
 
-	vi idxs[100001];
+	cin >> n;
 
-	for (int i = 0; i < n; i++)
-		idxs[v[i]].push_back(i + 1);
+	string s1, s2;
+	cin >> s1 >> s2;
 
-	for (int i = 0; i <= mxmx; i++)
-		if (idxs[i].size())
-			sort(all(idxs[i]), greater<int>());
+	memset(a1, 0, sizeof a1);
+	memset(a2, 0, sizeof a2);
 
-	ll mx = -inf;
+	for (int i = 1; i <= n; i++)
+		a1[i] = s1[i - 1] - '0';
 
-	for (int i = 0; i < n - 1; i++)
-	{
-		int x = v[i];
-		int y = v[i + 1];
-		ll temp_ans = (i + 1) * (i + 2) - k * (x | y);
-		mx = maxx(mx, temp_ans);
-	}
+	for (int i = 1; i <= n; i++)
+		a2[i] = s2[i - 1] - '0';
 
-	sort(all(v));
+	for (int i = 1; i <= n; i++)
+		if (a1[i] == 1)
+			a1[i] = -1;
 
-	for (int i = 0; i < v.size() - 1; i++)
-	{
-		if (v[i] == v[i + 1])
-		{
-			int x = idxs[v[i]][0];
-			int y = idxs[v[i]][1];
-			ll temp_ans = (x * y) - k * v[i];
-			mx = maxx(mx, temp_ans);
-		}
-	}
+	// for (int i = 0; i <= n + 2; i++)
+	// 	cout << a1[i] << " ";
+	// cout << endl;
+	// for (int i = 0; i <= n + 2; i++)
+	// 	cout << a2[i] << " ";
+	// cout << endl;
 
-	cout << mx << endl;
+	memset(dp, -1, sizeof dp);
+	cout << get_ans(1, a1[0], a1[1], a1[2]) << endl;
 }
 
 int main()
