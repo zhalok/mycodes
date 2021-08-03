@@ -51,39 +51,34 @@ ll cill(ll a, ll b)
 int movex[8] = {1, -1, 0, 0, 1, -1, 1, -1};
 int movey[8] = {0, 0, 1, -1, 1, 1, -1, -1};
 
-/*
-
-void solve_eqn(ll a1,ll b1,ll a2,ll b2,ll c1,ll c2)
+pii solve_eqn(ll a1, ll b1, ll a2, ll b2, ll c1, ll c2)
 {
-	 
-     ll del=a1*b2-b1*a2;
-	 ll delx=c1*b2-c2*b1;
-	 ll dely=a1*c2-a2*c1;
-     
-	 long double x,y;
-	 if(delx==0) x=0.0;
-	 else 
-	  x=(1.0*delx)/del;
 
-	  if(dely==0)
-	  y=0.0;
-	  else 
-	  y=(1.0*dely)/del;
+	ll del = a1 * b2 - b1 * a2;
+	ll delx = c1 * b2 - c2 * b1;
+	ll dely = a1 * c2 - a2 * c1;
+
+	long double x, y;
+	if (delx == 0)
+		x = 0.0;
+	else
+		x = (1.0 * delx) / del;
+
+	if (dely == 0)
+		y = 0.0;
+	else
+		y = (1.0 * dely) / del;
 	//  cout<<fixed<<setprecision(10)<<x<<" "<<y<<endl;
-	  
-	  
-      
-//	 return {x,y};
 
+	return {x, y};
 }
 
-double find_dis(double x1,double y1,double x2,double y2)
+double find_dis(double x1, double y1, double x2, double y2)
 {
-	double ans=(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+	double ans = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
 	return ans;
 	return sqrt(ans);
 }
-*/
 
 ll mod_exp(ll a, ll n, ll mod)
 {
@@ -170,6 +165,25 @@ ll lcm(ll a, ll b)
 {
 	ll g = gcd(a, b);
 	return (a * b) / g;
+}
+
+int extended_gcd(int a, int b, int &x, int &y)
+{
+
+	if (b == 0)
+	{
+		cout << "BAse case" << endl;
+		x = 1;
+		y = 0;
+		return a;
+	}
+
+	cout << "not base case" << endl;
+	int x1, y1;
+	int d = extended_gcd(b, a % b, x1, y1);
+	x = y1;
+	y = x1 - y1 * (a / b);
+	return d;
 }
 
 ll get_digit_sum(ll n)
@@ -291,215 +305,8 @@ int sum_of_digits(int n)
 	return sum;
 }
 
-int extended_gcd(int a, int b, int &x, int &y)
-{
-
-	if (b == 0)
-	{
-		cout << "BAse case" << endl;
-		x = 1;
-		y = 0;
-		return a;
-	}
-
-	cout << "not base case" << endl;
-	int x1, y1;
-	int d = extended_gcd(b, a % b, x1, y1);
-	x = y1;
-	y = x1 - y1 * (a / b);
-	return d;
-}
-
-vi v1, v2;
-
-bool evaluation(int mid)
-{
-	for (int i = 0; i < mid; i++)
-		v1.push_back(100);
-
-	for (int i = 0; i < mid; i++)
-		v2.push_back(0);
-
-	int limit = v1.size() - (v1.size() / 4);
-
-	int sum1 = 0;
-
-	for (int i = v1.size() - 1, cnt = 0; i >= 0, cnt < limit; i--, cnt++)
-		sum1 += v1[i];
-
-	int sum2 = 0;
-	for (int i = 0; i < limit; i++)
-		sum2 += v2[i];
-
-	for (int i = 0; i < mid; i++)
-	{
-		v1.pop_back();
-		v2.pop_back();
-	}
-	// cout << sum1 << " " << sum2 << endl;
-
-	if (sum1 >= sum2)
-		return true;
-	return false;
-}
-
-bool check(vll v1, vll v2)
-{
-	for (auto x : v1)
-		cout << x << " ";
-	cout << endl;
-	for (auto x : v2)
-		cout << x << " ";
-	cout << endl;
-	cout << endl;
-	for (int i = 0; i < v1.size(); i++)
-		if (v1[i] != v2[i])
-			return false;
-	return true;
-}
-
-bool comp(vi v1, vi v2)
-{
-	int cnt = 0;
-	for (int i = 0; i < v1.size(); i++)
-		if (v1[i] < v2[i])
-			cnt++;
-
-	if (cnt >= 3)
-		return true;
-	return false;
-}
-
-bool checkIntersection(pii p1, pii p2)
-{
-	int lo1 = p1.first;
-	int hi1 = p1.second;
-	int lo2 = p2.first;
-	int hi2 = p2.second;
-	if (lo1 > hi1)
-		swap(lo1, hi1);
-	if (lo2 > hi2)
-		swap(lo2, hi2);
-
-	if (lo1 <= lo2 && hi1 >= hi2)
-		return false;
-	if (lo2 <= lo1 && hi2 >= hi1)
-		return false;
-	if (hi1 < lo2 || lo1 > hi2)
-		return false;
-	return true;
-}
-
-vi get_in_bits(ll n)
-{
-	vi v;
-	int bits = 32;
-	while (bits--)
-	{
-		v.push_back(n % 2);
-		n /= 2;
-	}
-	reverse(all(v));
-	return v;
-}
-
-ll bits_to_num(vi v)
-{
-	ll sum = 0;
-	for (int i = 0; i < v.size(); i++)
-	{
-		sum *= 2;
-		sum += v[i];
-	}
-	return sum;
-}
-
-struct Point
-{
-	int x, y;
-};
-int n;
-int a1[200005];
-int a2[200005];
-ll dp[200002][2][2][2];
-
-ll get_ans(int idx, int left, int up, int right)
-{
-	if (idx > n)
-		return 0;
-	if (dp[idx][left][up][right] != -1)
-		return dp[idx][left][up][right];
-
-	ll ans = 0;
-
-	if (a2[idx] == 0)
-	{
-		left = up;
-		up = right;
-		right = a1[idx + 2];
-		return get_ans(idx + 1, left, up, right);
-	}
-
-	if (up == 0)
-	{
-		up = 1;
-		left = up;
-		up = right;
-		right = a1[idx + 2];
-		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
-	}
-
-	if (left == -1)
-	{
-		left = 1;
-		left = up;
-		up = right;
-		right = a1[idx + 2];
-		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
-	}
-
-	if (right == -1)
-	{
-		right = 1;
-		left = up;
-		up = right;
-		right = a1[idx + 2];
-		ans = maxx(ans, 1 + get_ans(idx + 1, left, up, right));
-	}
-
-	return dp[idx][left][up][right] = ans;
-}
-
 void solve()
 {
-
-	cin >> n;
-
-	string s1, s2;
-	cin >> s1 >> s2;
-
-	memset(a1, 0, sizeof a1);
-	memset(a2, 0, sizeof a2);
-
-	for (int i = 1; i <= n; i++)
-		a1[i] = s1[i - 1] - '0';
-
-	for (int i = 1; i <= n; i++)
-		a2[i] = s2[i - 1] - '0';
-
-	for (int i = 1; i <= n; i++)
-		if (a1[i] == 1)
-			a1[i] = -1;
-
-	// for (int i = 0; i <= n + 2; i++)
-	// 	cout << a1[i] << " ";
-	// cout << endl;
-	// for (int i = 0; i <= n + 2; i++)
-	// 	cout << a2[i] << " ";
-	// cout << endl;
-
-	memset(dp, -1, sizeof dp);
-	cout << get_ans(1, a1[0], a1[1], a1[2]) << endl;
 }
 
 int main()
