@@ -24,7 +24,7 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define sz 10001
+#define sz 400001
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(), v.end()
@@ -251,14 +251,13 @@ ll count_primes(ll x, ll p)
 	return cnt;
 }
 
-vll used_primes;
-
-void factorization(ll n)
+vll factorization(ll n)
 {
-	used_primes.clear();
+	vll used_primes;
+
 	ll temp_n = n;
 	for (int i = 2; i * i <= temp_n; i++)
-		if (n % i == 0)
+		while (n % i == 0)
 		{
 			used_primes.push_back(i);
 
@@ -267,6 +266,8 @@ void factorization(ll n)
 
 	if (n > 1)
 		used_primes.push_back(n);
+
+	return used_primes;
 }
 
 int calculate_digits(ll n)
@@ -293,27 +294,220 @@ ll digit_to_num(vll v)
 	return sum;
 }
 
-int sum_of_digits(int n)
+vi adj[sz];
+bool visited[sz];
+
+void dfs(int node)
 {
-	int sum = 0;
-	while (n)
+	visited[node] = true;
+	loop(i, 0, adj[node].size())
 	{
-		sum += (n % 10);
-		n /= 10;
+		int cur = adj[node][i];
+		if (visited[cur] == false)
+			dfs(cur);
+	}
+}
+
+int get_ans(vi v, int n)
+{
+	int left_idx;
+	int right_idx;
+	for (int i = 0; i < v.size(); i++)
+
+		if (v[i] == n)
+		{
+			left_idx = i;
+			break;
+		}
+
+	for (int i = v.size() - 1; i >= 0; i--)
+		if (v[i] == n)
+		{
+			right_idx = i;
+			break;
+		}
+
+	int cnt1 = left_idx + 1;
+	int cnt2 = n - right_idx;
+	if (cnt1 < cnt2)
+		return left_idx;
+	else
+		return right_idx;
+}
+
+int pref[1000];
+
+void make_pref(string s)
+{
+	memset(pref, 0, sizeof pref);
+
+	for (int i = 1; i < s.size(); i++)
+	{
+		int j = pref[i - 1];
+		while (j > 0 && s[i] != s[j])
+			j = pref[j - 1];
+
+		if (s[i] == s[j])
+			pref[i] = j + 1;
+	}
+}
+
+bool match(string s, string t)
+{
+	make_pref(t);
+	int i = 0;
+	int j = 0;
+	while (i < s.size())
+	{
+		if (s[i] == t[j])
+		{
+			i++;
+			j++;
+		}
+		else
+		{
+
+			if (j == t.size())
+				return true;
+
+			if (j == 0)
+				i++;
+			else
+				j = pref[j - 1];
+		}
 	}
 
-	return sum;
+	if (j == t.size())
+		return true;
+
+	return false;
+}
+
+// bool match(string s, string t)
+// {
+// 	int i = 0;
+// 	int j = t.size() - 1;
+// 	while (j < s.size())
+// 	{
+// 		string temp;
+// 		for (int x = i; x <= j; x++)
+// 			temp += s[x];
+// 		if (temp == t)
+// 			return true;
+// 		i++;
+// 		j++;
+// 	}
+
+// 	return false;
+// }
+
+string check1(string s)
+{
+	string ans;
+	for (char a = 'a'; a <= 'z'; a++)
+	{
+		bool flag = true;
+		for (int i = 0; i < s.size(); i++)
+			if (s[i] == a)
+			{
+				flag = false;
+				break;
+			}
+
+		if (flag)
+		{
+			ans += a;
+			break;
+		}
+	}
+
+	return ans;
+}
+
+string check2(string s)
+{
+	vector<string> ans;
+	string temp;
+	for (char a = 'a'; a <= 'z'; a++)
+	{
+		temp.push_back(a);
+
+		for (char b = 'a'; b <= 'z'; b++)
+		{
+			temp.push_back(b);
+			if (match(s, temp) == false)
+				return temp;
+			temp.pop_back();
+		}
+
+		temp.pop_back();
+	}
+
+	return temp;
+}
+
+string check3(string s)
+{
+	string temp;
+
+	for (char a = 'a'; a <= 'z'; a++)
+	{
+		temp.push_back(a);
+		for (char b = 'a'; b <= 'z'; b++)
+		{
+			temp.push_back(b);
+
+			for (char c = 'a'; c <= 'z'; c++)
+			{
+				temp.push_back(c);
+				if (match(s, temp) == false)
+					return temp;
+				temp.pop_back();
+			}
+			temp.pop_back();
+		}
+		temp.pop_back();
+	}
+
+	return temp;
 }
 
 void solve()
 {
+
+	int n;
+	cin >> n;
+	string s;
+	cin >> s;
+	string ans1, ans2, ans3;
+	ans1 = check1(s);
+	ans2 = check2(s);
+	ans3 = check3(s);
+
+	if (ans1.size())
+	{
+		cout << ans1 << endl;
+		return;
+	}
+
+	if (ans2.size())
+	{
+		cout << ans2 << endl;
+		return;
+	}
+
+	if (ans3.size())
+	{
+		cout << ans3 << endl;
+		return;
+	}
 }
 
 int main()
 {
 
-	// freopen("input.txt", "r", stdin);
-	// freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
