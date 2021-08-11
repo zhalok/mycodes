@@ -5,7 +5,7 @@
 #include <vector>
 #include <utility>
 using namespace std;
-#define zhalok Zhalok
+
 #define inf 1000000000
 #define ll long long int
 #define ull unsigned long long
