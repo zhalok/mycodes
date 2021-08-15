@@ -5,8 +5,8 @@
 #include <vector>
 #include <utility>
 using namespace std;
-
-#define inf 1000000000
+#define zhalok zhalok
+#define inf 2000000000
 #define ll long long int
 #define ull unsigned long long
 #define loop(i, a, b) for (ll i = a; i < b; i++)
@@ -28,7 +28,7 @@ using namespace std;
 #define ub upper_bound
 #define lb lower_bound
 #define all(v) v.begin(), v.end()
-#define eps 1e-9
+#define eps 1e-6
 #define pi acos(-1.0)
 
 ll minn(ll a, ll b)
@@ -39,6 +39,11 @@ ll minn(ll a, ll b)
 ll maxx(ll a, ll b)
 {
 	return a > b ? a : b;
+}
+
+double maxx(double a, double b)
+{
+	return ((a - b > eps)) ? a : b;
 }
 
 ll cill(ll a, ll b)
@@ -95,6 +100,11 @@ ll mod_exp(ll a, ll n, ll mod)
 		ll temp2 = mod_exp(a, n - 1, mod);
 		return (temp1 % mod * temp2 % mod) % mod;
 	}
+}
+
+ll mod_inv(ll n, ll mod)
+{
+	return mod_exp(n, mod - 2, mod);
 }
 
 ll abss(ll a)
@@ -472,34 +482,81 @@ string check3(string s)
 	return temp;
 }
 
+vll factorials;
+
+void preCalculation(ll n, ll mod)
+{
+
+	ll fact = 1;
+	factorials.push_back(fact);
+
+	for (int i = 1; i <= n; i++)
+	{
+		fact *= i;
+		fact %= mod;
+		factorials.push_back(fact);
+	}
+}
+
+ll process(ll n, ll k)
+{
+
+	ll ans1 = factorials[n];
+	ll ans2 = factorials[k];
+	ll ans3 = factorials[n - k];
+	ll ans = (ans1 % MOD) * mod_inv(ans2, MOD) * mod_inv(ans3, MOD);
+	return ans;
+}
+
+ll dp[200001][2];
+int n, k;
+
+ll get_ans(int idx, bool flag, ll comb, ll exp)
+{
+
+	if (idx == k)
+		return 1;
+	if (dp[idx][flag] != -1)
+		return dp[idx][flag];
+	ll ans = 0;
+	if (flag)
+		ans = (get_ans(idx + 1, true, comb, exp) % MOD + ((exp - 1) % MOD * get_ans(idx + 1, false, comb, exp) % MOD) % MOD) % MOD;
+	else
+		ans = (get_ans(idx + 1, true, comb, exp) % MOD + ((comb - 1) % MOD * get_ans(idx + 1, false, comb, exp) % MOD) % MOD) % MOD;
+
+	return dp[idx][flag] = ans;
+}
+
 void solve()
 {
 
-	int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	string ans1, ans2, ans3;
-	ans1 = check1(s);
-	ans2 = check2(s);
-	ans3 = check3(s);
+	cin >> n >> k;
 
-	if (ans1.size())
+	if (k == 0)
 	{
-		cout << ans1 << endl;
+		cout << "1" << endl;
 		return;
 	}
 
-	if (ans2.size())
+	if (n % 2 == 0)
 	{
-		cout << ans2 << endl;
-		return;
-	}
+		ll comb = 0;
+		for (int i = 0; i <= n; i += 2)
+			comb += process(n, i);
+		ll exp = mod_exp(2, n, MOD);
 
-	if (ans3.size())
+		memset(dp, -1, sizeof dp);
+
+		cout << get_ans(0, false, comb, exp) << endl;
+	}
+	else
 	{
-		cout << ans3 << endl;
-		return;
+		ll temp = 0;
+		for (int i = 1; i <= n; i += 2)
+			temp += process(n, i);
+
+		ll ans = 1 + mod_exp(temp, k, MOD);
+		cout << ans << endl;
 	}
 }
 
@@ -514,7 +571,7 @@ int main()
 
 	int T;
 
-	// precalculation();
+	preCalculation(200000, MOD);
 
 	cin >> T;
 	for (int i = 1; i <= T; i++)

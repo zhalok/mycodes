@@ -27,69 +27,59 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
+ll minn(ll a, ll b)
+{
+    return (a < b) ? a : b;
+}
+
+vll v;
+ll mem[10001];
+int n;
+
+ll dp(int idx)
+{
+    if (idx >= v.size() - 1)
+        return 0;
+    if (mem[idx] != -1)
+        return mem[idx];
+    int mn = idx + 1;
+    int mx = idx + v[idx];
+    mx = minn(v.size() - 1, mx);
+    ll ans = inf;
+    for (int i = mn; i <= mx; i++)
+        ans = minn(ans, 1 + dp(i));
+
+    return mem[idx] = ans;
+}
+
 class Solution
 {
 public:
-    int countPalindromicSubsequence(string s)
+    int jump(vector<int> &nums)
     {
-        map<char, int> mp;
-        ll ans[s.size()];
-        memset(ans, 0, sizeof ans);
-
-        for (int i = 0; i < s.size(); i++)
-            mp[s[i]] = -1;
-
-        for (int i = 0; i < s.size(); i++)
-        {
-            if (mp[s[i]] != -1)
-                ans[i] = ans[mp[s[i]]] + (i - mp[s[i]] - 1);
-            mp[s[i]] = i;
-        }
-
-        ll total = 0;
-        for (auto x : ans)
-            total += x;
-        return total;
+        for (auto x : nums)
+            v.push_back(x);
+        memset(mem, -1, sizeof mem);
+        return dp(0);
     }
 };
 
-// int main()
-// {
-//     // cout<<"HEllo world"<<endl;
-//     //gu
-//     int m;
-//     freopen("input.txt","r",stdin);
-//     freopen("output.txt","w",stdout);
-//     int n;
-//     cin>>n;
-//     vi v;
-//     for(int i=0;i<n;i++)
-//     {
-//         int x;
-//         cin>>x;
-//         v.push_back(x);
+int main()
+{
 
-//     }
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 
-//     for(auto x: v)cout<<x<<endl;
+    int n;
+    cin >> n;
+    vi v;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.push_back(x);
+    }
 
-//     // Solution solution;
-
-//     // string s;
-//     // vector<string>v;
-
-//     // cin>>s;
-//     // int n;
-//     // cin>>n;
-//     // for(int i=0;i<n;i++)
-//     // {
-//     //     string s;
-//     //     cin>>s;
-//     //     v.push_back(s);
-//     // }
-
-//     // vi ans = solution.findSubstring(s,v);
-//     // for(auto x:ans) cout<<x<<" ";
-//     // cout<<endl;
-
-// }
+    Solution solution;
+    cout << solution.jump(v) << endl;
+}
