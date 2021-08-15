@@ -57,6 +57,7 @@ class Solution
 public:
     int jump(vector<int> &nums)
     {
+        v.clear();
         for (auto x : nums)
             v.push_back(x);
         memset(mem, -1, sizeof mem);
@@ -64,22 +65,22 @@ public:
     }
 };
 
-int main()
-{
+// int main()
+// {
 
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
 
-    int n;
-    cin >> n;
-    vi v;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        v.push_back(x);
-    }
+//     int n;
+//     cin >> n;
+//     vi v;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         v.push_back(x);
+//     }
 
-    Solution solution;
-    cout << solution.jump(v) << endl;
-}
+//     Solution solution;
+//     cout << solution.jump(v) << endl;
+// }

@@ -460,50 +460,33 @@ ll get_ans(int idx, bool flag)
 void solve()
 {
 
-    cin >> n >> k;
-
-    if (k == 0)
+    int n;
+    cin >> n;
+    list<int> li;
+    for (int i = 0; i < n; i++)
     {
-        cout << "1" << endl;
-        return;
+        int x;
+        cin >> x;
+        li.push_front(x);
     }
 
-    if (n % 2 == 0)
-    {
-        comb = 0;
-        for (int i = 0; i <= n; i += 2)
-            comb += process(n, i);
-        pown = mod_exp(2, n, MOD);
-
-        memset(dp, -1, sizeof dp);
-
-        cout << get_ans(0, false) << endl;
-    }
-    else
-    {
-        ll temp = 0;
-        for (int i = 1; i <= n; i += 2)
-            temp += process(n, i);
-
-        ll ans = 1 + mod_exp(temp, k, MOD);
-        cout << ans << endl;
-    }
+    for (auto x : li)
+        cout << x << " ";
+    cout << endl;
 }
 
 int main()
 {
 
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     int T;
 
-    preCalculation(200000, MOD);
-
-    cin >> T;
-    for (int i = 1; i <= T; i++)
-        solve();
+    // cin >> T;
+    // for (int i = 1; i <= T; i++)
+    solve();
 }
