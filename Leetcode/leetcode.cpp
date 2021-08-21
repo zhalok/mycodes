@@ -27,39 +27,22 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
-ll minn(ll a, ll b)
+int N;
+int mem[201];
+int dp(int idx)
 {
-    return (a < b) ? a : b;
-}
-
-vll v;
-ll mem[10001];
-int n;
-
-ll dp(int idx)
-{
-    if (idx >= v.size() - 1)
-        return 0;
+    if (idx >= N)
+        return 1;
     if (mem[idx] != -1)
         return mem[idx];
-    int mn = idx + 1;
-    int mx = idx + v[idx];
-    mx = minn(v.size() - 1, mx);
-    ll ans = inf;
-    for (int i = mn; i <= mx; i++)
-        ans = minn(ans, 1 + dp(i));
-
-    return mem[idx] = ans;
+    return mem[idx] = dp(idx + 1) + dp(idx + 2);
 }
 
 class Solution
 {
 public:
-    int jump(vector<int> &nums)
+    int climbStairs(int n)
     {
-        v.clear();
-        for (auto x : nums)
-            v.push_back(x);
         memset(mem, -1, sizeof mem);
         return dp(0);
     }
@@ -70,17 +53,21 @@ public:
 
 //     freopen("input.txt", "r", stdin);
 //     freopen("output.txt", "w", stdout);
-
-//     int n;
-//     cin >> n;
-//     vi v;
+//     int n, m;
+//     cin >> n >> m;
+//     vector<vi> v;
 //     for (int i = 0; i < n; i++)
 //     {
-//         int x;
-//         cin >> x;
-//         v.push_back(x);
+//         vi temp;
+//         for (int j = 0; j < m; j++)
+//         {
+//             int x;
+//             cin >> x;
+//             temp.push_back(x);
+//         }
+//         v.push_back(temp);
 //     }
 
-//     Solution solution;
-//     cout << solution.jump(v) << endl;
+//     Solution Solution;
+//     cout << Solution.uniquePathsIII(v) << endl;
 // }
