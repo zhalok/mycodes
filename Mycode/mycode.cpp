@@ -526,37 +526,111 @@ ll get_ans(int idx, bool flag, ll comb, ll exp)
 
 	return dp[idx][flag] = ans;
 }
+// vll v;
+
+// bool isSorted()
+// {
+// 	for (int i = 0; i < v.size() - 1; i++)
+// 		if (v[i] > v[i + 1])
+// 			return false;
+// 	return true;
+// }
+
+vi v;
+
+bool isSorted()
+{
+	for (int i = 0; i < v.size() - 1; i++)
+		if (v[i] > v[i + 1])
+			return false;
+	return true;
+}
+
+vi arr;
+
+bool eval(ll sum, ll cnt, ll cnt_sum, ll val)
+{
+	int x = cnt * val;
+	int y = sum - cnt_sum;
+	if (x > y)
+		return true;
+	return false;
+}
 
 void solve()
 {
+	int n;
+	cin >> n;
+	vll v;
+	ll odds = 0;
+	ll evens = 0;
 
-	cin >> n >> k;
-
-	if (k == 0)
+	for (int i = 0; i < n; i++)
 	{
-		cout << "1" << endl;
+		ll x;
+		cin >> x;
+		v.push_back(x);
+		if (x % 2 == 0)
+			evens++;
+		else
+			odds++;
+	}
+	if (abss(evens - odds) > 1)
+	{
+		cout << "-1" << endl;
 		return;
 	}
 
-	if (n % 2 == 0)
+	if (evens == odds)
 	{
-		ll comb = 0;
-		for (int i = 0; i <= n; i += 2)
-			comb += process(n, i);
-		ll exp = mod_exp(2, n, MOD);
+		int ans = inf;
+		int sum = 0;
+		int idx = 0;
+		for (int i = 0; i < n; i++)
+			if (v[i] % 2 == 0)
+			{
+				sum += abs(idx - i);
+				idx += 2;
+			}
+		ans = min(ans, sum);
+		sum = 0;
+		idx = 1;
+		for (int i = 0; i < n; i++)
+			if (v[i] % 2 == 0)
+			{
+				sum += abs(idx - i);
+				idx += 2;
+			}
+		ans = min(ans, sum);
 
-		memset(dp, -1, sizeof dp);
-
-		cout << get_ans(0, false, comb, exp) << endl;
+		cout << ans << endl;
 	}
 	else
 	{
-		ll temp = 0;
-		for (int i = 1; i <= n; i += 2)
-			temp += process(n, i);
-
-		ll ans = 1 + mod_exp(temp, k, MOD);
-		cout << ans << endl;
+		if (evens > odds)
+		{
+			int sum = 0;
+			int idx = 0;
+			for (int i = 0; i < n; i++)
+				if (v[i] % 2 == 0)
+				{
+					sum += abs(idx - i);
+					idx += 2;
+				}
+			cout << sum << endl;
+		}
+		else
+		{
+			int sum = 0;
+			int idx = 1;
+			for (int i = 0; i < n; i++)
+				if (v[i] % 2 == 0)
+				{
+					sum += abs(idx - i);
+					idx += 2;
+				}
+			cout << sum << endl;
+		}
 	}
 }
 
@@ -570,8 +644,6 @@ int main()
 	cin.tie(NULL);
 
 	int T;
-
-	preCalculation(200000, MOD);
 
 	cin >> T;
 	for (int i = 1; i <= T; i++)
