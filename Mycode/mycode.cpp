@@ -304,334 +304,41 @@ ll digit_to_num(vll v)
 	return sum;
 }
 
-vi adj[sz];
-bool visited[sz];
+string str1, str2;
 
-void dfs(int node)
-{
-	visited[node] = true;
-	loop(i, 0, adj[node].size())
-	{
-		int cur = adj[node][i];
-		if (visited[cur] == false)
-			dfs(cur);
-	}
-}
+ll dp[501][501];
 
-int get_ans(vi v, int n)
-{
-	int left_idx;
-	int right_idx;
-	for (int i = 0; i < v.size(); i++)
-
-		if (v[i] == n)
-		{
-			left_idx = i;
-			break;
-		}
-
-	for (int i = v.size() - 1; i >= 0; i--)
-		if (v[i] == n)
-		{
-			right_idx = i;
-			break;
-		}
-
-	int cnt1 = left_idx + 1;
-	int cnt2 = n - right_idx;
-	if (cnt1 < cnt2)
-		return left_idx;
-	else
-		return right_idx;
-}
-
-int pref[1000];
-
-void make_pref(string s)
-{
-	memset(pref, 0, sizeof pref);
-
-	for (int i = 1; i < s.size(); i++)
-	{
-		int j = pref[i - 1];
-		while (j > 0 && s[i] != s[j])
-			j = pref[j - 1];
-
-		if (s[i] == s[j])
-			pref[i] = j + 1;
-	}
-}
-
-bool match(string s, string t)
-{
-	make_pref(t);
-	int i = 0;
-	int j = 0;
-	while (i < s.size())
-	{
-		if (s[i] == t[j])
-		{
-			i++;
-			j++;
-		}
-		else
-		{
-
-			if (j == t.size())
-				return true;
-
-			if (j == 0)
-				i++;
-			else
-				j = pref[j - 1];
-		}
-	}
-
-	if (j == t.size())
-		return true;
-
-	return false;
-}
-
-// bool match(string s, string t)
-// {
-// 	int i = 0;
-// 	int j = t.size() - 1;
-// 	while (j < s.size())
-// 	{
-// 		string temp;
-// 		for (int x = i; x <= j; x++)
-// 			temp += s[x];
-// 		if (temp == t)
-// 			return true;
-// 		i++;
-// 		j++;
-// 	}
-
-// 	return false;
-// }
-
-string check1(string s)
-{
-	string ans;
-	for (char a = 'a'; a <= 'z'; a++)
-	{
-		bool flag = true;
-		for (int i = 0; i < s.size(); i++)
-			if (s[i] == a)
-			{
-				flag = false;
-				break;
-			}
-
-		if (flag)
-		{
-			ans += a;
-			break;
-		}
-	}
-
-	return ans;
-}
-
-string check2(string s)
-{
-	vector<string> ans;
-	string temp;
-	for (char a = 'a'; a <= 'z'; a++)
-	{
-		temp.push_back(a);
-
-		for (char b = 'a'; b <= 'z'; b++)
-		{
-			temp.push_back(b);
-			if (match(s, temp) == false)
-				return temp;
-			temp.pop_back();
-		}
-
-		temp.pop_back();
-	}
-
-	return temp;
-}
-
-string check3(string s)
-{
-	string temp;
-
-	for (char a = 'a'; a <= 'z'; a++)
-	{
-		temp.push_back(a);
-		for (char b = 'a'; b <= 'z'; b++)
-		{
-			temp.push_back(b);
-
-			for (char c = 'a'; c <= 'z'; c++)
-			{
-				temp.push_back(c);
-				if (match(s, temp) == false)
-					return temp;
-				temp.pop_back();
-			}
-			temp.pop_back();
-		}
-		temp.pop_back();
-	}
-
-	return temp;
-}
-
-vll factorials;
-
-void preCalculation(ll n, ll mod)
+ll get_ans(int n, int m)
 {
 
-	ll fact = 1;
-	factorials.push_back(fact);
+	if (n == 0)
+		return m;
+	if (m == 0)
+		return n;
+	if (dp[n][m] != -1)
+		return dp[n][m];
+	if (str1[n - 1] == str2[m - 1])
+		return dp[n][m] = get_ans(n - 1, m - 1);
 
-	for (int i = 1; i <= n; i++)
-	{
-		fact *= i;
-		fact %= mod;
-		factorials.push_back(fact);
-	}
-}
+	ll ans = inf;
+	ll temp_ans;
 
-ll process(ll n, ll k)
-{
+	temp_ans = 1 + get_ans(n - 1, m - 1);
+	ans = minn(ans, temp_ans);
+	temp_ans = 1 + get_ans(n - 1, m);
+	ans = minn(temp_ans, ans);
+	temp_ans = 1 + get_ans(n, m - 1);
+	ans = minn(temp_ans, ans);
 
-	ll ans1 = factorials[n];
-	ll ans2 = factorials[k];
-	ll ans3 = factorials[n - k];
-	ll ans = (ans1 % MOD) * mod_inv(ans2, MOD) * mod_inv(ans3, MOD);
-	return ans;
-}
-
-ll dp[200001][2];
-int n, k;
-
-ll get_ans(int idx, bool flag, ll comb, ll exp)
-{
-
-	if (idx == k)
-		return 1;
-	if (dp[idx][flag] != -1)
-		return dp[idx][flag];
-	ll ans = 0;
-	if (flag)
-		ans = (get_ans(idx + 1, true, comb, exp) % MOD + ((exp - 1) % MOD * get_ans(idx + 1, false, comb, exp) % MOD) % MOD) % MOD;
-	else
-		ans = (get_ans(idx + 1, true, comb, exp) % MOD + ((comb - 1) % MOD * get_ans(idx + 1, false, comb, exp) % MOD) % MOD) % MOD;
-
-	return dp[idx][flag] = ans;
-}
-// vll v;
-
-// bool isSorted()
-// {
-// 	for (int i = 0; i < v.size() - 1; i++)
-// 		if (v[i] > v[i + 1])
-// 			return false;
-// 	return true;
-// }
-
-vi v;
-
-bool isSorted()
-{
-	for (int i = 0; i < v.size() - 1; i++)
-		if (v[i] > v[i + 1])
-			return false;
-	return true;
-}
-
-vi arr;
-
-bool eval(ll sum, ll cnt, ll cnt_sum, ll val)
-{
-	int x = cnt * val;
-	int y = sum - cnt_sum;
-	if (x > y)
-		return true;
-	return false;
+	return dp[n][m] = ans;
 }
 
 void solve()
 {
-	int n;
-	cin >> n;
-	vll v;
-	ll odds = 0;
-	ll evens = 0;
-
-	for (int i = 0; i < n; i++)
-	{
-		ll x;
-		cin >> x;
-		v.push_back(x);
-		if (x % 2 == 0)
-			evens++;
-		else
-			odds++;
-	}
-	if (abss(evens - odds) > 1)
-	{
-		cout << "-1" << endl;
-		return;
-	}
-
-	if (evens == odds)
-	{
-		int ans = inf;
-		int sum = 0;
-		int idx = 0;
-		for (int i = 0; i < n; i++)
-			if (v[i] % 2 == 0)
-			{
-				sum += abs(idx - i);
-				idx += 2;
-			}
-		ans = min(ans, sum);
-		sum = 0;
-		idx = 1;
-		for (int i = 0; i < n; i++)
-			if (v[i] % 2 == 0)
-			{
-				sum += abs(idx - i);
-				idx += 2;
-			}
-		ans = min(ans, sum);
-
-		cout << ans << endl;
-	}
-	else
-	{
-		if (evens > odds)
-		{
-			int sum = 0;
-			int idx = 0;
-			for (int i = 0; i < n; i++)
-				if (v[i] % 2 == 0)
-				{
-					sum += abs(idx - i);
-					idx += 2;
-				}
-			cout << sum << endl;
-		}
-		else
-		{
-			int sum = 0;
-			int idx = 1;
-			for (int i = 0; i < n; i++)
-				if (v[i] % 2 == 0)
-				{
-					sum += abs(idx - i);
-					idx += 2;
-				}
-			cout << sum << endl;
-		}
-	}
+	cin >> str1 >> str2;
+	memset(dp, -1, sizeof dp);
+	ll ans = get_ans(str1.size(), str2.size());
+	cout << ans << endl;
 }
 
 int main()
@@ -645,7 +352,7 @@ int main()
 
 	int T;
 
-	cin >> T;
-	for (int i = 1; i <= T; i++)
-		solve();
+	// cin >> T;
+	// for (int i = 1; i <= T; i++)
+	solve();
 }

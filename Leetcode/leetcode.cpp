@@ -27,24 +27,32 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
-int N;
-int mem[201];
-int dp(int idx)
+string st;
+
+int mem[100001];
+
+int mx, mn;
+
+bool dp(int idx)
 {
-    if (idx >= N)
-        return 1;
+    if (idx >= st.size() - 1 && st[st.size() - 1] == '0')
+        return true;
     if (mem[idx] != -1)
         return mem[idx];
-    return mem[idx] = dp(idx + 1) + dp(idx + 2);
+    int lo = idx + mn;
+    int hi = idx + mx;
+    bool ans = false;
+    for (int i = lo; i <= hi; i++)
+        if (st[i] == '0')
+            ans |= dp(i);
+    return mem[idx] = ans;
 }
 
 class Solution
 {
 public:
-    int climbStairs(int n)
+    bool canReach(string s, int minJump, int maxJump)
     {
-        memset(mem, -1, sizeof mem);
-        return dp(0);
     }
 };
 
@@ -53,21 +61,19 @@ public:
 
 //     freopen("input.txt", "r", stdin);
 //     freopen("output.txt", "w", stdout);
-//     int n, m;
-//     cin >> n >> m;
-//     vector<vi> v;
-//     for (int i = 0; i < n; i++)
+//     int n;
+//     cin>>n;
+//     vi v;
+//     for(int i=0;i<n;i++)
 //     {
-//         vi temp;
-//         for (int j = 0; j < m; j++)
-//         {
-//             int x;
-//             cin >> x;
-//             temp.push_back(x);
-//         }
-//         v.push_back(temp);
-//     }
+//         ll x;
+//         cin>>x;
+//         v.push_back(x);
 
+//     }
+//     int start;
+//     cin>>start;
 //     Solution Solution;
-//     cout << Solution.uniquePathsIII(v) << endl;
+//     Solution.canReach(v,start);
+
 // }
