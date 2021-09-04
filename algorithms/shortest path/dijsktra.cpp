@@ -5,7 +5,7 @@
 #include <vector>
 #include <utility>
 using namespace std;
-#define inf 2000000000
+#define inf INT_MAX
 #define ll long long int
 #define ull unsigned long long
 #define loop(i, a, b) for (ll i = a; i < b; i++)
@@ -38,8 +38,9 @@ vi w[sz];
 int costs[sz];
 int par[sz];
 
-void dijkstra(int source, int sink)
+void dijkstra(int source)
 {
+    costs[source] = 0;
     pq.push({-costs[source], source});
 
     while (pq.size())
@@ -49,23 +50,14 @@ void dijkstra(int source, int sink)
         for (int i = 0; i < adj[cur].size(); i++)
         {
             int newNode = adj[cur][i];
-            if (cur + w[cur][i] < costs[newNode])
+            if (costs[cur] + w[cur][i] < costs[newNode])
             {
                 par[newNode] = cur;
-                costs[newNode] = cur + w[cur][i];
+                costs[newNode] = costs[cur] + w[cur][i];
                 pq.push({-costs[newNode], newNode});
             }
         }
     }
-
-    int cur_node = sink;
-    while (cur_node != -1)
-    {
-        shortestPath.push_back(cur_node);
-        cur_node = par[cur_node];
-    }
-
-    reverse(all(shortestPath));
 }
 
 void preProcess(int n)
@@ -80,8 +72,57 @@ void preProcess(int n)
     }
 }
 
+void find_sortestPath(int start, int end)
+{
+    shortestPath.clear();
+    int cur = end;
+    while (cur != -1)
+    {
+        shortestPath.push_back(cur);
+        cur = par[cur];
+    }
+
+    if (costs[end] == inf)
+    {
+        cout << "NO path" << endl;
+        return;
+    }
+
+    reverse(all(shortestPath));
+    for (auto x : shortestPath)
+        cout << x << " ";
+    cout << endl;
+}
+
 int main()
 {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
+
+    int n, m;
+    cin >> n >> m;
+    preProcess(n);
+    while (m--)
+    {
+        int x, y, c;
+        cin >> x >> y >> c;
+        adj[x].push_back(y);
+        w[x].push_back(c);
+    }
+
+    dijkstra(1);
+    for (int i = 2; i <= 5; i++)
+    {
+        shortestPath.clear();
+        int cur = i;
+        while (cur != -1)
+        {
+            shortestPath.push_back(cur);
+            cur = par[cur];
+        }
+        reverse(all(shortestPath));
+        for (auto x : shortestPath)
+            cout << x << " ";
+        cout << endl;
+    }
 }

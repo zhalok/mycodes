@@ -304,55 +304,69 @@ ll digit_to_num(vll v)
 	return sum;
 }
 
-string str1, str2;
-
-ll dp[501][501];
-
-ll get_ans(int n, int m)
+void solve(int t)
 {
+	int n;
+	cin >> n;
+	vll v;
+	for (int i = 0; i < n; i++)
+	{
+		ll x;
+		cin >> x;
+		v.push_back(x);
+	}
 
-	if (n == 0)
-		return m;
-	if (m == 0)
-		return n;
-	if (dp[n][m] != -1)
-		return dp[n][m];
-	if (str1[n - 1] == str2[m - 1])
-		return dp[n][m] = get_ans(n - 1, m - 1);
+	vpll st;
+	ll mn = inf;
+	ll ans = 0;
 
-	ll ans = inf;
-	ll temp_ans;
+	for (int i = 0; i < v.size(); i++)
+	{
+		ll temp_ans;
+		if (st.size())
+		{
+			if ((minn(st.back().second, v[i]) * (st.size() + 1)) < v[i])
+			{
 
-	temp_ans = 1 + get_ans(n - 1, m - 1);
-	ans = minn(ans, temp_ans);
-	temp_ans = 1 + get_ans(n - 1, m);
-	ans = minn(temp_ans, ans);
-	temp_ans = 1 + get_ans(n, m - 1);
-	ans = minn(temp_ans, ans);
+				while (st.size())
+					st.pop_back();
 
-	return dp[n][m] = ans;
-}
+				st.push_back({v[i], v[i]});
+				temp_ans = v[i];
+			}
+			else
+			{
+				ll temp_min = minn(st.back().second, v[i]);
+				st.push_back({v[i], temp_min});
+				temp_ans = temp_min * st.size();
+			}
+		}
+		else
+		{
+			st.push_back({v[i], v[i]});
+			temp_ans = v[i];
+		}
 
-void solve()
-{
-	cin >> str1 >> str2;
-	memset(dp, -1, sizeof dp);
-	ll ans = get_ans(str1.size(), str2.size());
+		ans = maxx(ans, temp_ans);
+	}
+	cout << "Case " << t << ": ";
 	cout << ans << endl;
 }
 
 int main()
 {
 
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	// freopen("input.txt", "r", stdin);
+	// freopen("output.txt", "w", stdout);
 
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
 	int T;
 
-	// cin >> T;
-	// for (int i = 1; i <= T; i++)
-	solve();
+	// cout << lcm(12, 125) << endl;
+
+	cin >> T;
+	for (int i = 1; i <= T; i++)
+		solve(i);
 }
