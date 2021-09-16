@@ -27,105 +27,119 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
-int maxHistogramRectangle(vi &v)
-{
-    int n = v.size();
-    int left[n];
-    int right[n];
-    stack<int> st;
-    for (int i = 0; i < n; i++)
-    {
-        while (st.size() && v[st.top()] >= v[i])
-            st.pop();
-
-        if (st.size())
-            left[i] = st.top() + 1;
-        else
-            left[i] = 0;
-
-        st.push(i);
-    }
-    while (st.size())
-        st.pop();
-
-    for (int i = v.size() - 1; i >= 0; i--)
-    {
-        while (st.size() && v[st.top()] >= v[i])
-            st.pop();
-
-        if (st.size())
-            right[i] = st.top() - 1;
-        else
-            right[i] = n - 1;
-
-        st.push(i);
-    }
-
-    int ans = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        int lo = left[i];
-        int hi = right[i];
-        int temp_ans = v[i] * (hi - lo + 1);
-        ans = max(ans, temp_ans);
-    }
-
-    return ans;
-}
-
 class Solution
 {
 public:
-    int maximalRectangle(vector<vector<char>> &matrix)
+    string addStrings(string num1, string num2)
     {
-        if (matrix.size() == 0)
-            return 0;
-        int n = matrix.size();
-        int m = matrix[0].size();
-        int grid[n][m];
-        int ans = 0;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
-                grid[i][j] = matrix[i][j] - '0';
-        vi v;
-
-        for (int i = 1; i < n; i++)
+        reverse(all(num1));
+        reverse(all(num2));
+        int mx = max(num1.size(), num2.size());
+        int arr1[mx + 1];
+        int arr2[mx + 1];
+        int arr[mx + 1];
+        memset(arr1, 0, sizeof arr1);
+        memset(arr2, 0, sizeof arr2);
+        for (int i = 0; i < num1.size(); i++)
+            arr1[i] = num1[i] - '0';
+        for (int i = 0; i < num2.size(); i++)
+            arr2[i] = num2[i] - '0';
+        int carry = 0;
+        for (int i = 0; i <= mx; i++)
         {
-            v.clear();
+            int sum = (arr1[i] + arr2[i] + carry) % 10;
+            carry = (arr1[i] + arr2[i] + carry) / 10;
+            arr[i] = sum;
+        }
 
-            for (int j = 0; j < m; j++)
+        string ans;
+        for (int i = 0; i < mx; i++)
+            ans += (arr[i] + '0');
+        if (arr[mx] != 0)
+            ans += (arr[mx] + '0');
+        reverse(all(ans));
+        return ans;
+    }
+
+    string numToString(int n)
+    {
+        string ans;
+        while (n)
+        {
+            int temp = n % 10;
+            n /= 10;
+            ans += (temp + '0');
+        }
+        reverse(all(ans));
+        return ans;
+    }
+
+    string addAllStrings(vector<string> vs)
+    {
+        string init = "";
+        for (int i = 0; i < vs.size(); i++)
+            init = addStrings(init, vs[i]);
+        return init;
+    }
+
+    string multiply(string num1, string num2)
+    {
+        vector<string> vv;
+
+        if (num1 == "0" || num2 == "0")
+            return "0";
+
+        if (num1.size() > num2.size())
+        {
+            // cout << "HELLO" << endl;
+            return multiply(num2, num1);
+        }
+
+        reverse(all(num1));
+        reverse(all(num2));
+
+        for (int i = 0; i < num1.size(); i++)
+        {
+            string ans;
+
+            int carry = 0;
+
+            for (int j = 0; j < num2.size(); j++)
             {
-                if (grid[i][j])
-                    grid[i][j] += grid[i - 1][j];
-                v.push_back(grid[i][j]);
+                int digit1 = num1[i] - '0';
+                int digit2 = num2[j] - '0';
+                int sum = (digit1 * digit2 + carry) % 10;
+                carry = (digit1 * digit2 + carry) / 10;
+                ans += (sum + '0');
+                // cout << sum << " " << carry << endl;
             }
 
-            int temp_ans = maxHistogramRectangle(v);
-            ans = max(ans, temp_ans);
+            if (carry)
+                ans += (carry + '0');
+
+            reverse(all(ans));
+
+            for (int k = 0; k < i; k++)
+                ans += '0';
+            vv.push_back(ans);
         }
+
+        // for (auto x : vv)
+        //     cout << x << endl;
+
+        string ans = addAllStrings(vv);
 
         return ans;
     }
 };
 
-int main()
-{
+// int main()
+// {
 
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    int n;
-    cin >> n;
-    vi v;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        v.push_back(x);
-    }
-    int k;
-    cin >> k;
-
-    Solution sol;
-    cout << sol.maxResult(v, k) << endl;
-}
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
+//     string s1, s2;
+//     cin >> s1 >> s2;
+//     Solution Solution;
+//     cout << Solution.multiply(s1, s2) << endl;
+// }

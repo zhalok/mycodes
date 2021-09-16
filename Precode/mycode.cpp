@@ -1,3 +1,4 @@
+/*“In the name of Allah, The Most Gracious and The Most Merciful“*/
 #include <bits/stdc++.h>
 #include <map>
 #include <iostream>
@@ -304,53 +305,29 @@ ll digit_to_num(vll v)
 	return sum;
 }
 
+vll xors;
+
+void precalExors()
+{
+	ll xr = 0;
+	for (int i = 0; i < 1000000; i++)
+	{
+		xr ^= i;
+		xors.push_back(xr);
+	}
+}
+
 void solve(int t)
 {
-	int n;
-	cin >> n;
-	vll v;
-	for (int i = 0; i < n; i++)
-	{
-		ll x;
-		cin >> x;
-		v.push_back(x);
-	}
-
-	vpll st;
-	ll mn = inf;
-	ll ans = 0;
-
-	for (int i = 0; i < v.size(); i++)
-	{
-		ll temp_ans;
-		if (st.size())
-		{
-			if ((minn(st.back().second, v[i]) * (st.size() + 1)) < v[i])
-			{
-
-				while (st.size())
-					st.pop_back();
-
-				st.push_back({v[i], v[i]});
-				temp_ans = v[i];
-			}
-			else
-			{
-				ll temp_min = minn(st.back().second, v[i]);
-				st.push_back({v[i], temp_min});
-				temp_ans = temp_min * st.size();
-			}
-		}
-		else
-		{
-			st.push_back({v[i], v[i]});
-			temp_ans = v[i];
-		}
-
-		ans = maxx(ans, temp_ans);
-	}
-	cout << "Case " << t << ": ";
-	cout << ans << endl;
+	ll a, b;
+	cin >> a >> b;
+	ll xr = xors[a - 1];
+	if ((b ^ xr) == 0)
+		cout << a << endl;
+	else if ((b ^ xr) == a)
+		cout << a + 2 << endl;
+	else
+		cout << a + 1 << endl;
 }
 
 int main()
@@ -365,7 +342,7 @@ int main()
 	int T;
 
 	// cout << lcm(12, 125) << endl;
-
+	precalExors();
 	cin >> T;
 	for (int i = 1; i <= T; i++)
 		solve(i);

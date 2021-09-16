@@ -1,4 +1,4 @@
-MST edges: 
+MST edges:
 8 7
 3 9
 6 7
@@ -7,4 +7,4 @@ MST edges:
 3 4
 1 8
 4 5
-Minimum weight of MST = 37
+Total cost of MST: 37
