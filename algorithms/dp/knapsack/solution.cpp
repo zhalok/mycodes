@@ -12,11 +12,11 @@ int knapsack(int idx, int cap)
     if (idx == n)
         return 0;
 
-    if (mem[idx][cap] != -1)
-        return mem[idx][cap];
+    // if (mem[idx][cap] != -1)
+    //     return mem[idx][cap];
 
     int ans = 0;
-    if (cap - weights[idx] > 0)
+    if (cap - weights[idx] >= 0)
         ans = max(ans, val[idx] + knapsack(idx + 1, cap - weights[idx]));
     ans = max(ans, knapsack(idx + 1, cap));
     return mem[idx][cap] = ans;
@@ -26,7 +26,7 @@ int main()
 {
     freopen64("input.txt", "r", stdin);
     freopen64("output.txt", "w", stdout);
-    int n;
+
     cin >> n;
     val.clear();
     weights.clear();
@@ -44,6 +44,7 @@ int main()
         cin >> x;
         weights.push_back(x);
     }
+
     int cap;
     cin >> cap;
     cout << knapsack(0, cap) << endl;

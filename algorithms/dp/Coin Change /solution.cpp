@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int mem[1000];
+int mem[1000][1000];
 
 vector<int> arr;
 
@@ -11,13 +11,13 @@ int numberOfChanges(int idx, int total)
         return 1;
     if (total < 0)
         return 0;
-    if (idx == arr.size())
+    if (idx >= arr.size())
         return 0;
 
-    if (mem[idx] != -1)
-        return mem[idx];
+    if (mem[idx][total] != -1)
+        return mem[idx][total];
 
-    return mem[idx] = numberOfChanges(idx + 1, total) + numberOfChanges(idx, total - arr[idx]);
+    return mem[idx][total] = numberOfChanges(idx + 1, total) + numberOfChanges(idx, total - arr[idx]);
 }
 
 int main()
