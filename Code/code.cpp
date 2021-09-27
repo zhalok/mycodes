@@ -24,7 +24,7 @@ using namespace std;
 #define vpll vector<pll>
 #define ff first
 #define ss second
-#define MOD 998244353
+#define MOD 1000000007
 #define sz 400001
 #define ub upper_bound
 #define lb lower_bound
@@ -32,33 +32,33 @@ using namespace std;
 #define eps 1e-6
 #define pi acos(-1.0)
 
+ll gcd(ll a, ll b)
+{
+    if (a % b == 0)
+        return b;
+    return gcd(b, a % b);
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    vll v;
-    for (int i = 0; i < 2 * n; i++)
-    {
-        ll x;
-        cin >> x;
-        v.push_back(x);
-    }
 
-    sort(all(v));
-    for (int i = 1; i < v.size() - 2; i += 2)
-        swap(v[i], v[i + 1]);
-    for (auto x : v)
-        cout << x << " ";
-    cout << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            cout << "* ";
+        }
+
+        cout << endl;
+    }
 }
 
 int main()
 {
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
-
-    int T;
-    cin >> T;
-    for (int i = 1; i <= T; i++)
-        solve();
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    // int T;
+    // cin >> T;
+    // for (int i = 1; i <= T; i++)
+    solve();
 }

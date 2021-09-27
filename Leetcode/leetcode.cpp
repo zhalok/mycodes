@@ -27,109 +27,39 @@ using namespace std;
 #define eps 1e-8
 #define pi acos(-1.0)
 
+vi v;
+set<vi> ans;
+
+void findAllPermutation(int start, int end)
+{
+
+    if (start == end)
+    {
+        ans.insert(v);
+        return;
+    }
+
+    for (int i = start; i <= end; i++)
+    {
+        swap(v[start], v[i]);
+        findAllPermutation(start + 1, end);
+        swap(v[start], v[i]);
+    }
+}
+
 class Solution
 {
 public:
-    string addStrings(string num1, string num2)
+    vector<vector<int>> permuteUnique(vector<int> &nums)
     {
-        reverse(all(num1));
-        reverse(all(num2));
-        int mx = max(num1.size(), num2.size());
-        int arr1[mx + 1];
-        int arr2[mx + 1];
-        int arr[mx + 1];
-        memset(arr1, 0, sizeof arr1);
-        memset(arr2, 0, sizeof arr2);
-        for (int i = 0; i < num1.size(); i++)
-            arr1[i] = num1[i] - '0';
-        for (int i = 0; i < num2.size(); i++)
-            arr2[i] = num2[i] - '0';
-        int carry = 0;
-        for (int i = 0; i <= mx; i++)
-        {
-            int sum = (arr1[i] + arr2[i] + carry) % 10;
-            carry = (arr1[i] + arr2[i] + carry) / 10;
-            arr[i] = sum;
-        }
+        v = nums;
+        ans.clear();
+        findAllPermutation(0, nums.size() - 1);
+        vector<vi> anss;
+        for (auto x : ans)
+            anss.push_back(x);
 
-        string ans;
-        for (int i = 0; i < mx; i++)
-            ans += (arr[i] + '0');
-        if (arr[mx] != 0)
-            ans += (arr[mx] + '0');
-        reverse(all(ans));
-        return ans;
-    }
-
-    string numToString(int n)
-    {
-        string ans;
-        while (n)
-        {
-            int temp = n % 10;
-            n /= 10;
-            ans += (temp + '0');
-        }
-        reverse(all(ans));
-        return ans;
-    }
-
-    string addAllStrings(vector<string> vs)
-    {
-        string init = "";
-        for (int i = 0; i < vs.size(); i++)
-            init = addStrings(init, vs[i]);
-        return init;
-    }
-
-    string multiply(string num1, string num2)
-    {
-        vector<string> vv;
-
-        if (num1 == "0" || num2 == "0")
-            return "0";
-
-        if (num1.size() > num2.size())
-        {
-            // cout << "HELLO" << endl;
-            return multiply(num2, num1);
-        }
-
-        reverse(all(num1));
-        reverse(all(num2));
-
-        for (int i = 0; i < num1.size(); i++)
-        {
-            string ans;
-
-            int carry = 0;
-
-            for (int j = 0; j < num2.size(); j++)
-            {
-                int digit1 = num1[i] - '0';
-                int digit2 = num2[j] - '0';
-                int sum = (digit1 * digit2 + carry) % 10;
-                carry = (digit1 * digit2 + carry) / 10;
-                ans += (sum + '0');
-                // cout << sum << " " << carry << endl;
-            }
-
-            if (carry)
-                ans += (carry + '0');
-
-            reverse(all(ans));
-
-            for (int k = 0; k < i; k++)
-                ans += '0';
-            vv.push_back(ans);
-        }
-
-        // for (auto x : vv)
-        //     cout << x << endl;
-
-        string ans = addAllStrings(vv);
-
-        return ans;
+        return anss;
     }
 };
 
@@ -138,8 +68,22 @@ public:
 
 //     freopen("input.txt", "r", stdin);
 //     freopen("output.txt", "w", stdout);
-//     string s1, s2;
-//     cin >> s1 >> s2;
-//     Solution Solution;
-//     cout << Solution.multiply(s1, s2) << endl;
+
+//     int n;
+//     cin >> n;
+//     vi v;
+//     for (int i = 0; i < n; i++)
+//     {
+//         int x;
+//         cin >> x;
+//         v.push_back(x);
+//     }
+//     Solution sol;
+//     vector<vi> ans = sol.permute(v);
+//     for (auto x : ans)
+//     {
+//         for (auto y : x)
+//             cout << y << " ";
+//         cout << endl;
+//     }
 // }

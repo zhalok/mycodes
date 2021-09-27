@@ -1,0 +1,5 @@
+Given a sequence 
+find the longest increasing sub sequence
+
+Problem link :
+https://leetcode.com/problems/longest-increasing-subsequence/
