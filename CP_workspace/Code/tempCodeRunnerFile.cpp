@@ -32,33 +32,40 @@ using namespace std;
 #define eps 1e-6
 #define pi acos(-1.0)
 
-ll gcd(ll a, ll b)
-{
-    if (a % b == 0)
-        return b;
-    return gcd(b, a % b);
-}
-
 void solve()
 {
-
-    for (int i = 0; i < 10; i++)
+    ll n, m, k;
+    cin >> n >> m >> k;
+    ll mxedge = n * (n - 1);
+    mxedge /= 2;
+    if (m > mxedge)
     {
-        for (int j = 0; j < 10; j++)
-        {
-            cout << "* ";
-        }
-
-        cout << endl;
+        cout << "NO" << endl;
+        return;
+    }
+    if (m == mxedge)
+    {
+        if (k > 2)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
+    }
+    else
+    {
+        if (k > 3)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
 }
 
 int main()
 {
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    // int T;
-    // cin >> T;
-    // for (int i = 1; i <= T; i++)
-    solve();
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+
+    int T;
+    cin >> T;
+    for (int i = 1; i <= T; i++)
+        solve();
 }
