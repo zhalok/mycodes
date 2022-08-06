@@ -1,17 +1,8 @@
 /**
- * @param {string[]} nums
- * @param {string} target
- * @return {number}
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
  */
-var numOfPairs = function (nums, target) {
-    let ans = [];
-    for (let i = 0; i < nums.length; i++)
-        for (let j = 0; j < nums.length; j++)
-            if (i != j && (nums[i] + nums[j]) === target)
-                ans.push([i, j]);
+var isAnagram = function (s, t) {};
 
-    return ans.length;
-};
-
-// const ans = numOfPairs(["777", "7", "77", "77"], "7777");
-// console.log(ans);
+isAnagram("hello", "hi");
