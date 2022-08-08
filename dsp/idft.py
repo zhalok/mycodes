@@ -16,7 +16,7 @@ def dft(signal):
     _dft = [0]*_len
     for k in range(_len):
         for n in range(_len):
-            _dft[k] += singal[n]*np.exp(-1j*2*np.pi*k*n/_len)
+            _dft[k] += signal[n]*np.exp(-1j*2*np.pi*k*n/_len)
     return _dft
 
 
@@ -25,7 +25,7 @@ def idft(signal):
     _idft = [0]*_len
     for n in range(_len):
         for k in range(_len):
-            _idft[n] += singal[k]*np.exp(1j*2*np.pi*k*n/_len)
+            _idft[n] += signal[k]*np.exp(1j*2*np.pi*k*n/_len)
         _idft[n] /= _len
     return _idft
 
