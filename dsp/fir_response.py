@@ -1,0 +1,42 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy as sc
+
+
+def sinusoid(x):
+    return 2*np.sin(3*x)
+
+
+def sinusoid1(x):
+    return 3*np.sin(4*x)
+
+
+def dft(signal):
+    _len = len(signal)
+    _dft = [0]*_len
+    for k in range(_len):
+        for n in range(_len):
+            _dft[k] += signal[n]*np.exp(-1j*2*np.pi*k*n/_len)
+    return _dft
+
+
+def idft(signal):
+    _len = len(signal)
+    _idft = [0]*_len
+    for n in range(_len):
+        for k in range(_len):
+            _idft[n] += signal[k]*np.exp(1j*2*np.pi*k*n/_len)
+        _idft[n] /= _len
+    return _idft
+
+
+inputs = np.arange(0, 100, 1)
+x = sinusoid(inputs)
+h = sinusoid1(inputs)
+
+X = dft(x)
+H = dft(h)
+Y = np.array(X)*np.array(H)
+y = idft(Y)
+plt.plot(inputs, y)
+plt.show()
