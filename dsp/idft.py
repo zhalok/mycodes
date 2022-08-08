@@ -38,8 +38,8 @@ _idft = idft(_dft)
 plt.plot(inputs, _dft)
 plt.plot(inputs, _idft)
 
-lib_dft = sc.fft.fft(signal)
-lib_idft = sc.fft.ifft(lib_dft)
+lib_dft = np.fft.fft(signal)
+lib_idft = np.fft.ifft(lib_dft)
 
 plt.plot(inputs, lib_dft)
 plt.plot(inputs, lib_idft)
