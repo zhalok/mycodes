@@ -20,6 +20,7 @@ def dft(signal):
 
 
 inputs = np.arange(0, 100, 1)
+signal = sinusoid(inputs)
 _dft = dft((signal))
 plt.plot(inputs, _dft)
 plt.show()
