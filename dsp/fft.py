@@ -16,7 +16,7 @@ def fft(x):
         odd_list.append(x[2*i+1])
 
     _even_list, _odd_list = fft(even_list), fft(odd_list)
-    y = np.zeros(n, dtype=np.complex)
+    y = [0]*n
     for i in range(math.floor(n/2)):
         y[i] = _even_list[i] + np.power(w, i) * _odd_list[i]
         y[i+math.floor(n/2)] = _even_list[i] - np.power(w, i) * _odd_list[i]
@@ -27,7 +27,7 @@ def fft(x):
 signal = [1, 2, 4, 8, 16, 32, 64, 128]
 fft_response = fft(signal)
 
-plt.plot(signal, fft_response, linestyle="dashed")
-plt.plot(signal, np.fft.fft(signal))
+plt.plot(signal, fft_response, color="black")
+plt.plot(signal, np.fft.fft(signal), color="green")
 plt.show()
 print(fft_response)

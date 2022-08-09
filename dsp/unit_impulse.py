@@ -8,7 +8,7 @@ def impulse_signal(shift, dataset):
     impulse = []
 
     for x in dataset:
-        if(x == (-1*shift)):
+        if(x >= (-1*shift)):
             impulse.append(1)
         else:
             impulse.append(0)
