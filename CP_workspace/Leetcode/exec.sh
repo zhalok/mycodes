@@ -1,0 +1,1 @@
+python3 test-case-converter.py && g++ leetcode.cpp && ./leetcode

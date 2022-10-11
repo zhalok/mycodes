@@ -1,53 +1,36 @@
-#include "bits/stdc++.h"
-
+#include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
-const int MAXN = 100100;
+void solve() {
+  int n;
+  cin >> n;
+  vector<int> v;
 
-int t, n;
-vector<int> a[MAXN];
-
-int solve(int x) {
-
-  if (!a[x].size())
-    return 0;
-
-  int curr = a[x][0];
-  int ans = 1;
-
-  for (int i : a[x]) {
-    if ((i & 1) != (curr & 1)) {
-      ans++;
-      curr = i;
-    }
+  for (int i = 0; i < n; i++) {
+    int x;
+    cin >> x;
+    v.push_back(x);
   }
 
-  return ans;
+  long long int ans = 0;
+
+  for (int i = 0; i < v.size(); i++) {
+    if (v[i] < 0) {
+      ans++;
+    } else if (v[i] == 0) {
+      cout << "0" << endl;
+      return;
+    }
+  }
+  cout << ans % 2 << endl;
 }
 
 int main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
-  // freopen("input.txt", "r", stdin);
-  // freopen("output.txt", "w", stdout);
+  // your code goes here
+  int t;
   cin >> t;
   while (t--) {
-
-    cin >> n;
-
-    for (int i = 1; i <= n; i++)
-      a[i].clear();
-
-    for (int i = 1; i <= n; i++) {
-      int x;
-      cin >> x;
-      a[x].push_back(i);
-    }
-
-    for (int i = 1; i <= n; i++) {
-      cout << solve(i) << " ";
-    }
-    cout << endl;
+    solve();
   }
+  return 0;
 }

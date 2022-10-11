@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
-#include <string>
-#include <system_error>
+#include <queue>
+#include <set>
 #include <vector>
 using namespace std;
 using namespace std;
 #define zhalok Zhalok
-#define inf INT_MAX
+#define inf 1000000
 #define ll long long int
 #define ull unsigned long long
 #define loop(i, a, b) for (ll i = a; i < b; i++)
@@ -32,34 +32,48 @@ using namespace std;
 
 class Solution {
 public:
-  bool isAnagram(string s, string t) {
-    sort(all(s));
-    sort(all(t));
-    if (s.size() != t.size())
-      return false;
-    for (int i = 0; i < s.size(); i++)
-      if (s[i] != t[i])
-        return false;
-    return true;
+  set<int> left;
+  set<int> right;
+
+  bool increasingTriplet(vector<int> &nums) {
+
+    int lefMin[nums.size()];
+    int rightMax[nums.size()];
+    memset(lefMin, 0, sizeof lefMin);
+    memset(rightMax, 0, sizeof rightMax);
+    int mn = inf;
+    for (int i = 0; i < nums.size(); i++) {
+      mn = min(mn, nums[i]);
+      lefMin[i] = mn;
+    }
+    int mx = -inf;
+    for (int i = nums.size() - 1; i >= 0; i--) {
+      mx = max(mx, nums[i]);
+      rightMax[i] = mx;
+    }
+    for (int i = 1; i < nums.size() - 1; i++)
+      if (nums[i] > lefMin[i - 1] && nums[i] < rightMax[i + 1])
+        return true;
+    return false;
   }
 };
+
 int main() {
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
 
-  // freopen("input.txt", "r", stdin);
-  // freopen("output.txt", "w", stdout);
-
-  // int n;
-  // cin >> n;
-  // vector<vector<int>> v;
-  // for (int i = 0; i < n; i++) {
-  //   vector<int> temp;
-  //   for (int j = 0; j < n; j++) {
-  //     ll x;
-  //     cin >> x;
-  //     temp.push_back(x);
-  //   }
-  //   v.push_back(temp);
-  // }
-  // Solution sol;
-  // sol.setZeroes(v);
+  int n;
+  cin >> n;
+  vector<int> nums;
+  for (int i = 0; i < n; i++) {
+    int x;
+    cin >> x;
+    nums.push_back(x);
+  }
+  Solution sol;
+  bool ans = sol.increasingTriplet(nums);
+  cout << ans << endl;
+  // set<int> s;
+  // s.insert(10);
+  // cout << *s.begin() << endl;
 }
